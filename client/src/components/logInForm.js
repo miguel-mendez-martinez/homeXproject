@@ -18,7 +18,7 @@ export default class logInForm extends Component
         this.state = {
             email: '',
             password: '',
-            logged:false
+            redirect:false
         }
 
     }
@@ -49,7 +49,7 @@ export default class logInForm extends Component
                     sessionStorage.name = res.data.name
                     sessionStorage.accessLevel = res.data.accessLevel
                     
-                    this.setState({isLoggedIn:true})
+                    this.setState({redirect:true})
                 }        
             }
             else
@@ -68,11 +68,11 @@ export default class logInForm extends Component
     {   
         return (           
             <div className="form-container">
-                {this.state.logged ? <Redirect to="/DisplayAllSkates"/> : null}
+                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                 <h2> Users Log In </h2>
                 <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                 <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
-                <input type="button" className="green-button" value="Add User" onClick={this.addUser}/>
+                <input type="button" className="green-button" value="Log In" onClick={this.logInUser}/>
                 {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
                 <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
             </div> 
