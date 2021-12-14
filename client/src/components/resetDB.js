@@ -7,14 +7,13 @@ import {SERVER_HOST} from "../config/global_constants"
 
 import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
 
-export default class LogOut extends Component 
+export default class resetDB extends Component 
 {
     constructor(props) 
     {
         super(props)
         
         this.state = {
-            id: this.props.match.params.id,
             redirect: false
         }
     }
@@ -22,7 +21,7 @@ export default class LogOut extends Component
    
     componentDidMount() 
     { 
-        axios.post(`${SERVER_HOST}/Users/logout`)
+        axios.post(`${SERVER_HOST}/Users/resetUsers`)
         .then(res => 
         {     
             if(res.data)
@@ -33,7 +32,7 @@ export default class LogOut extends Component
                 }
                 else
                 { 
-                    console.log("User logged out")
+                    console.log("DataBase Cleared")
                     sessionStorage.clear()   
     
                     sessionStorage.name = "GUEST"

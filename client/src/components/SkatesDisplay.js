@@ -5,9 +5,7 @@ import axios from "axios"
 
 import {SERVER_HOST} from "../config/global_constants"
 
-import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
-
-import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
+import {ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 export default class SkateDisplay extends Component 
 {
@@ -47,14 +45,16 @@ export default class SkateDisplay extends Component
         return (           
             <div className="form-container">
                 <div className = "header">
-                    <Link className="blue-button" to="/logInForm"> Login </Link>
-                    <Link className="green-button" to="/userForm"> Register </Link>
-                    {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? <Link className="red-button" to="/userForm"> LogOut </Link> : null }
+                    {sessionStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? <Link className="blue-button" to="/logInForm"> Login </Link> : null}
+                    {sessionStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? <Link className="green-button" to="/userForm"> Register </Link> : null}
+                    {sessionStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? <Link className="red-button" to="/logOut"> LogOut </Link> : null }
+                    <Link className="red-button" to="/resetDB"> Reset DB </Link>
                 </div>
                 <div className="grid-container">
                     
                 </div>
             </div> 
+
         )
     }
 }

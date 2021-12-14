@@ -4,12 +4,15 @@ const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".
 
 const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
 
+const accessLevels = [0, 1, 2]
+
 let userSchema = new mongoose.Schema(
    {
         name: {type: String},
         email: {type: String, match: [emailPattern, "Email must be valid."]},
         password: {type: String, /* match: [passwordPattern, "Password must have at leat 6 characters, including 1 number and 1 special character."] */},
-        confirmPassword: {type: String, /* match: [this.password, "Passwords must match."] */}
+        confirmPassword: {type: String, /* match: [this.password, "Passwords must match."] */},
+        accessLevel: {type: Number, match: [accessLevels, "Invalid Access Level"]}
    },
    {
         collection: `Users`

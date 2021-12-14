@@ -9,7 +9,8 @@ import Home from "./components/Home"
 import About from "./components/About"
 import userForm from "./components/userForm.js"
 import logOut from "./components/logOut.js"
-import logInForm from "./components/logInForm"
+import logInForm from "./components/logInForm.js"
+import resetDB from "./components/resetDB.js"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 
@@ -38,6 +39,7 @@ export default class App extends Component
                     <Route exact path="/userForm" component={userForm}/>
                     <Route exact path="/logInForm" component={logInForm}/>
                     <Route exact path="/logOut" component={logOut}/>
+                    <Route exact path="/resetDB" component={resetDB}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/> {/* si es mala la url sale esto */}                           
                 </Switch>
             </BrowserRouter>
