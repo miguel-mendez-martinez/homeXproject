@@ -12,7 +12,7 @@ let userSchema = new mongoose.Schema(
         confirmPassword: {type: String, /* match: [this.password, "Passwords must match."] */}
    },
    {
-        collection: `skates`
+        collection: `Skates`
    })
 
-module.exports = mongoose.model(`skates`, userSchema)
+module.exports = mongoose.model(`Skates`, userSchema)
