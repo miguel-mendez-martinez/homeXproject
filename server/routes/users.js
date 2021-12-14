@@ -12,34 +12,94 @@ router.get('/Users', (req, res) =>
     })
 })
 
-router.post('/Users/:name/:email/:password/:confirmPassword', (req, res) => 
+router.post(`/Users/resetUsers`, (req,res) => 
 {
-    /*if(!req.params.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-        console.log('Email must be Valid')
-    }else if(!req.params.password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
-        console.log('Password must have at leat 6 characters, including 1 number and 1 special character')
-    }else if(!req.params.confirmPassword.match(req.params.password)){
-        console.log(Passwords must match.')
-    }*///else{
-        bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
+    usersModel.deleteMany({}, (error, data) => 
+    {
+        if(data)
         {
-            // hash is the encrypted password.
-            usersModel.create({name: req.params.name, email: req.params.email, password: hash, confirmPassword: req.params.confirmPassword}, (error, data) =>
+            bcrypt.hash(process.env.ADMIN_PASSWORD.toString(), parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
             {
-                console.log(error)
-                if(error){
-                    res.json({errorMessage:`Bad Request`})
-                }else{
-                    res.json(data)
-                }
-                
+                usersModel.create({name:"Administrator", email:"admin@admin.com", password:hash, accessLevel:parseInt(process.env.ACCESS_LEVEL_ADMIN)}, (createError, createData) => 
+                {
+                    if(createData)
+                    {
+                        res.json(createData)
+                    }
+                    else
+                    {
+                        res.json({errorMessage:`Failed to create Admin user for testing purposes`})
+                    }
+                })
             })
-        })
-        
-    //}
-
-
-    
+        }
+        else
+        {
+            res.json({errorMessage:`User is not logged in`})
+        }
+    })                
 })
+
+
+router.post(`/Users/register/:name/:email/:password`, (req,res) => {
+    // If a user with this email does not already exist, then create new user
+    usersModel.findOne({email:req.params.email}, (uniqueError, uniqueData) => 
+    {
+        if(uniqueData)
+        {
+            res.json({errorMessage:`User already exists`})
+        }
+        else
+        {
+            bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
+            {
+                usersModel.create({name:req.params.name,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (error, data) => 
+                {
+                    if(data)
+                    {
+                        res.json({name: data.name, accessLevel:data.accessLevel})
+                    }
+                    else
+                    {
+                        res.json({errorMessage:`User was not registered`})
+                    }
+                }) 
+            })
+        }
+    })         
+})
+ 
+
+router.post(`/Users/login/:email/:password`, (req,res) => 
+{
+    usersModel.findOne({email:req.params.email}, (error, data) => 
+    {
+        if(data)
+        {
+            bcrypt.compare(req.params.password, data.password, (err, result) =>
+            {
+                if(result)
+                {
+                    res.json({name: data.name, accessLevel:data.accessLevel})
+                }
+                else
+                {
+                    res.json({errorMessage:`User is not logged in`})
+                }
+            })
+        }
+        else
+        {
+            console.log("not found in db")
+            res.json({errorMessage:`User is not logged in`})
+        } 
+    })
+})
+
+
+router.post(`/users/logout`, (req,res) => {       
+    res.json({})
+})
+    
 
 module.exports = router
