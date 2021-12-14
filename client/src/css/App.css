@@ -39,7 +39,7 @@
   border-color: #28a745;
   margin-right: 10px;
   position: relative;
-  top: 1px;  
+  top: 10px;  
   text-decoration: none;
   cursor:pointer;
 }
@@ -83,12 +83,15 @@
 }
 /* end of link buttons */
 
+input 
+{
 
-
+}
 
 input [type="button"] 
 {
 color:pink;
+padding: 10px;
 }
 
 

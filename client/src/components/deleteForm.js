@@ -5,7 +5,7 @@ import axios from "axios"
 
 import {SERVER_HOST} from "../config/global_constants"
 
-export default class DisplayAllCars extends Component 
+export default class SkateDisplay extends Component 
 {
     constructor(props) 
     {
@@ -20,6 +20,7 @@ export default class DisplayAllCars extends Component
    
     componentDidMount() 
     { 
+        axios.defaults.withCredentials = true // needed for sessions to work
         axios.delete(`${SERVER_HOST}/DisplayAllCars/${this.state.id}`)
         .then(res => 
         {
