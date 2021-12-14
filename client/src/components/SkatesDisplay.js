@@ -42,7 +42,7 @@ export default class DisplayAllCars extends Component
         return (           
             <div className="form-container">
                 <div className = "header">
-                    <Link to="/userForm"> Register </Link>
+                    <Link className="green-button" to="/userForm"> Register </Link>
                 </div>
                 <div className="grid-container">
                     
