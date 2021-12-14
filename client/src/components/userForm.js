@@ -48,15 +48,17 @@ export default class userForm extends Component
     addUser = e => {
 
         //clientSide validation
+        mailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
 
-        /*if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+        if(!this.state.email.match(mailPattern)){
             console.log('Email must be valid')
-        }else if(!this.state.password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
+        }else if(!this.state.password.match(passWordPattern)){
             console.log('Password must have at least 6 characters, 1 number and 1 especial character.')
         }else if(!this.state.confirmPassword.match(this.state.password)){
             console.log('Passwords must match.')
-        }*///else{
-            axios.post(`${SERVER_HOST}/Users/${this.state.name}/${this.state.email}/${this.state.password}/${this.state.confirmPassword}`)
+        }else{
+            axios.post(`${SERVER_HOST}/Users/resgister/${this.state.name}/${this.state.email}/${this.state.password}`)
             .then(res => 
             {
                 if(res.data.errorMessage)
@@ -67,7 +69,7 @@ export default class userForm extends Component
                     console.log("Record added")
                 }
             })
-        //}
+        }
     }
 
     cancelUser = e => {

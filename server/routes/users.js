@@ -97,7 +97,7 @@ router.post(`/Users/login/:email/:password`, (req,res) =>
 })
 
 
-router.post(`/users/logout`, (req,res) => {       
+router.post(`/Users/logout`, (req,res) => {       
     res.json({})
 })
     

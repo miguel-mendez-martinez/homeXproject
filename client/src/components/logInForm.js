@@ -27,7 +27,9 @@ export default class logInForm extends Component
         this.setState({[event.target.name]: event.target.value})
     }
 
-    logInUser = e => {
+    
+
+    logInUser = e => {   
         axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {     
@@ -47,7 +49,7 @@ export default class logInForm extends Component
                     sessionStorage.name = res.data.name
                     sessionStorage.accessLevel = res.data.accessLevel
                     
-                    this.setState({logged:true})
+                    this.setState({isLoggedIn:true})
                 }        
             }
             else
@@ -70,7 +72,7 @@ export default class logInForm extends Component
                 <h2> Users Log In </h2>
                 <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                 <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
-                <input type="button" className="green-button" value="Log In" onClick={this.logInUser}/>
+                <input type="button" className="green-button" value="Add User" onClick={this.addUser}/>
                 {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
                 <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
             </div> 
