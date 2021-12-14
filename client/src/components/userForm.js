@@ -53,12 +53,12 @@ export default class userForm extends Component
 
         if(!this.state.email.match(mailPattern)){
             console.log('Email must be valid')
-        }else if(!this.state.password.match(passWordPattern)){
+        }else if(!this.state.password.match(passwordPattern)){
             console.log('Password must have at least 6 characters, 1 number and 1 especial character.')
         }else if(!this.state.confirmPassword.match(this.state.password)){
             console.log('Passwords must match.')
         }else{
-            axios.post(`${SERVER_HOST}/Users/resgister/${this.state.name}/${this.state.email}/${this.state.password}`)
+            axios.post(`${SERVER_HOST}/Users/register/${this.state.name}/${this.state.email}/${this.state.password}`)
             .then(res => 
             {
                 if(res.data.errorMessage)

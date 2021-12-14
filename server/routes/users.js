@@ -43,6 +43,7 @@ router.post(`/Users/resetUsers`, (req,res) =>
 
 router.post(`/Users/register/:name/:email/:password`, (req,res) => {
     // If a user with this email does not already exist, then create new user
+    console.log("llegA")
     usersModel.findOne({email:req.params.email}, (uniqueError, uniqueData) => 
     {
         if(uniqueData)
