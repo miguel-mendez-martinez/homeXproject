@@ -2,6 +2,12 @@
   padding-top: 10px;
 }
 
+img {
+    border-radius: 50%;
+    padding: 5px;
+    width: 100px;
+}
+
 .form-container,
 .table-container 
 {
@@ -9,9 +15,82 @@
   margin: 0 auto;
 }
 
+.web-container
+{
+    max-width: 90%;
+    margin: 0 auto;
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7px;
+    background: white;
+}
+
+.header-container
+{
+    display: flex;
+    max-width: 98%;
+    margin: 0 auto;
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 3px;
+    background: #bd24b8;
+}
+
+.header-container h6{
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+}
+
+.centerHeader{
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    top: 16px;
+    right: 18%;
+}
+
+.rightHeader {
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    top: 40px;
+    left: 17%;
+}
+
+.content-container
+{
+    display: flex;
+}
+
+.category-container
+{
+    width: 15%;
+    margin: 0 auto;
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: 1%;
+    border-radius: 3px;
+    background: white;
+}
+
+.grid-container
+{
+    width: 83%;
+    margin: 0 auto;
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-right: 1%;
+    border-radius: 3px;
+    background: white;
+}
+
 .form-container
 {
-      border:thin solid #aaaaaa;
+    border:thin solid #aaaaaa;
     padding: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -30,8 +109,8 @@
 .red-button,
 .blue-button
 {
-  padding: 7px 10px;
-  font-size: 0.875rem;
+  padding: 10px 13px;
+  font-size: 1rem;
   line-height: normal;
   border-radius: 0.2rem;
   color: #fff;
@@ -39,7 +118,6 @@
   border-color: #28a745;
   margin-right: 10px;
   position: relative;
-  top: 10px;  
   text-decoration: none;
   cursor:pointer;
 }
@@ -82,6 +160,13 @@
   background-color: #1020a0; 
 }
 /* end of link buttons */
+
+input 
+{
+color:pink;
+margin-top: 5px;
+padding: 10px;
+}
 
 input [type="button"] 
 {

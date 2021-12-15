@@ -82,13 +82,14 @@ export default class userForm extends Component
         return (           
             <div className="form-container">
                 {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
+                <h2>User Registration</h2>
                 <input id="name" type="text" name="name" placeholder="Name" onChange={this.handleChange}/><br/>
                 <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                 <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
                 <input id="confirm-password" type="password" name="confirm-password" placeholder="Confirm password" onChange={this.handleChange}/><br/>
-                <input type="button" value="Add User" onClick={this.addUser}/>
+                <input type="button" className="green-button" value="Add User" onClick={this.addUser}/>
                 {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
-                <Link to="/DisplayAllSkates"> Cancel </Link>
+                <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
             </div> 
         )
     }
