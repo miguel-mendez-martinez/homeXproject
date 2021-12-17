@@ -29,15 +29,20 @@ img {
 
 .header-container
 {
-    display: flex;
+    position: sticky;
     max-width: 98%;
     margin: 0 auto;
     border:thin solid #aaaaaa;
-    padding: 20px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 3px;
     background: #bd24b8;
+}
+
+.flexBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-container h6{
@@ -45,20 +50,81 @@ img {
     font-style: italic;
 }
 
+.leftHeader {
+    flex: 1;
+}
+
 .centerHeader{
-    position: relative;
-    margin: 0 auto;
     display: block;
-    top: 16px;
-    right: 18%;
+    flex: 19;
 }
 
 .rightHeader {
+    flex: 3;
+    display: inline-flex;
+
+}
+
+.navigation{
     position: relative;
-    margin: 0 auto;
+    display: flex;
+    width: 300px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation ul{
+    position: relative;
+    top: 50%;
+    left: 15px;
+    display: flex;
+    width: 350px;
+}
+
+.navigation ul li{
+    list-style: none;
+    width: 70px;
+    height: 70px;
+    z-index: 1;
+}
+
+.navigation ul li span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.navigation ul li span .navigation-icon{
     display: block;
-    top: 40px;
-    left: 17%;
+    text-align: center;
+    color: black;  
+    transition: 0.5s;
+}
+
+.navigation ul li:hover span .navigation-icon{
+    transform: translateY(-25px);
+}
+
+.navigation ul li span .navigation-item{
+    font-size: 1rem;
+    line-height: normal;
+    border-radius: 0.2rem;
+    color: black;
+    position: absolute;
+    text-decoration: none;
+    cursor:pointer;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.navigation ul li:hover span .navigation-item{
+    opacity: 1;
+    transform: translateY(10px);
 }
 
 .content-container
@@ -80,6 +146,7 @@ img {
 .grid-container
 {
     width: 83%;
+    height: 1500px;
     margin: 0 auto;
     border:thin solid #aaaaaa;
     padding: 20px;
