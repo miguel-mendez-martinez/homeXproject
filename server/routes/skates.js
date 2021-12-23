@@ -11,7 +11,7 @@ router.get('/DisplayAllSkates', (req, res) =>
     })
 })
 
-router.post('/DisplayAllSkates/:model/:colour/:year/:price', (req, res) => 
+router.post('/DisplayAllSkates/:type/:size/:brand/:price', (req, res) => 
 {
     skatesModel.create({model: req.params.model, colour: req.params.colour, year: req.params.year, price: parseInt(req.params.price)}, (error, data) =>
     {
