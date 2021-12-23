@@ -57,7 +57,6 @@ export default class modForm extends Component
         return (           
             <div className="form-container">
                 {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
-                <label>Type:<input type="text" name="type" onChange={this.handleChange} value={this.state.type}/></label><br/>
                 <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
                 <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
                 <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>
