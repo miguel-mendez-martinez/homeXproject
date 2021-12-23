@@ -30,7 +30,10 @@ export default class addForm extends Component
 
 
     addProduct = () =>{
-        axios.post(`${SERVER_HOST}/DisplayAllSkates/${this.state.type}/${this.state.size}/${this.state.brand}/${this.state.price}`)
+
+        axios.defaults.withCredentials = true
+
+        axios.post(`${SERVER_HOST}/DisplayAllSkates/${this.state.type}/${this.state.size}/${this.state.brand}/${this.state.price}`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {   
             if(res.data)

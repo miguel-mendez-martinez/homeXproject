@@ -34,8 +34,8 @@ export default class logInForm extends Component
         .then(res => 
         {     
             // default if not logged in
-            sessionStorage.name = "GUEST"
-            sessionStorage.accessLevel = ACCESS_LEVEL_GUEST 
+            localStorage.name = "GUEST"
+            localStorage.accessLevel = ACCESS_LEVEL_GUEST 
             if(res.data)
             {
                 if (res.data.errorMessage)
@@ -46,8 +46,9 @@ export default class logInForm extends Component
                 { 
                     console.log("User logged in")
                     
-                    sessionStorage.name = res.data.name
-                    sessionStorage.accessLevel = res.data.accessLevel
+                    localStorage.name = res.data.name
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
                     
                     this.setState({redirect:true})
                 }        

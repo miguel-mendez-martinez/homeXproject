@@ -1,12 +1,18 @@
 import React, {Component} from "react"
 
-export default class Home extends Component 
+import WebHeader from "./WebHeader"
+
+export default class about extends Component 
 {
     render() 
     {   
         return (           
-            <div className="form-container">
-                <div className="table-container">
+            
+            <div className="web-container">
+
+                <WebHeader />
+                
+                <div className="content-container">
                     <h1>About Page</h1>
                 </div>
             </div> 

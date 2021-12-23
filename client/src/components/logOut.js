@@ -22,6 +22,9 @@ export default class LogOut extends Component
    
     componentDidMount() 
     { 
+
+        axios.defaults.withCredentials = true
+
         axios.post(`${SERVER_HOST}/Users/logout`)
         .then(res => 
         {     
@@ -34,10 +37,11 @@ export default class LogOut extends Component
                 else
                 { 
                     console.log("User logged out")
-                    sessionStorage.clear()   
+                    localStorage.clear()   
     
-                    sessionStorage.name = "GUEST"
-                    sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+                    localStorage.name = "GUEST"
+                    localStorage.accessLevel = ACCESS_LEVEL_GUEST
+                    localStorage.token = null
 
                     this.setState({redirect: true})
                 }

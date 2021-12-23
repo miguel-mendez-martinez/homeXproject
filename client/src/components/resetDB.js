@@ -21,6 +21,8 @@ export default class resetDB extends Component
    
     componentDidMount() 
     { 
+        axios.defaults.withCredentials = true
+
         axios.post(`${SERVER_HOST}/Users/resetUsers`)
         .then(res => 
         {     
@@ -33,10 +35,10 @@ export default class resetDB extends Component
                 else
                 { 
                     console.log("DataBase Cleared")
-                    sessionStorage.clear()   
+                    localStorage.clear()   
     
-                    sessionStorage.name = "GUEST"
-                    sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+                    localStorage.name = "GUEST"
+                    localStorage.accessLevel = ACCESS_LEVEL_GUEST
 
                     this.setState({redirect: true})
                 }

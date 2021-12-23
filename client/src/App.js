@@ -14,10 +14,11 @@ import LoggedInRoute from "./components/LoggedInRoute"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 
-if (typeof sessionStorage.accessLevel === "undefined")
+if (typeof localStorage.accessLevel === "undefined")
     {
-        sessionStorage.name = "GUEST"
-        sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+        localStorage.name = "GUEST"
+        localStorage.accessLevel = ACCESS_LEVEL_GUEST
+        localStorage.token = null
     }
 
 export default class App extends Component 
@@ -25,12 +26,7 @@ export default class App extends Component
     render() 
     {
         return (
-            <BrowserRouter>{/* 
-                <header>
-                    <Link to="/home">Home </Link>
-                    <Link to="/about">About </Link>
-                    <Link to="/DisplayAllSkates">Products</Link>
-                </header> */}
+            <BrowserRouter>
                 <Switch>                 
                     <Route exact path="/" component={SkatesDisplay} />
                     <Route exact path="/DisplayAllSkates" component={SkatesDisplay}/> 

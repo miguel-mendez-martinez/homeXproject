@@ -47,6 +47,8 @@ export default class userForm extends Component
 
     addUser = e => {
 
+        axios.defaults.withCredentials = true
+
         //clientSide validation
         const mailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
@@ -65,6 +67,11 @@ export default class userForm extends Component
                 {          
                     console.log(res.data.errorMessage)
                 }else{
+
+                    localStorage.name = res.data.name
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
+
                     this.setState({redirect: !this.state.redirect})
                     console.log("Record added")
                 }
