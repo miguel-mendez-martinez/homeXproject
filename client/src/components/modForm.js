@@ -27,7 +27,7 @@ export default class modForm extends Component
         this.setState({[e.target.name]: e.target.value})
     }
 
-    modCar = e =>{
+    modProduct = e =>{
         const product = {size: this.state.size, brand: this.state.brand, price: this.state.price } //No se si dará problemas no pasar el type al hacer el $set en el route
         axios.put(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`, product)
         .then(res => 
@@ -60,7 +60,7 @@ export default class modForm extends Component
                 <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
                 <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
                 <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>
-                <input type="submit" value="submit" onClick={this.addProduct}></input>
+                <input type="submit" value="submit" onClick={this.modProduct}></input>
                 <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
             </div> 
         )
