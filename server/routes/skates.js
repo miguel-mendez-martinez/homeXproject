@@ -1,5 +1,6 @@
 const router = require(`express`).Router()
 const skatesModel = require(`../models/skates`)
+const jwt = require('jsonwebtoken')
 
 router.get('/DisplayAllSkates', (req, res) => 
 {
@@ -8,6 +9,20 @@ router.get('/DisplayAllSkates', (req, res) =>
         if(!error){
             res.json(data)
         }
+    })
+})
+
+router.post('/DisplayAllSkates/validateUser', (req, res) => 
+{
+    //we verify the user and return name, access level and token in order to avoid changes in web from changing the access level in app display oon dev tools
+    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
+
+        if( typeof decodedToken  == 'undefined'){
+            res.json({accessLevel: 0})
+        }else{
+            res.json({accessLevel: decodedToken.accessLevel})
+        }
+        
     })
 })
 

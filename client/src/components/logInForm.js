@@ -7,6 +7,7 @@ import axios from "axios"
 import {SERVER_HOST} from "../config/global_constants"
 
 import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
+import WebHeader from "./WebHeader"
 
 export default class logInForm extends Component 
 {
@@ -67,15 +68,21 @@ export default class logInForm extends Component
 
     render() 
     {   
-        return (           
-            <div className="form-container">
-                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
-                <h2> Users Log In </h2>
-                <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
-                <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
-                <input type="button" className="green-button" value="Log In" onClick={this.logInUser}/>
-                {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
-                <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
+        return (      
+            
+            <div className="web-container">
+
+                <WebHeader/>
+
+                <div className="form-container">
+                    {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
+                    <h2> Users Log In </h2>
+                    <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
+                    <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
+                    <input type="button" className="green-button" value="Log In" onClick={this.logInUser}/>
+                    {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
+                    <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
+                </div>
             </div> 
         )
     }

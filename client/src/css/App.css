@@ -8,7 +8,76 @@ img {
     width: 100px;
 }
 
-.form-container,
+.form-container{
+    max-width: 98%;
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background: #f7f7f7;
+}
+
+.form-container .green-button:disabled{
+    background-color: #dbf99f;
+    color: #fcc;
+}
+
+.form-container input[type=text],
+.form-container input[type=password] {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.form-container .green-button, .form-container .red-button{
+    position: relative;
+    max-width: 300px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.nameContainer,
+.emailContainer,
+.passwordContainer,
+.confirmPasswordContainer
+{
+    position:relative;  
+}
+
+.nameContainer span,
+.emailContainer span,
+.passwordContainer span,
+.confirmPasswordContainer span
+{
+    position:absolute;
+    top:0px;
+    right:2px;
+    font-size: 20px;
+    color:green;
+    vertical-align: middle;  
+    display:none; 
+}
+
+.CorrectTick
+{
+    display:block !important;
+}
+
+.form-container input.error
+{
+    border-color: red;
+}
+
+.form-container div.error
+{
+    color:red;
+    margin-bottom:2em;
+}
+
 .table-container 
 {
   max-width: 700px;
@@ -231,8 +300,8 @@ img {
 input 
 {
 color: black;
-margin-top: 5px;
 padding: 10px;
+border-radius: 5px;
 }
 
 input [type="button"] 
