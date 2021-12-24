@@ -9,6 +9,7 @@ import About from "./components/About"
 import userForm from "./components/userForm.js"
 import logOut from "./components/logOut.js"
 import logInForm from "./components/logInForm.js"
+import addForm from "./components/addForm.js"
 import resetDB from "./components/resetDB.js"
 import LoggedInRoute from "./components/LoggedInRoute"
 
@@ -34,6 +35,7 @@ export default class App extends Component
                     <Route exact path="/userForm" component={userForm}/>
                     <Route exact path="/logInForm" component={logInForm}/>
                     <LoggedInRoute exact path="/logOut" component={logOut}/>
+                    <LoggedInRoute exact path="/addForm" component={addForm}/>
                     <Route exact path="/resetDB" component={resetDB}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/> {/* si es mala la url sale esto */}                           
                 </Switch>

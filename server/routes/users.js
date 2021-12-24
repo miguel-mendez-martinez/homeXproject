@@ -13,6 +13,20 @@ router.get('/Users', (req, res) =>
     })
 })
 
+router.post('/Users/validateUser', (req, res) => 
+{
+    //we verify the user and return name, access level and token in order to avoid changes in web from changing the access level in app display on dev tools
+    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
+
+        if( typeof decodedToken  == 'undefined'){
+            res.json({accessLevel: 0})
+        }else{
+            res.json({accessLevel: decodedToken.accessLevel})
+        }
+        
+    })
+})
+
 router.post(`/Users/resetUsers`, (req,res) => 
 {
     usersModel.deleteMany({}, (error, data) => 
@@ -44,7 +58,6 @@ router.post(`/Users/resetUsers`, (req,res) =>
 
 router.post(`/Users/register/:name/:email/:password`, (req,res) => {
     // If a user with this email does not already exist, then create new user
-    console.log("llegA")
     usersModel.findOne({email:req.params.email}, (uniqueError, uniqueData) => 
     {
         if(uniqueData)

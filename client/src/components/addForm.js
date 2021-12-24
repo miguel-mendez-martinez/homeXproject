@@ -53,7 +53,7 @@ export default class addForm extends Component
                 console.log("Record not added")
             }
         }).catch(err =>{
-            console.log(err.response.data)
+            console.log(err.response) //No se p q con err.response.data me petaba la pagina
         })
     }
  
