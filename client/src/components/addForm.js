@@ -20,6 +20,7 @@ export default class addForm extends Component
             size: 0,
             brand: '',
             price: 0,
+            selectedFiles: false,
             redirect: false
         }
     }
@@ -28,6 +29,10 @@ export default class addForm extends Component
         this.setState({[e.target.name]: e.target.value})
     }
 
+    handleFileChange = (e) => 
+    {
+        this.setState({selectedFiles: e.target.files})
+    }
 
     addProduct = () =>{
 

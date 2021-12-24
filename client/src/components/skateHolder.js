@@ -9,8 +9,10 @@ export default class skateHolder extends Component
         
         this.state = {
             id: this.props.match.params.id,
-            name: this.props.match.params.name,
+            image: this.props.match.params.name,
+            brand: this.props.match.params.brand,
             price: this.props.match.params.price
+            
         }
     }
 
@@ -18,7 +20,7 @@ export default class skateHolder extends Component
     {   
         return (           
             <div className="skate-container">
-                <img src={require(`../images/${this.state.name}.jpg`)} width="100" height="150"/>    
+                <img src={require(`../images/${this.state.image}.jpg`)} width="100" height="150"/>    
             </div> 
         )
     }

@@ -27,7 +27,7 @@ export default class SkateDisplay extends Component
                 console.log( "This page is reloaded" );
                 //when its reloaded, we check user privileges and change them to what should be
                 //this is made in order to bane users from changing the web by changing their level of access
-                if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){
+                if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){ //el + 5 para q no entre pq resetea el accesLevel a 0 
                     console.log("validating user")
                     axios.defaults.withCredentials = true // needed for sessions to work //creo q se puede borrar pq es solo si estas usando sesiones en el server side
                     axios.post(`${SERVER_HOST}/Users/validateUser`, {headers:{"authorization":localStorage.token}})
