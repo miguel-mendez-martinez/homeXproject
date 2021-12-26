@@ -14,6 +14,7 @@ import resetDB from "./components/resetDB.js"
 import LoggedInRoute from "./components/LoggedInRoute"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
+import Categories from "./components/Categories"
 
 if (typeof localStorage.accessLevel === "undefined")
     {
@@ -37,6 +38,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/logOut" component={logOut}/>
                     <LoggedInRoute exact path="/addForm" component={addForm}/>
                     <Route exact path="/resetDB" component={resetDB}/>
+                    <Route exact path="/categories" component={Categories}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/> {/* si es mala la url sale esto */}                           
                 </Switch>
             </BrowserRouter>

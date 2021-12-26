@@ -20,7 +20,6 @@ export default class SkateDisplay extends Component
    
     componentDidMount() 
     { 
-        axios.defaults.withCredentials = true // needed for sessions to work
         axios.delete(`${SERVER_HOST}/DisplayAllCars/${this.state.id}`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {

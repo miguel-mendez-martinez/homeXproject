@@ -29,8 +29,6 @@ export default class modForm extends Component
 
     modProduct = e =>{
 
-        axios.defaults.withCredentials = true
-
         const product = {size: this.state.size, brand: this.state.brand, price: this.state.price } //No se si dará problemas no pasar el type al hacer el $set en el route
         axios.put(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`, product, {headers:{"authorization":localStorage.token}})
         .then(res => 

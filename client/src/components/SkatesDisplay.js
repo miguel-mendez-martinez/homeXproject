@@ -24,17 +24,19 @@ export default class SkateDisplay extends Component
 
         if (window.performance) {
             if (performance.navigation.type === 1) {
-                console.log( "This page is reloaded" );
                 //when its reloaded, we check user privileges and change them to what should be
                 //this is made in order to bane users from changing the web by changing their level of access
                 if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){ //el + 5 para q no entre pq resetea el accesLevel a 0 
-                    console.log("validating user")
-                    axios.defaults.withCredentials = true // needed for sessions to work //creo q se puede borrar pq es solo si estas usando sesiones en el server side
-                    axios.post(`${SERVER_HOST}/Users/validateUser`, {headers:{"authorization":localStorage.token}})
+                    console.log("validating user") //creo q se puede borrar pq es solo si estas usando sesiones en el server side
+
+                    axios.defaults.headers.common['Authorization'] = localStorage.token;
+
+                    axios.post(`${SERVER_HOST}/Users/validateUser`, { headers: { 'Authorization': `${localStorage.token}` } })
                     .then(res => 
                     {
                     if(res.data)
                         {
+                            console.log(res.data)
                             localStorage.accessLevel = res.data.accessLevel
                             console.log("Token and user verified and correctly set.")              
                         }
@@ -43,8 +45,6 @@ export default class SkateDisplay extends Component
                             console.log("Error, token didnt reach.")
                         }
                     })  
-                }else{
-                    console.log("not validating user")
                 }
             }else {
                 console.log("This page is not reloaded");
@@ -56,7 +56,11 @@ export default class SkateDisplay extends Component
 
     componentDidMount() 
     { 
-        axios.defaults.withCredentials = true // needed for sessions to work // de nuevo se puede quitar creo
+        if(typeof this.props.location.state != 'undefined'){
+            console.log(this.props.location.state.id)
+        }
+        
+
         axios.get(`${SERVER_HOST}/DisplayAllSkates`)
         .then(res => 
         {
@@ -79,10 +83,8 @@ export default class SkateDisplay extends Component
             <div className="web-container">
                 <WebHeader/>
                 <div className="content-container">
-                    <div className="category-container">
-                        <h2>Categories here</h2>
-                        {(localStorage.accessLevel == ACCESS_LEVEL_ADMIN) ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
-                    </div>
+                    
+                    {(localStorage.accessLevel === ACCESS_LEVEL_ADMIN) ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
 
                     <div className="grid-container">
                         <h1>Products Here</h1>

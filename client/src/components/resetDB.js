@@ -21,7 +21,6 @@ export default class resetDB extends Component
    
     componentDidMount() 
     { 
-        axios.defaults.withCredentials = true
 
         axios.post(`${SERVER_HOST}/Users/resetUsers`)
         .then(res => 

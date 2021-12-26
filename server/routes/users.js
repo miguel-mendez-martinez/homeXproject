@@ -15,12 +15,15 @@ router.get('/Users', (req, res) =>
 
 router.post('/Users/validateUser', (req, res) => 
 {
+    console.log(req.headers.Authorization)
     //we verify the user and return name, access level and token in order to avoid changes in web from changing the access level in app display on dev tools
-    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
+    jwt.verify(req.headers.Authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
 
         if( typeof decodedToken  == 'undefined'){
+            console.log(decodedToken)
             res.json({accessLevel: 0})
         }else{
+            console.log(decodedToken.accessLevel)
             res.json({accessLevel: decodedToken.accessLevel})
         }
         

@@ -22,9 +22,6 @@ export default class LogOut extends Component
    
     componentDidMount() 
     { 
-
-        axios.defaults.withCredentials = true
-
         axios.post(`${SERVER_HOST}/Users/logout`)
         .then(res => 
         {     

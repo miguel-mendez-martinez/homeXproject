@@ -189,6 +189,16 @@ img {
     cursor:pointer;
     transition: 0.5s;
     opacity: 0;
+} 
+
+.navigation ul li span input{
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none;
+    text-decoration: none;
+    cursor:pointer;
+    font-weight: bold;
 }
 
 .navigation ul li:hover span .navigation-item{
@@ -201,21 +211,10 @@ img {
     display: flex;
 }
 
-.category-container
-{
-    width: 15%;
-    margin: 0 auto;
-    border:thin solid #aaaaaa;
-    padding: 20px;
-    margin-left: 1%;
-    border-radius: 3px;
-    background: white;
-}
-
+.category-container,
 .grid-container
 {
-    width: 83%;
-    height: 1500px;
+    width: 98%;
     margin: 0 auto;
     border:thin solid #aaaaaa;
     padding: 20px;

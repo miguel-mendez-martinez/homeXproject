@@ -4,11 +4,21 @@ import {ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 import { HomeOutline } from 'react-ionicons'
 import { SkullOutline } from 'react-ionicons'
+import { ReorderThreeOutline } from 'react-ionicons'
 
 import {Link} from "react-router-dom"
 
 export default class WebHeader extends Component 
 {
+
+    constructor(props) 
+    {
+        super(props)
+        
+        this.state = {
+            showCategories: false
+        }
+    }
     render() 
     {   
         return ( 
@@ -34,6 +44,12 @@ export default class WebHeader extends Component
                                 <span>
                                     <HomeOutline className="navigation-icon" color={'#00000'} title={"home"} height="25px" width="25px"/>
                                     <Link className="navigation-item" to="/DisplayAllSkates">Home </Link>
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    <ReorderThreeOutline className="navigation-icon" color={'#00000'}  title={"about"} height="25px" width="25px"/>
+                                    <Link className="navigation-item" to="/categories">Products </Link>
                                 </span>
                             </li>
                             <li>
