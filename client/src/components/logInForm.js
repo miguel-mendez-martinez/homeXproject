@@ -34,30 +34,19 @@ export default class logInForm extends Component
         axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {     
-            // default if not logged in
+            console.log("User logged in")
+                    
+            localStorage.name = res.data.name
+            localStorage.accessLevel = res.data.accessLevel
+            localStorage.token = res.data.token
+            
+            this.setState({redirect:true})
+        }).catch(err=>
+            {
             localStorage.name = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST 
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else // user successfully logged in
-                { 
-                    console.log("User logged in")
-                    
-                    localStorage.name = res.data.name
-                    localStorage.accessLevel = res.data.accessLevel
-                    localStorage.token = res.data.token
-                    
-                    this.setState({redirect:true})
-                }        
-            }
-            else
-            {
-                console.log("Login failed")
-            }
+            console.log(err)
+            this.setState({redirect:false})
         })
     }
 
@@ -77,6 +66,7 @@ export default class logInForm extends Component
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                     <h2> Users Log In </h2>
+
                     <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                     <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
                     <input type="button" className="green-button" value="Log In" onClick={this.logInUser}/>

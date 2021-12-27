@@ -4,6 +4,7 @@ import {SERVER_HOST} from "../config/global_constants"
 import { Link } from "react-router-dom"
 
 import axios from "axios"
+import WebHeader from "./WebHeader"
 
 
 
@@ -78,15 +79,22 @@ export default class modForm extends Component
  
     render() 
     {   
-        return (           
-            <div className="form-container">
-                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
-                <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
-                <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
-                <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>
-                <input type="submit" value="submit" onClick={this.modProduct}></input>
-                <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
-            </div> 
+        return (  
+            
+            <div className="web-container">
+
+                <WebHeader/>
+
+                <div className="form-container">
+                    {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
+                    <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
+                    <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
+                    <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>
+                    <input type="submit" value="submit" onClick={this.modProduct}></input>
+                    <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
+                </div> 
+            </div>
+            
         )
     }
 }

@@ -14,6 +14,7 @@ import modForm from "./components/modForm.js"
 import deleteForm from "./components/deleteForm.js"
 import resetDB from "./components/resetDB.js"
 import LoggedInRoute from "./components/LoggedInRoute"
+import Home from "./components/Home"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import Categories from "./components/Categories"
@@ -32,7 +33,7 @@ export default class App extends Component
         return (
             <BrowserRouter>
                 <Switch>                 
-                    <Route exact path="/" component={SkatesDisplay} />
+                    <Route exact path="/" component={Categories} />
                     <Route exact path="/DisplayAllSkates" component={SkatesDisplay}/> 
                     <Route exact path="/about" component={About}/>
                     <Route exact path="/userForm" component={userForm}/>
@@ -43,6 +44,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/modForm" component={modForm}/>
                     <Route exact path="/resetDB" component={resetDB}/>
                     <Route exact path="/categories" component={Categories}/>
+                    <Route exact path="/Home" component={Home}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/> {/* si es mala la url sale esto */}                           
                 </Switch>
             </BrowserRouter>

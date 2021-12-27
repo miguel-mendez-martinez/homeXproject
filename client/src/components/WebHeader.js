@@ -35,7 +35,7 @@ export default class WebHeader extends Component
                             {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="blue-button" to="/logInForm"> Login </Link> : null}
                             {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="green-button" to="/userForm"> Register </Link> : null}
                             {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? <Link className="red-button" to="/logOut"> LogOut </Link> : null }
-                            {<Link className="red-button" to="/resetDB"> Reset DB </Link> }
+                            {/* {<Link className="red-button" to="/resetDB"> Reset DB </Link> } */}
                         </div>
                     </div>
                     <div className="navigation">
@@ -43,7 +43,7 @@ export default class WebHeader extends Component
                             <li>
                                 <span>
                                     <HomeOutline className="navigation-icon" color={'#00000'} title={"home"} height="25px" width="25px"/>
-                                    <Link className="navigation-item" to="/DisplayAllSkates">Home </Link>
+                                    <Link className="navigation-item" to='/Home'> Home </Link>
                                 </span>
                             </li>
                             <li>

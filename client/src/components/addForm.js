@@ -4,6 +4,7 @@ import {SERVER_HOST} from "../config/global_constants"
 import { Link } from "react-router-dom"
 
 import axios from "axios"
+import WebHeader from "./WebHeader"
 
 
 
@@ -76,17 +77,21 @@ export default class addForm extends Component
  
     render() 
     {   
-        return (           
-            <div className="form-container">
-                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
-                <label>Type:<input type="text" name="type" onChange={this.handleChange}/></label><br/>
-                <label>Size:<input type="text" name="size" onChange={this.handleChange}/></label><br/>
-                <label>Brand:<input type="text" name="brand" onChange={this.handleChange}/></label><br/>
-                <label>Price:<input type="text" name="price" onChange={this.handleChange}/></label><br/>
-                <input type = "file" multiple onChange = {this.handleFileChange}/><br/>
-                <input type="submit" value="submit" onClick={this.addProduct}></input>
-                <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
-            </div> 
+        return (   
+            
+            <div className="web-container">
+                <WebHeader/>
+                <div className="form-container">
+                    {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
+                    <label>Type:<input type="text" name="type" onChange={this.handleChange}/></label><br/>
+                    <label>Size:<input type="text" name="size" onChange={this.handleChange}/></label><br/>
+                    <label>Brand:<input type="text" name="brand" onChange={this.handleChange}/></label><br/>
+                    <label>Price:<input type="text" name="price" onChange={this.handleChange}/></label><br/>
+                    <input type = "file" multiple onChange = {this.handleFileChange}/><br/>
+                    <input type="submit" value="submit" onClick={this.addProduct}></input>
+                    <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
+                </div> 
+            </div>
         )
     }
 }

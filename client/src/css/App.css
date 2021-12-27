@@ -1,5 +1,6 @@
-.container {
-  padding-top: 10px;
+
+body{
+    background-color: #D39DD1;
 }
 
 img {
@@ -223,6 +224,69 @@ img {
     background: white;
 }
 
+.category-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-container ul{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.category-container ul li{
+    padding: auto;
+    margin-bottom: 0px;
+    list-style: none;
+    width: 100%;
+    z-index: 1;
+}
+
+.category-container ul li span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.category-container ul li span .iconoCat{
+    border-radius: 0%;
+    display: block;
+    text-align: center;
+    transition: 0.5s;
+
+    width: 75%;
+    height: 100%;
+}
+
+.category-container ul li span .botonCat{
+    padding: 0;
+    position: absolute; 
+    background: none;
+    color: magenta;
+    border-radius: 0.2rem;
+    border: none;
+    font-size: 3rem;
+    line-height: normal;
+    text-decoration: none;
+    cursor:pointer;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.category-container ul li:hover span .botonCat{
+    opacity: 1;
+    transform: translateY(10px);
+}
+
 .form-container
 {
     border:thin solid #aaaaaa;
@@ -231,12 +295,6 @@ img {
     margin-right: auto;
     border-radius: 5px;
     background: #f7f7f7;
-}
-
-
-.logout
-{
-    margin-bottom:30px;
 }
 
 /* link buttons */
@@ -352,5 +410,24 @@ padding: 10px;
 .add-new-car
 {
     margin-top:1em;
+}
+
+
+@media only screen and (max-device-width: 400px) {
+    .category-container ul{
+        display: flex;
+        flex-direction: column;
+    } 
+
+    .category-container ul li span .iconoCat{
+
+        height: 300px;
+        width: 100%;
+    }
+
+    .category-container ul li span .botonCat{
+        opacity: 1;
+        font-size: 1rem;
+    }
 }
 /*end of table of cars */

@@ -22,8 +22,12 @@ export default class SkateDisplay extends Component
             redirectAddForm: false
         }
 
-        if (window.performance) {
+        /* if (window.performance) {
             if (performance.navigation.type === 1) {
+                console.log("this page is reloaded")
+                if(typeof this.props.location.state != 'undefined'){
+                    this.props.location.state.id = ""
+                }
                 //when its reloaded, we check user privileges and change them to what should be
                 //this is made in order to bane users from changing the web by changing their level of access
                 if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){ //el + 5 para q no entre pq resetea el accesLevel a 0 
@@ -49,31 +53,53 @@ export default class SkateDisplay extends Component
             }else {
                 console.log("This page is not reloaded");
             }
-                    
-            }
+                   
+            }*/
     }
 
 
     componentDidMount() 
     { 
-        if(typeof this.props.location.state != 'undefined'){
-            console.log(this.props.location.state.id)
-        }
-        
 
-        axios.get(`${SERVER_HOST}/DisplayAllSkates`)
-        .then(res => 
-        {
-            if(res.data)
+        if(typeof this.props.location.state != 'undefined'){
+
+            //aqui se hace un get con categoria=lo que viene del redirect
+
+            //un get normal y corriente
+            axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}`)
+            .then(res => 
+            {
+                if(res.data)
                     {
                         this.setState({products: res.data}) 
-                        this.setState({mounted: true})                   
+                        this.setState({mounted: true})       
+                        console.log(res.data)             
                     }
                     else
                     {
                         console.log("Records not found")
                     }
-        })                     
+            })
+
+        }else{
+            //un get normal y corriente
+            axios.get(`${SERVER_HOST}/DisplayAllSkates`)
+            .then(res => 
+            {
+                if(res.data)
+                    {
+                        this.setState({products: res.data}) 
+                        this.setState({mounted: true})   
+                        console.log(res.data)                  
+                    }
+                    else
+                    {
+                        console.log("Records not found")
+                    }
+            }) 
+        }      
+        
+        
     }
    
  
@@ -83,11 +109,9 @@ export default class SkateDisplay extends Component
             <div className="web-container">
                 <WebHeader/>
                 <div className="content-container">
-                    
-                    <Link className="blue-button" to="/addForm"> Add Product </Link>
-
                     <div className="grid-container">
                         <h1>Products Here</h1>
+                        {localStorage.accessLevel === ACCESS_LEVEL_ADMIN ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
                     </div>     
                 </div>
                 

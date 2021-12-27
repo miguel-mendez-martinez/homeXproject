@@ -2,6 +2,7 @@ const router = require(`express`).Router()
 const usersModel = require(`../models/users`)
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+var createError = require('http-errors')
 
 router.get('/Users', (req, res) => 
 {
@@ -96,9 +97,17 @@ router.post(`/Users/login/:email/:password`, (req,res) =>
     {
         if(data)
         {
+            console.log(req.params.password, data.password)
             bcrypt.compare(req.params.password, data.password, (err, result) =>
             {
-                if(result)
+                if(!result){
+                    res.json(createError(400, `Password or Email are incorrect, please try again.`))
+                }else{
+                    const token = jwt.sign({email:data.email, accessLevel:data.accessLevel}, process.env.JWT_PRIVATE_KEY, {algorithm:'HS256', expiresIn:process.env.JWT_EXPIRY})     
+           
+                    res.json({name: data.name, accessLevel:data.accessLevel, token:token})
+                }
+               /*  if(result)
                 {
                     const token = jwt.sign({email:data.email, accessLevel:data.accessLevel}, process.env.JWT_PRIVATE_KEY, {algorithm:'HS256', expiresIn:process.env.JWT_EXPIRY})     
            
@@ -107,13 +116,13 @@ router.post(`/Users/login/:email/:password`, (req,res) =>
                 else
                 {
                     res.json({errorMessage:`User is not logged in`})
-                }
+                } */
             })
         }
         else
         {
             console.log("not found in db")
-            res.json({errorMessage:`User is not logged in`})
+            res.json(createError(400, `Password or Email are incorrect, please try again.`))
         } 
     })
 })

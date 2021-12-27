@@ -15,6 +15,16 @@ router.get('/DisplayAllSkates', (req, res) =>
     })
 })
 
+router.get('/DisplayAllSkates/:category', (req, res) => 
+{
+    skatesModel.find({type: req.params.category}, (error, data) =>
+    {
+        if(!error){
+            res.json(data)
+        }
+    })
+})
+
 router.get(`/DisplayAllSkates/:id`, (req, res) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
     {
