@@ -16,11 +16,34 @@ export default class modForm extends Component
         super(props)
         
         this.state = {
-            size: this.props.match.params.size,
-            brand: this.props.match.params.brand,
-            price: this.props.match.params.price,
+            size: 0,
+            brand: '',
+            price: 0,
             redirect: false
         }
+    }
+
+    componentDidMount(){
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`)
+        .then(res => {
+            if(res.data)
+            {
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {   
+                    this.setState({size: res.data.size})
+                    this.setState({brand: res.data.brand})
+                    this.setState({price: res.data.price})
+                } 
+            }
+            else
+            {
+                console.log("Record not added")
+            }
+        })
     }
 
     handleChange = e =>{

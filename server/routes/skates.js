@@ -2,6 +2,9 @@ const router = require(`express`).Router()
 const skatesModel = require(`../models/skates`)
 const jwt = require('jsonwebtoken')
 
+const multer  = require('multer')
+var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
+
 router.get('/DisplayAllSkates', (req, res) => 
 {
     skatesModel.find({}, (error, data) =>
@@ -12,10 +15,58 @@ router.get('/DisplayAllSkates', (req, res) =>
     })
 })
 
+router.get(`/DisplayAllSkates/:id`, (req, res) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    {
+        if (err) 
+        { 
+            res.json({errorMessage:`User is not logged in`})
+        }
+        else
+        {
+            carsModel.findById(req.params.id, (error, data) => 
+            {
+                if(error)
+                    res.json({errorMessage: `Product not found`})
+                else
+                    res.json(data)
+            })
+        }
+    })
+})
 
-router.post('/DisplayAllSkates/:type/:size/:brand/:price', (req, res) => 
+//Return a photo
+router.get(`/DisplayAllSkates/photo/:filename`, (req, res) => 
+{   
+    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, fileData) => 
+        {        
+        if(fileData)
+        {  
+            res.json({image:fileData})                           
+        }   
+        else
+        {
+            res.json({image:null})
+        }
+    })             
+})
+
+
+router.post('/DisplayAllSkates', upload.array("productPhotos", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), (req, res) => 
 {
-    skatesModel.create({type: req.params.type, size: parseFloat(req.params.size), brand: req.params.brand, price: parseInt(req.params.price)}, (error, data) =>
+    let productDetails = new Object()
+    productDetails.type = req.body.type
+    productDetails.size = req.body.size
+    productDetails.brand = req.body.brand
+    productDetails.price = req.body.price
+    productDetails.photos = []
+
+    req.files.map((file, index) =>
+    {
+        productDetails.photos[index] = {filename:`${file.filename}`}
+    })
+    
+    skatesModel.create(productDetails, (error, data) =>
     {
         if(error){
             res.json({errorMessage: `${error}`})

@@ -17,7 +17,7 @@ export default class SkateDisplay extends Component
         super(props)
         
         this.state = {
-            skates:[],
+            products:[],//Aqui se cargarian las ids de los productos
             mounted: false,
             redirectAddForm: false
         }
@@ -27,7 +27,7 @@ export default class SkateDisplay extends Component
                 //when its reloaded, we check user privileges and change them to what should be
                 //this is made in order to bane users from changing the web by changing their level of access
                 if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){ //el + 5 para q no entre pq resetea el accesLevel a 0 
-                    console.log("validating user") //creo q se puede borrar pq es solo si estas usando sesiones en el server side
+                    console.log("validating user")
 
                     axios.defaults.headers.common['Authorization'] = localStorage.token;
 
@@ -66,7 +66,7 @@ export default class SkateDisplay extends Component
         {
             if(res.data)
                     {
-                        this.setState({skates: res.data}) 
+                        this.setState({products: res.data}) 
                         this.setState({mounted: true})                   
                     }
                     else
@@ -84,7 +84,7 @@ export default class SkateDisplay extends Component
                 <WebHeader/>
                 <div className="content-container">
                     
-                    {(localStorage.accessLevel === ACCESS_LEVEL_ADMIN) ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                    <Link className="blue-button" to="/addForm"> Add Product </Link>
 
                     <div className="grid-container">
                         <h1>Products Here</h1>

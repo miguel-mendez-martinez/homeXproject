@@ -20,7 +20,7 @@ export default class addForm extends Component
             size: 0,
             brand: '',
             price: 0,
-            selectedFiles: false,
+            selectedFiles: null,
             redirect: false
         }
     }
@@ -36,7 +36,21 @@ export default class addForm extends Component
 
     addProduct = () =>{
 
-        axios.post(`${SERVER_HOST}/DisplayAllSkates/${this.state.type}/${this.state.size}/${this.state.brand}/${this.state.price}`, {headers:{"authorization":localStorage.token}})
+        let formData = new FormData()  
+        formData.append("type", this.state.type)
+        formData.append("size", this.state.size)
+        formData.append("brand", this.state.brand)
+        formData.append("price", this.state.price) 
+
+        if(this.state.selectedFiles)
+        {
+            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            {
+                formData.append("productPhotos", this.state.selectedFiles[i])
+            }
+        }
+
+        axios.post(`${SERVER_HOST}/DisplayAllSkates`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
         .then(res => 
         {   
             if(res.data)
@@ -69,6 +83,7 @@ export default class addForm extends Component
                 <label>Size:<input type="text" name="size" onChange={this.handleChange}/></label><br/>
                 <label>Brand:<input type="text" name="brand" onChange={this.handleChange}/></label><br/>
                 <label>Price:<input type="text" name="price" onChange={this.handleChange}/></label><br/>
+                <input type = "file" multiple onChange = {this.handleFileChange}/><br/>
                 <input type="submit" value="submit" onClick={this.addProduct}></input>
                 <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
             </div> 
