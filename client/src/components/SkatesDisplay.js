@@ -111,7 +111,7 @@ export default class SkateDisplay extends Component
                 <div className="content-container">
                     <div className="grid-container">
                         <h1>Products Here</h1>
-                        {localStorage.accessLevel === ACCESS_LEVEL_ADMIN ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                        {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
                     </div>     
                 </div>
                 

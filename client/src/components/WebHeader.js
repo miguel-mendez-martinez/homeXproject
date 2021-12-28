@@ -35,6 +35,7 @@ export default class WebHeader extends Component
                             {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="blue-button" to="/logInForm"> Login </Link> : null}
                             {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="green-button" to="/userForm"> Register </Link> : null}
                             {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? <Link className="red-button" to="/logOut"> LogOut </Link> : null }
+                            {/* {localStorage.profilePhoto != "null" ? <img id="profilePhoto" src={`data:base64,${localStorage.profilePhoto}`} alt=""/> : null} */}
                             {/* {<Link className="red-button" to="/resetDB"> Reset DB </Link> } */}
                         </div>
                     </div>

@@ -19,7 +19,8 @@ export default class userForm extends Component
             email: '',
             password: '',
             confirmPassword: '',
-            redirect:false
+            redirect:false,
+            userExitsError: false
         }
 
     }
@@ -114,18 +115,17 @@ export default class userForm extends Component
             axios.post(`${SERVER_HOST}/Users/register/${this.state.name}/${this.state.email}/${this.state.password}`)
             .then(res => 
             {
-                if(res.data.errorMessage)
-                {          
-                    console.log(res.data.errorMessage)
-                }else{
 
-                    localStorage.name = res.data.name
-                    localStorage.accessLevel = res.data.accessLevel
-                    localStorage.token = res.data.token
+                localStorage.name = res.data.name
+                localStorage.accessLevel = res.data.accessLevel
+                localStorage.token = res.data.token
 
-                    this.setState({redirect: !this.state.redirect})
-                    console.log("Record added")
-                }
+                this.setState({redirect: !this.state.redirect})
+                console.log("Record added")
+
+            }).catch((err) => 
+            {
+                this.setState({userExitsError: !this.state.userExitsError})
             })
         }
     }
@@ -170,6 +170,8 @@ export default class userForm extends Component
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                     <h2>User Registration</h2>
+                    {this.state.userExitsError ? <div className="errorDiv"> Error. User Already exists. Please try again.</div> : null}
+
                     <div className="nameContainer">
                         <input className = {formInputsState.name ? "" : "error"}
                             id="name" 
