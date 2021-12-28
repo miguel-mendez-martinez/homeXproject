@@ -64,29 +64,36 @@ router.get(`/DisplayAllSkates/photo/:filename`, (req, res) =>
 
 router.post('/DisplayAllSkates', upload.array("productPhotos", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), (req, res) => 
 {
-    let productDetails = new Object()
-    productDetails.type = req.body.type
-    productDetails.size = req.body.size
-    productDetails.brand = req.body.brand
-    productDetails.price = req.body.price
-    productDetails.photos = []
-
-    req.files.map((file, index) =>
-    {
-        productDetails.photos[index] = {filename:`${file.filename}`}
-    })
-    
-    skatesModel.create(productDetails, (error, data) =>
-    {
-        if(error){
-            res.json({errorMessage: `${error}`})
-            //res.json({errorMessage:`Bad Request`})
+    console.log()
+    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) =>{
+        if(err){
+            res.json({errorMessage: `${err}`})
         }else{
-            res.json(data)
+            let productDetails = new Object()
+            productDetails.type = req.body.type
+            productDetails.size = req.body.size
+            productDetails.brand = req.body.brand
+            productDetails.price = req.body.price
+            productDetails.photos = []
+
+            req.files.map((file, index) =>
+            {
+                productDetails.photos[index] = {filename:`${file.filename}`}
+            })
+            
+            skatesModel.create(productDetails, (error, data) =>
+            {
+                if(error){
+                    res.json({errorMessage: `${error}`})
+                    //res.json({errorMessage:`Bad Request`})
+                }else{
+                    res.json(data)
+                }
+                
+            })
         }
         
     })
-
     
 })
 

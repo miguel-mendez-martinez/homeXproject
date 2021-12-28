@@ -59,13 +59,15 @@ export default class logInForm extends Component
         axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {    
+            console.log(res)
             localStorage.name = res.data.name
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
             
             this.setState({redirect:true})
         }).catch((error)=>
-            {
+        {
+            console.log("error:", error)
             localStorage.name = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST
             this.setState({logInError: true})

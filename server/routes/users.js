@@ -43,7 +43,10 @@ const checkLogIn = (req, res, next) =>
         }
         if(!result)
         {  
-          return next(createError(400, `Error. Email or password are incorrect. Please try again.`))
+            //res.json({error: `Error. Email or password are incorrect. Please try again.`})
+            /* res.status(400).send(`Error. Email or password are incorrect. Please try again.`)  */
+            return next(createError(400, "Error. Email or password are incorrect. Please try again."))
+
         }        
         
         return next()        
