@@ -1,6 +1,12 @@
 import React, {Component} from "react"
+import axios from "axios"
 
-export default class skateHolder extends Component //Cosas sin cambiar del copypaste
+import {Link} from "react-router-dom"
+
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
+import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
+
+export default class SkateHolder extends Component //Cosas sin cambiar del copypaste
 {
 
     constructor(props) 
@@ -8,7 +14,7 @@ export default class skateHolder extends Component //Cosas sin cambiar del copyp
         super(props)
         
         this.state = {  //Ver como qedan los campos
-            id: this.props.match.params.id,
+            id: this.props.skate._id,
             image: null,
             size: 0,
             brand: '',
@@ -19,7 +25,7 @@ export default class skateHolder extends Component //Cosas sin cambiar del copyp
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`)
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.skate._id}`)
         .then(res => {
             if(res.data)
             {            
@@ -29,10 +35,10 @@ export default class skateHolder extends Component //Cosas sin cambiar del copyp
                 }
                 else
                 {           
-                    this.state.image = res.data.photo
-                    this.state.size = res.data.size
-                    this.state.brand = res.data.brand
-                    this.state.price = res.data.price                                                         
+                    this.setState({image: res.data.photo})
+                    this.setState({size: res.data.size})
+                    this.setState({brand: res.data.brand})
+                    this.setState({price: res.data.price})                                                       
                 }   
             }
             else

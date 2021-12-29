@@ -4,10 +4,11 @@ import axios from "axios"
 
 import {Link} from "react-router-dom"
 
-import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
 import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
 import WebHeader from "./WebHeader"
+import SkateHolder from "./SkateHolder"
 
 
 export default class SkateDisplay extends Component 
@@ -111,7 +112,11 @@ export default class SkateDisplay extends Component
                 <div className="content-container">
                     <div className="grid-container">
                         <h1>Products Here</h1>
-                        {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                        {/* this.state.products.forEach((index) =>{ //Lo de _id peta no se p q
+                            <skateHolder key={this.state.products[index]._id} skate={this.state.products[index]}/>
+                        }) */}
+                        {/*<SkateHolder skate={this.state.products[0]}/>*/}
                     </div>     
                 </div>
                 
