@@ -7,7 +7,7 @@ var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 const checkUserLogged = (req, res, next) =>
 {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
     {
         if (err) 
         { 
