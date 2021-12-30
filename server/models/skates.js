@@ -14,7 +14,7 @@ let skateSchema = new mongoose.Schema(
         size: {type: Number},
         brand: {type: String},
         price: {type: Number, validate: function(){return this.price > 0}},
-        photo: [skatePhotosSchema]
+        photos: [skatePhotosSchema]
    },
    {
         collection: `Skates`

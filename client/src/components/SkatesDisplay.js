@@ -4,8 +4,7 @@ import axios from "axios"
 
 import {Link} from "react-router-dom"
 
-import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
-import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
+import { ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
 
 import WebHeader from "./WebHeader"
 import SkateHolder from "./SkateHolder"
@@ -73,8 +72,8 @@ export default class SkateDisplay extends Component
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
-                        this.setState({mounted: true})       
-                        console.log(res.data)             
+                        this.setState({mounted: true})     
+                        console.log(this.state.products)  
                     }
                     else
                     {
@@ -90,8 +89,8 @@ export default class SkateDisplay extends Component
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
-                        this.setState({mounted: true})   
-                        console.log(res.data)                  
+                        this.setState({mounted: true})  
+                        console.log(this.state.products) 
                     }
                     else
                     {
@@ -116,7 +115,7 @@ export default class SkateDisplay extends Component
                         {/* this.state.products.forEach((index) =>{ //Lo de _id peta no se p q
                             <skateHolder key={this.state.products[index]._id} skate={this.state.products[index]}/>
                         }) */}
-                        {/*<SkateHolder skate={this.state.products[0]}/>*/}
+                        {this.state.products[0]? <SkateHolder skate={this.state.products[0] }/> : null}
                     </div>     
                 </div>
                 

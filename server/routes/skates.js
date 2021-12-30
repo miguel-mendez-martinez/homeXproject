@@ -56,6 +56,7 @@ const addProduct = (req, res, next) =>{
     {
         productDetails.photos[index] = {filename:`${file.filename}`}
     })
+    console.log(productDetails)
     
     skatesModel.create(productDetails, (error, data) =>
     {
@@ -63,6 +64,7 @@ const addProduct = (req, res, next) =>{
             res.json({errorMessage: `${error}`})
             //res.json({errorMessage:`Bad Request`})
         }else{
+            console.log(data)
             res.json(data)
         }
         
