@@ -3,7 +3,7 @@ body{
     background-color: #D39DD1;
 }
 
-img {
+.header-container img {
     border-radius: 50%;
     padding: 5px;
     width: 100px;
@@ -297,6 +297,39 @@ img {
     background: #f7f7f7;
 }
 
+.form-container .errorDiv{
+    
+    color: #D8000C;
+    background-color: #FFBABA;
+    width: auto;
+}
+
+.grid-container .buttons-container{
+    padding: 10px;
+    margin: 5px;
+    border: thin solid #aaaaaa;
+}
+
+.grid-container .skates-grid{
+    border: thin solid #aaaaaa;
+    display: flex;
+}
+
+.grid-container .skates-grid .skate {
+    border: thin solid #aaaaaa;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.grid-container .skates-grid .skate .skatePhoto {
+    border-radius: 0px;
+    width: 100px;
+    height: 100px;
+}
+
 /* link buttons */
 .green-button,
 .red-button,
@@ -420,7 +453,6 @@ padding: 10px;
     } 
 
     .category-container ul li span .iconoCat{
-
         height: 300px;
         width: 100%;
     }

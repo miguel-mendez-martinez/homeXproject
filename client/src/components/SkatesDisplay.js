@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 import { ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
 
 import WebHeader from "./WebHeader"
-import SkateHolder from "./SkateHolder"
+import SkateGrid from "./skateGrid"
 
 
 export default class SkateDisplay extends Component 
@@ -21,40 +21,6 @@ export default class SkateDisplay extends Component
             mounted: false,
             redirectAddForm: false
         }
-
-        /* if (window.performance) {
-            if (performance.navigation.type === 1) {
-                console.log("this page is reloaded")
-                if(typeof this.props.location.state != 'undefined'){
-                    this.props.location.state.id = ""
-                }
-                //when its reloaded, we check user privileges and change them to what should be
-                //this is made in order to bane users from changing the web by changing their level of access
-                if(localStorage.accessLevel >= ACCESS_LEVEL_GUEST + 5){ //el + 5 para q no entre pq resetea el accesLevel a 0 
-                    console.log("validating user")
-
-                    axios.defaults.headers.common['Authorization'] = localStorage.token;
-
-                    axios.post(`${SERVER_HOST}/Users/validateUser`, { headers: { 'Authorization': `${localStorage.token}` } })
-                    .then(res => 
-                    {
-                    if(res.data)
-                        {
-                            console.log(res.data)
-                            localStorage.accessLevel = res.data.accessLevel
-                            console.log("Token and user verified and correctly set.")              
-                        }
-                    else
-                        {
-                            console.log("Error, token didnt reach.")
-                        }
-                    })  
-                }
-            }else {
-                console.log("This page is not reloaded");
-            }
-                   
-            }*/
     }
 
 
@@ -110,12 +76,16 @@ export default class SkateDisplay extends Component
                 <WebHeader/>
                 <div className="content-container">
                     <div className="grid-container">
-                        <h1>Products Here</h1>
-                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                        <div className="buttons-container">
+                            {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
+                        </div>
+                        {this.state.mounted ? <SkateGrid skates={this.state.products}/> : null}
+                        
                         {/* this.state.products.forEach((index) =>{ //Lo de _id peta no se p q
                             <skateHolder key={this.state.products[index]._id} skate={this.state.products[index]}/>
                         }) */}
-                        {this.state.products[0]? <SkateHolder skate={this.state.products[0] }/> : null}
+                        
+                        {/* {this.state.products[0] ? this..products.map((product) => <SkateHolder key = {product._id} skate={product}/>) : null}} */}
                     </div>     
                 </div>
                 

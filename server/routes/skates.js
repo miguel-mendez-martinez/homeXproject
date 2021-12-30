@@ -1,6 +1,7 @@
 const router = require(`express`).Router()
 const skatesModel = require(`../models/skates`)
 const jwt = require('jsonwebtoken')
+const fs = require('fs');
 
 const multer  = require('multer')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
@@ -61,6 +62,7 @@ const addProduct = (req, res, next) =>{
     skatesModel.create(productDetails, (error, data) =>
     {
         if(error){
+            console.log(`Error en la creacion: ${error}`)
             res.json({errorMessage: `${error}`})
             //res.json({errorMessage:`Bad Request`})
         }else{
