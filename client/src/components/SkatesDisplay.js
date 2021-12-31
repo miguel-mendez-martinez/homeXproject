@@ -76,9 +76,11 @@ export default class SkateDisplay extends Component
                 <WebHeader/>
                 <div className="content-container">
                     <div className="grid-container">
-                        <div className="buttons-container">
-                            {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
-                        </div>
+                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                            <div className="buttons-container">
+                                <Link className="blue-button" to="/addForm"> Add Product </Link>
+                            </div>
+                        : null}
                         {this.state.mounted ? <SkateGrid skates={this.state.products}/> : null}
                         
                         {/* this.state.products.forEach((index) =>{ //Lo de _id peta no se p q

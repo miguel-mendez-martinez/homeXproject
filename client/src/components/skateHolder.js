@@ -12,11 +12,12 @@ export default class SkateHolder extends Component
 
         
         this.state = {  //Ver como qedan los campos
-            /* id: this.props.skate._id,
+            id: this.props.skate._id,
             photo: this.props.skate.photo,
             size: this.props.skate.size,
             brand: this.props.skate.brand,
-            price: this.props.skate.price */
+            price: this.props.skate.price,
+            type: this.props.skate.type,
             picture: '',
             mounted: false
         }
@@ -53,10 +54,13 @@ export default class SkateHolder extends Component
     {
         return (
             <div className="skate">
+                <div className="productType">
+                    {this.state.type}
+                </div>
                 {/* this.props.skate.photo.forEach(photo => <img key={photo.filename} id={photo.filename} alt=""/>) */}
                 {this.state.mounted ? <img id={this.state.picture} className="skatePhoto" src={`data:;base64,${this.state.picture}`} alt=""/> : null}
                 <div className="skateInfo">
-                    Hola2
+                    {this.state.brand} <br/> {this.state.price}
                 </div>
             </div>        
         )

@@ -83,7 +83,16 @@ export default class addForm extends Component
                 <WebHeader/>
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
-                    <label>Type:<input type="text" name="type" onChange={this.handleChange}/></label><br/>
+                    <label>
+                        Type:{/* <input type="text" name="type" onChange={this.handleChange}/> */}
+                        <div className="customSelect">
+                            <select name="type" onChange={this.handleChange}>
+                                <option value="Deck">Deck</option>
+                                <option value="Trucks">Trucks</option>
+                                <option value="Wheels">Wheels</option>
+                            </select>
+                        </div>
+                        </label><br/>
                     <label>Size:<input type="text" name="size" onChange={this.handleChange}/></label><br/>
                     <label>Brand:<input type="text" name="brand" onChange={this.handleChange}/></label><br/>
                     <label>Price:<input type="text" name="price" onChange={this.handleChange}/></label><br/>

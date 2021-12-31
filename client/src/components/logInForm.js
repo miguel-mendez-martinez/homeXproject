@@ -20,7 +20,8 @@ export default class logInForm extends Component
             email: '',
             password: '',
             redirect:false,
-            logInError: false
+            logInError: false,
+            errorMessage: ''
         }
 
     }
@@ -59,7 +60,6 @@ export default class logInForm extends Component
         axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {    
-            console.log(res)
             localStorage.name = res.data.name
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
@@ -67,10 +67,10 @@ export default class logInForm extends Component
             this.setState({redirect:true})
         }).catch((error)=>
         {
-            console.log("error:", error)
+            console.log("error:", error.response.data)
             localStorage.name = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST
-            this.setState({logInError: true})
+            this.setState({logInError: true, errorMessage: error.response.data})
         })
     }
 
@@ -94,7 +94,7 @@ export default class logInForm extends Component
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                     <h2> Users Log In </h2>
-                    {this.state.logInError ? <div className="errorDiv"> Error. Email or password are icnorrect. Please try again.</div> : null}
+                    {this.state.logInError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
                     <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                     <input id="password" type="password" name="password" placeholder="Password" onChange={this.handleChange}/><br/>
                     <input type="button" className="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>

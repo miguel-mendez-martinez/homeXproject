@@ -20,7 +20,8 @@ export default class userForm extends Component
             password: '',
             confirmPassword: '',
             redirect:false,
-            userExitsError: false
+            userExitsError: false,
+            errorMessage: ''
         }
 
     }
@@ -125,7 +126,7 @@ export default class userForm extends Component
 
             }).catch((err) => 
             {
-                this.setState({userExitsError: !this.state.userExitsError})
+                this.setState({userExitsError: !this.state.userExitsError, errorMessage: err.response.data})
             })
         }
     }
@@ -170,7 +171,7 @@ export default class userForm extends Component
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                     <h2>User Registration</h2>
-                    {this.state.userExitsError ? <div className="errorDiv"> Error. User Already exists. Please try again.</div> : null}
+                    {this.state.userExitsError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
 
                     <div className="nameContainer">
                         <input className = {formInputsState.name ? "" : "error"}

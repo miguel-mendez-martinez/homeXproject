@@ -1,7 +1,7 @@
 const mongoose = require(`mongoose`)
 
 
-const types = "deck,truck,wheels".split(",")
+const types = "Deck,Trucks,Wheels".split(",")
 
 let skatePhotosSchema = new mongoose.Schema(
      {
