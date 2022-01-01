@@ -61,7 +61,9 @@ export default class SkateHolder extends Component
                     {productInfo}
                 </div>
                 {/* this.props.skate.photo.forEach(photo => <img key={photo.filename} id={photo.filename} alt=""/>) */}
-                {this.state.mounted ? <img id={this.state.picture} className="skatePhoto" src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                <div className="skatePhoto">
+                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                </div>
                 <div className="productPrice">
                     {productPrice}
                 </div>
