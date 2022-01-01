@@ -76,6 +76,7 @@ export default class SkateDisplay extends Component
                 <WebHeader/>
                 <div className="content-container">
                     <div className="grid-container">
+                        <h1>Products</h1>
                         {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
                             <div className="buttons-container">
                                 <Link className="blue-button" to="/addForm"> Add Product </Link>

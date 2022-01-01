@@ -52,15 +52,18 @@ export default class SkateHolder extends Component
     
     render() 
     {
+
+        let productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
+        let productPrice = `${this.state.price}€`
         return (
             <div className="skate">
-                <div className="productType">
-                    {this.state.type}
+                <div className="productName">
+                    {productInfo}
                 </div>
                 {/* this.props.skate.photo.forEach(photo => <img key={photo.filename} id={photo.filename} alt=""/>) */}
                 {this.state.mounted ? <img id={this.state.picture} className="skatePhoto" src={`data:;base64,${this.state.picture}`} alt=""/> : null}
-                <div className="skateInfo">
-                    {this.state.brand} <br/> {this.state.price}
+                <div className="productPrice">
+                    {productPrice}
                 </div>
             </div>        
         )

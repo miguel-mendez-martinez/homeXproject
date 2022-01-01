@@ -6,9 +6,6 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import WebHeader from "./WebHeader"
 
-
-
-
 export default class addForm extends Component 
 {
 
@@ -86,7 +83,7 @@ export default class addForm extends Component
                     <label>
                         Type:{/* <input type="text" name="type" onChange={this.handleChange}/> */}
                         <div className="customSelect">
-                            <select name="type" onChange={this.handleChange}>
+                            <select name="type" defaultValue="Deck" onChange={this.handleChange}>
                                 <option value="Deck">Deck</option>
                                 <option value="Trucks">Trucks</option>
                                 <option value="Wheels">Wheels</option>

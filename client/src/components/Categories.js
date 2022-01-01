@@ -47,9 +47,9 @@ export default class Categories extends Component
                 <WebHeader />
                 
                 <div className="category-container">
-                    {this.state.redirectSkates ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'deck' } }}/> : null}
-                    {this.state.redirectEjes ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'truck' } }}/> : null}
-                    {this.state.redirectRuedas ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'wheels' } }}/> : null}
+                    {this.state.redirectSkates ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'Deck' } }}/> : null}
+                    {this.state.redirectEjes ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'Trucks' } }}/> : null}
+                    {this.state.redirectRuedas ? <Redirect to={{ pathname: '/displayAllSkates', state: { id: 'Wheels' } }}/> : null}
                     {/* La cuestion aqui es sacar 3 imagenes, una de ejes, otra de skates y otra de ruedas, cada una llevaria a la zona de los productos de estos, es decir la pagina inicial pero con una consulta poniendo tipo=tipo, y el boton de home volvera todo a la normalidad */}
                     <ul>
                         <li>
