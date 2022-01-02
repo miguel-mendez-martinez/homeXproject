@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import axios from "axios"
+import {Link} from "react-router-dom"
 
-import {SERVER_HOST} from "../config/global_constants"
+import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 export default class SkateHolder extends Component 
 {
@@ -11,7 +12,7 @@ export default class SkateHolder extends Component
         super(props)
 
         
-        this.state = {  //Ver como qedan los campos
+        this.state = { 
             id: this.props.skate._id,
             photo: this.props.skate.photo,
             size: this.props.skate.size,
@@ -66,6 +67,12 @@ export default class SkateHolder extends Component
                 </div>
                 <div className="productPrice">
                     {productPrice}
+                    {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                            <div className="buttons-container">
+                                <Link className="blue-button" to={`/modForm/${this.state.id}`}> Modify </Link>
+
+                            </div>
+                        : null}
                 </div>
             </div>        
         )

@@ -17,9 +17,11 @@ export default class modForm extends Component
         super(props)
         
         this.state = {
+            type:'',
             size: 0,
             brand: '',
             price: 0,
+            mounted: false,
             redirect: false
         }
     }
@@ -35,9 +37,11 @@ export default class modForm extends Component
                 }
                 else
                 {   
+                    this.setState({type: res.data.type})
                     this.setState({size: res.data.size})
                     this.setState({brand: res.data.brand})
                     this.setState({price: res.data.price})
+                    this.setState({mounted: true})
                 } 
             }
             else
@@ -53,7 +57,7 @@ export default class modForm extends Component
 
     modProduct = e =>{
 
-        const product = {size: this.state.size, brand: this.state.brand, price: this.state.price } //No se si dará problemas no pasar el type al hacer el $set en el route
+        const product = {type: this.state.type, size: this.state.size, brand: this.state.brand, price: this.state.price } 
         axios.put(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`, product, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {   
@@ -87,6 +91,16 @@ export default class modForm extends Component
 
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
+                    <label>
+                        Type:
+                        <div className="customSelect">
+                            <select name="type" defaultValue="Deck" onChange={this.handleChange}>
+                                <option value="Deck">Deck</option>
+                                <option value="Trucks">Trucks</option>
+                                <option value="Wheels">Wheels</option>
+                            </select>
+                        </div>
+                        </label><br/>
                     <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
                     <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
                     <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>

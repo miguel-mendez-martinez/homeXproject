@@ -41,7 +41,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/logOut" component={logOut}/>
                     <LoggedInRoute exact path="/addForm" component={addForm}/>
                     <LoggedInRoute exact path="/deleteForm" component={deleteForm}/>
-                    <LoggedInRoute exact path="/modForm" component={modForm}/>
+                    <LoggedInRoute exact path="/modForm/:id" component={modForm}/>
                     <Route exact path="/resetDB" component={resetDB}/>
                     <Route exact path="/categories" component={Categories}/>
                     <Route exact path="/Home" component={Home}/>
