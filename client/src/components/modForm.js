@@ -15,6 +15,7 @@ export default class modForm extends Component
     constructor(props) 
     {
         super(props)
+
         
         this.state = {
             type:'',
@@ -27,7 +28,7 @@ export default class modForm extends Component
     }
 
     componentDidMount(){
-        axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`)
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/get/${this.props.match.params.id}`, {headers:{"authorization":localStorage.token}})
         .then(res => {
             if(res.data)
             {
@@ -42,6 +43,7 @@ export default class modForm extends Component
                     this.setState({brand: res.data.brand})
                     this.setState({price: res.data.price})
                     this.setState({mounted: true})
+                    console.log(this.state)
                 } 
             }
             else

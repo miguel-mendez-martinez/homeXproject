@@ -36,7 +36,7 @@ const checkIfAdmin = (req, res, next) =>
 }
 
 const findById = (req, res, next) =>{
-    carsModel.findById(req.params.id, (error, data) => 
+    skatesModel.findById(req.params.id, (error, data) => 
     {
         if(error)
             res.json({errorMessage: `Product not found`})
@@ -115,7 +115,7 @@ router.get('/DisplayAllSkates/:category', (req, res) =>
     })
 })
 
-router.get(`/DisplayAllSkates/:id`, checkUserLogged, findById)
+router.get(`/DisplayAllSkates/get/:id`, checkUserLogged, findById)
 
 //Return a photo
 router.get(`/DisplayAllSkates/photo/:filename`, (req, res) => 

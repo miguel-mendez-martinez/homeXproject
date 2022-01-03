@@ -69,7 +69,7 @@ export default class SkateHolder extends Component
                     {productPrice}
                     {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
                             <div className="buttons-container">
-                                <Link className="blue-button" to={`/modForm/${this.state.id}`}> Modify </Link>
+                                <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
 
                             </div>
                         : null}
