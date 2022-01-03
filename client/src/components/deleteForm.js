@@ -5,14 +5,14 @@ import axios from "axios"
 
 import {SERVER_HOST} from "../config/global_constants"
 
-export default class SkateDisplay extends Component 
+export default class deleteForm extends Component 
 {
     constructor(props) 
     {
         super(props)
+
         
         this.state = {
-            id: this.props.match.params.id,
             redirect: false
         }
     }
@@ -20,13 +20,13 @@ export default class SkateDisplay extends Component
    
     componentDidMount() 
     { 
-        axios.delete(`${SERVER_HOST}/DisplayAllCars/${this.state.id}`, {headers:{"authorization":localStorage.token}})
+        axios.delete(`${SERVER_HOST}/DisplayAllCars/${this.props.match.params.id}`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {
-
             if(res.data)
             {          
-                this.setState({redirect: !this.state.redirect})
+                this.setState({redirect: true})
+                console.log("Record deleted")
             }else{
                 console.log("Record not deleted")
             }
