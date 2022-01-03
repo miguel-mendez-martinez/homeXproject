@@ -12,6 +12,7 @@ export default class SkateGrid extends Component
             products:[this.props.skates],
         }
     }
+
     render() 
     {   
         return ( 

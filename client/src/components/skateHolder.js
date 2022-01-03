@@ -2,6 +2,8 @@ import React, {Component} from "react"
 import axios from "axios"
 import {Link} from "react-router-dom"
 
+import SkateModal from "./SkateModal"
+
 import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 export default class SkateHolder extends Component 
@@ -20,8 +22,17 @@ export default class SkateHolder extends Component
             price: this.props.skate.price,
             type: this.props.skate.type,
             picture: '',
-            mounted: false
+            mounted: false,
+            modal: false
         }
+    }
+
+    clickOn = e => {
+        this.showModal()
+    }
+
+    showModal(){
+        this.setState({modal: !this.state.modal})
     }
 
     componentDidMount() 
@@ -53,11 +64,15 @@ export default class SkateHolder extends Component
     
     render() 
     {
-
-        let productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
+        let productInfo = ''
+        if(this.state.type == 'Wheels'){
+            productInfo = `${this.state.brand} ${this.state.size}mm ${this.state.type}`
+        }else{
+            productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
+        }
         let productPrice = `${this.state.price}€`
         return (
-            <div className="skate">
+            <div className="skate" onClick={this.clickOn}>
                 <div className="productName">
                     {productInfo}
                 </div>
@@ -67,13 +82,22 @@ export default class SkateHolder extends Component
                 </div>
                 <div className="productPrice">
                     {productPrice}
-                    {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
-                            <div className="buttons-container">
-                                <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
-                                <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
-                            </div>
-                        : null}
                 </div>
+                {this.state.modal ? <SkateModal 
+                                        skate = {this.props.skate}
+                                        closeModal = {this.showModal.bind(this)}
+                                      /> : null}   
+                {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                        <div className="buttons-container">
+                            <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
+                            <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
+                        </div>
+                    : null}
+                {localStorage.accessLevel <= ACCESS_LEVEL_NORMAL_USER ? 
+                <div className="buttons-container">
+                    <Link className="buy-button" to={{pathname: `modForm/${this.state.id}`}}> Buy </Link>
+                </div> : null }
+                
             </div>        
         )
     }
