@@ -65,7 +65,7 @@ export default class SkateHolder extends Component
     render() 
     {
         let productInfo = ''
-        if(this.state.type == 'Wheels'){
+        if(this.state.type === 'Wheels'){
             productInfo = `${this.state.brand} ${this.state.size}mm ${this.state.type}`
         }else{
             productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
@@ -76,7 +76,6 @@ export default class SkateHolder extends Component
                 <div className="productName">
                     {productInfo}
                 </div>
-                {/* this.props.skate.photo.forEach(photo => <img key={photo.filename} id={photo.filename} alt=""/>) */}
                 <div className="skatePhoto">
                     {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
                 </div>
@@ -93,7 +92,7 @@ export default class SkateHolder extends Component
                             <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
                         </div>
                     : null}
-                {localStorage.accessLevel <= ACCESS_LEVEL_NORMAL_USER ? 
+                {localStorage.accessLevel === ACCESS_LEVEL_NORMAL_USER ? 
                 <div className="buttons-container">
                     <Link className="buy-button" to={{pathname: `modForm/${this.state.id}`}}> Buy </Link>
                 </div> : null }

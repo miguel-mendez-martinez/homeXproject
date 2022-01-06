@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 import { ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
 
 import WebHeader from "./WebHeader"
-import SkateGrid from "./skateGrid"
+import SkateGrid from "./SkateGrid"
 
 
 export default class SkateDisplay extends Component 

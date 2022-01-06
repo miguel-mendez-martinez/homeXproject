@@ -20,7 +20,7 @@ export default class deleteForm extends Component
    
     componentDidMount() 
     { 
-        axios.delete(`${SERVER_HOST}/DisplayAllCars/${this.props.match.params.id}`, {headers:{"authorization":localStorage.token}})
+        axios.delete(`${SERVER_HOST}/DisplayAllSkates/${this.props.match.params.id}`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {
             if(res.data)
@@ -36,8 +36,8 @@ export default class deleteForm extends Component
     render() 
     {   
         return (           
-            <div className="form-container">
-                {this.state.redirect ? <Redirect to="/DisplayAllCars"/> : null}
+            <div>
+                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
             </div> 
         )
     }

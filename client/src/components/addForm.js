@@ -14,7 +14,7 @@ export default class addForm extends Component
         super(props)
         
         this.state = {
-            type: '',
+            type: 'Deck',
             size: 0,
             brand: '',
             price: 0,

@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import axios from "axios"
 
-import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
+import {SERVER_HOST} from "../config/global_constants"
 
 
 export default class SkateModal extends Component{
@@ -43,7 +43,7 @@ export default class SkateModal extends Component{
 
     render(){
         let productInfo = ''
-        if(this.state.type == 'Wheels'){
+        if(this.state.type === 'Wheels'){
             productInfo = `${this.state.skate.brand} ${this.state.skate.size}mm ${this.state.skate.type}`
         }else{
             productInfo = `${this.state.skate.brand} ${this.state.skate.size}" ${this.state.skate.type}`
@@ -57,7 +57,7 @@ export default class SkateModal extends Component{
                                 <h1>{productInfo}</h1>
                             </div>
                             <div id="exit" onClick={this.props.closeModal}>
-                                <img src= {require("../images/exit.png")}/>
+                                <img src= {require("../images/exit.png")} alt="/"/>
                             </div>
                         </div>
                         <div id="product">
