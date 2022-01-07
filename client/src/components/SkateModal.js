@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import axios from "axios"
+import {Link} from "react-router-dom"
 
-import {SERVER_HOST} from "../config/global_constants"
+import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 
 export default class SkateModal extends Component{
@@ -11,6 +12,7 @@ export default class SkateModal extends Component{
         super(props)
 
         this.state = {skate: this.props.skate,
+                      id: this.props.skate._id,
                       picture: '',
                       mounted: false  }
     }
@@ -43,11 +45,16 @@ export default class SkateModal extends Component{
 
     render(){
         let productInfo = ''
+        let productSize = ''
+
         if(this.state.type === 'Wheels'){
             productInfo = `${this.state.skate.brand} ${this.state.skate.size}mm ${this.state.skate.type}`
+            productSize = `${this.state.skate.size}mm`
         }else{
             productInfo = `${this.state.skate.brand} ${this.state.skate.size}" ${this.state.skate.type}`
+            productSize = `${this.state.skate.size}"`
         }
+
         return(
             <div id="modal"> 
                 <div id="modalContent">
@@ -61,14 +68,24 @@ export default class SkateModal extends Component{
                             </div>
                         </div>
                         <div id="product">
-                            {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
-                            <h2>Brand: {this.state.skate.brand}</h2>
-                            <h2>Size: {this.props.skate.size}</h2>
-                            <h2>Price:</h2>
-                            <p>{this.props.skate.price}€</p>
+                            <div id="productPicture">
+                                {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                            </div>
+                            <div id="productInfo">
+                                <h2>Brand: {this.state.skate.brand}</h2>
+                                <h2>Size: {productSize}</h2>
+                                <h2>{this.props.skate.price}€</h2>
+                            </div>
                         </div>
-                        
-                         
+                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                        <div id="buttons">
+                            <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
+                            <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
+                            </div> : null}
+                        {localStorage.accessLevel === ACCESS_LEVEL_NORMAL_USER ? 
+                        <div id="buttons">
+                            <Link className="buy-button" to={{pathname: `modForm/${this.state.id}`}}> Buy </Link>
+                        </div> : null }
                     </div>
                 </div>
             </div>

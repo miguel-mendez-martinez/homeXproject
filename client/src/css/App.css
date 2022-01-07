@@ -371,7 +371,6 @@ body{
     padding: 1em;
     font-size: 34px;
     font-weight: bold;
-    border: thin solid #aaaaaa;
 }
 
 .grid-container .skates-grid .skate .skatePhoto {
@@ -380,7 +379,6 @@ body{
     display: flex;
     align-content: center;
     justify-content: center;
-    border: thin solid #aaaaaa;
 }
 
 .grid-container .skates-grid .skate .skatePhoto img{  
@@ -395,7 +393,6 @@ body{
     flex: 1;
     padding: 1em;
     color: green;
-    border: thin solid #aaaaaa;
 }
 
 /* link buttons */
@@ -468,46 +465,6 @@ color:pink;
 padding: 10px;
 }
 
-/* .table-container table
-{
-    width:100%;
-    border-collapse:collapse;
-}
-
-.table-container thead
-{
-    background-color: #aaa;
-    color:#fff;
-    text-align: left;
-    text-transform: capitalize;
-}
-
-.table-container tbody tr
-{
-    height:3em;
-}
-
-.table-container thead th,
-.table-container tbody td
-{
-    padding:5px;
-}
-.table-container tbody tr:nth-child(odd) 
-{
-    background-color: #eee;
-}
-
-.table-container tbody tr:nth-child(even) 
-{
-    background-color: #ffa;
-}
-
-.add-new-car
-{
-    margin-top:1em;
-}
- */
-
  /*CSS for skateModals*/
  @keyframes modal_load
     {
@@ -559,13 +516,14 @@ padding: 10px;
     }
 
     #modalContent #info #title{
+        display: flex;
+        justify-content: center;
         flex:3;
     }
 
     #modalContent #info #exit{
-        border: thin solid black;
-        width: 50px;
-        height: 50px;
+        width: 25px;
+        height: 25px;
     }
 
     #modalContent #info #exit img{
@@ -580,56 +538,28 @@ padding: 10px;
     }
 
     #modalContent #product{
+        height: 550px;
         display: flex;
-        border: thin solid red;
+        justify-content: center;
     }
 
-    #modalContent img{
+    #modalContent #product #productInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+    }
+
+    #modalContent #product img{
         padding: 5em;
     }
 
-    #modalContent h1
-    {
-        font-size: 1.5em;
-        font-weight: bold;
+    #modalContent #buttons{
+        display: flex;
+        padding: 5px;
+        justify-content: center;
     }
-
-    #modalContent h2
-    {
-        font-size: 1em; 
-        margin:0px;
-        padding:0px;
-        margin-top: 0.5em;
-    }
-
-    #modalContent p
-    {
-        font-size: 1em; 
-        margin:0px;
-        padding:0px;
-    }/* 
-    
-    #modalContent #exitButton
-    {
-        position:absolute;
-        top: 5px;
-        right:5px;
-        width:20px;
-        height:20px;
-    }
-
-    #modalContent #exitButton img
-    {
-        width:100%;
-        height:100%;
-    }
-
-    #modalContent #exitButton img:hover
-    {
-        filter:brightness(150%);
-        transform: scale(1.2);
-        cursor:pointer;
-    } */
 
 
 @media only screen and (max-device-width: 400px) {

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import SkateHolder from "./SkateHolder"
+import SkateHolder from "./skateHolder.js"
 
 
 export default class SkateGrid extends Component 

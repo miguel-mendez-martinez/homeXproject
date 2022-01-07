@@ -85,6 +85,18 @@ export default class modForm extends Component
  
     render() 
     {   
+        //for setting the selector properly
+        let selectedOptions = [false, false, false]
+
+        if(this.state.type === 'Deck'){
+            selectedOptions[0] = true
+        }
+        if(this.state.type === 'Trucks'){
+            selectedOptions[1] = true
+        }
+        if(this.state.type === 'Wheels'){
+            selectedOptions[2] = true
+        }
         return (  
             
             <div className="web-container">
@@ -96,10 +108,10 @@ export default class modForm extends Component
                     <label>
                         Type:
                         <div className="customSelect">
-                            <select name="type" defaultValue="Deck" onChange={this.handleChange}>
-                                <option value="Deck">Deck</option>
-                                <option value="Trucks">Trucks</option>
-                                <option value="Wheels">Wheels</option>
+                            <select name="type" defaultValue={this.state.type} onChange={this.handleChange}>
+                                <option value="Deck" selected={selectedOptions[0]}>Deck</option>
+                                <option value="Trucks" selected={selectedOptions[1]}>Trucks</option>
+                                <option value="Wheels" selected={selectedOptions[2]}>Wheels</option>
                             </select>
                         </div>
                         </label><br/>

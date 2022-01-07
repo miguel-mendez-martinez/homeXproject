@@ -86,16 +86,6 @@ export default class SkateHolder extends Component
                                         skate = {this.props.skate}
                                         closeModal = {this.showModal.bind(this)}
                                       /> : null}   
-                {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
-                        <div className="buttons-container">
-                            <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
-                            <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
-                        </div>
-                    : null}
-                {localStorage.accessLevel === ACCESS_LEVEL_NORMAL_USER ? 
-                <div className="buttons-container">
-                    <Link className="buy-button" to={{pathname: `modForm/${this.state.id}`}}> Buy </Link>
-                </div> : null }
                 
             </div>        
         )
