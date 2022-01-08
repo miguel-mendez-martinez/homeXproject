@@ -131,7 +131,9 @@ body{
 
 .rightHeader {
     flex: 3;
-    display: inline-flex;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .navigation{
@@ -284,7 +286,7 @@ body{
 }
 
 .form-container .errorDiv{
-    
+    font-size: 1.25em;
     color: #D8000C;
     background-color: #FFBABA;
     width: auto;
@@ -551,6 +553,10 @@ padding: 10px;
         flex-direction: column;
     } 
 
+    .category-container ul li span{
+        padding: 10px;
+    }
+
     .category-container ul li span .iconoCat{
         height: 300px;
         width: 100%;
@@ -588,5 +594,19 @@ padding: 10px;
     #modalContent #product img{
         padding: 1em;
     }
+
+    .rightHeader{
+        height: 180px;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .rightHeader .red-button{
+        margin-left: 10px;
+    }
+
+    .rightHeader img{
+        margin-top: 10px;
+    }
 }
-/*end of table of cars */

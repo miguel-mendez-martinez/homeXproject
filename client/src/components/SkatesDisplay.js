@@ -38,8 +38,7 @@ export default class SkateDisplay extends Component
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
-                        this.setState({mounted: true})     
-                        console.log(this.state.products)  
+                        this.setState({mounted: true})
                     }
                     else
                     {
@@ -56,7 +55,6 @@ export default class SkateDisplay extends Component
                     {
                         this.setState({products: res.data}) 
                         this.setState({mounted: true})  
-                        console.log(this.state.products) 
                     }
                     else
                     {

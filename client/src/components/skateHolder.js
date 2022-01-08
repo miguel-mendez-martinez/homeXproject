@@ -1,10 +1,9 @@
 import React, {Component} from "react"
 import axios from "axios"
-import {Link} from "react-router-dom"
 
 import SkateModal from "./SkateModal"
 
-import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
+import {SERVER_HOST} from "../config/global_constants"
 
 export default class SkateHolder extends Component 
 {

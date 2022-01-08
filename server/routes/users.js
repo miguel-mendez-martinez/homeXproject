@@ -27,7 +27,7 @@ const checkUserNotExists = (req, res, next) =>
             if(err){
                 return next(err)
             }
-            return next(createError(400))
+            return next(createError(400, "User already exists."))
         }
     }) 
     
@@ -43,8 +43,6 @@ const checkLogIn = (req, res, next) =>
         }
         if(!result)
         {  
-            //res.json({error: `Error. Email or password are incorrect. Please try again.`})
-            /* res.status(400).send(`Error. Email or password are incorrect. Please try again.`)  */
             return next(createError(400, "Error. Email or password are incorrect. Please try again."))
 
         }        
@@ -107,7 +105,7 @@ const createAdmin = (req, res, next) => {
             {
                 res.json(createData)
             }else{
-                return next(createError(500))
+                return next(createError(500, "Error recreating the database."))
             }
         })
     })
@@ -141,10 +139,8 @@ router.post('/Users/validateUser', (req, res) =>
     jwt.verify(req.headers.Authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
 
         if( typeof decodedToken  == 'undefined'){
-            console.log(decodedToken)
             res.json({accessLevel: 0})
-        }else{
-            console.log(decodedToken.accessLevel)
+        }else{ç
             res.json({accessLevel: decodedToken.accessLevel})
         }
         

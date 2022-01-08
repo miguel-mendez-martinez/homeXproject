@@ -12,7 +12,7 @@ const checkUserLogged = (req, res, next) =>
     {
         if (err) 
         { 
-            return res.json({errorMessage:`User is not logged in`})
+            return next(createError(400, "User is not logged in."))
         }
         else 
         {
@@ -31,17 +31,20 @@ const checkIfAdmin = (req, res, next) =>
     }
     else
     {
-        return res.json({errorMessage:`User is not an administrator`})
+        return next(createError(400, "User must be an administrator."))
     }
 }
 
 const findById = (req, res, next) =>{
     skatesModel.findById(req.params.id, (error, data) => 
     {
-        if(error)
+        if(error){
+            createError(400, `Product not found`)
             res.json({errorMessage: `Product not found`})
-        else
+        }
+        else{
             res.json(data)
+        }
     })
 }
 
@@ -57,16 +60,13 @@ const addProduct = (req, res, next) =>{
     {
         productDetails.photos[index] = {filename:`${file.filename}`}
     })
-    console.log(productDetails)
     
     skatesModel.create(productDetails, (error, data) =>
     {
         if(error){
-            console.log(`Error en la creacion: ${error}`)
+            createError(400, `Error on creation: ${error}`)
             res.json({errorMessage: `${error}`})
-            //res.json({errorMessage:`Bad Request`})
         }else{
-            console.log(data)
             res.json(data)
         }
         
@@ -77,6 +77,7 @@ const deleteProduct = (req, res, next) =>{
     skatesModel.findByIdAndRemove(req.params.id, (error, data) => 
     {
         if(error){
+            createError(400, `Error on delete: ${error}`)
             res.json({errorMessage: `${error}`})
         }else{
             res.json(data)
@@ -88,7 +89,8 @@ const updateProduct = (req, res, next) =>{
     skatesModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (error, data) => 
     {
         if(error){
-            console.log(error)
+            createError(400, `Error on update: ${error}`)
+            res.json({errorMessage: `${error}`})
         }else{
             res.json(data)
         }

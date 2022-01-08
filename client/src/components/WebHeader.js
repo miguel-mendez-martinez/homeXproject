@@ -31,13 +31,18 @@ export default class WebHeader extends Component
                             <h2> All the Fat</h2>
                             <h6> From Skaters To Skaters</h6>
                         </div>
-                        <div className="rightHeader">
-                            {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="blue-button" to="/logInForm"> Login </Link> : null}
-                            {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? <Link className="green-button" to="/userForm"> Register </Link> : null}
-                            {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? <Link className="red-button" to="/logOut"> LogOut </Link> : null }
-                            {/* {localStorage.profilePhoto != "null" ? <img id="profilePhoto" src={`data:base64,${localStorage.profilePhoto}`} alt=""/> : null} */}
-                            {/* {<Link className="red-button" to="/resetDB"> Reset DB </Link> } */}
-                        </div>
+                        {(localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER) ? 
+                            <div className="rightHeader"> 
+                                <Link className="blue-button" to="/logInForm"> Login </Link>
+                                <Link className="green-button" to="/userForm"> Register </Link>
+                             </div> 
+                             : 
+                             <div className="rightHeader"> 
+                                <span>
+                                    <Link className="red-button" to="/logOut"> LogOut </Link>
+                                    <img src={require("../images/profilePic.png")} alt=""/>
+                                </span>
+                             </div>}
                     </div>
                     <div className="navigation">
                         <ul>
