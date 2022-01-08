@@ -22,6 +22,7 @@ body{
 .form-container .green-button:disabled{
     background-color: #dbf99f;
     color: #fcc;
+    cursor: default;
 }
 
 .form-container input[type=text],
@@ -38,7 +39,7 @@ body{
     position: relative;
     max-width: 300px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .nameContainer,
@@ -99,7 +100,6 @@ body{
 
 .header-container
 {
-    position: sticky;
     max-width: 98%;
     margin: 0 auto;
     border:thin solid #aaaaaa;
@@ -132,7 +132,6 @@ body{
 .rightHeader {
     flex: 3;
     display: inline-flex;
-
 }
 
 .navigation{
@@ -183,7 +182,6 @@ body{
 .navigation ul li span .navigation-item{
     font-size: 1rem;
     line-height: normal;
-    border-radius: 0.2rem;
     color: black;
     position: absolute;
     text-decoration: none;
@@ -191,16 +189,6 @@ body{
     transition: 0.5s;
     opacity: 0;
 } 
-
-.navigation ul li span input{
-    position: absolute;
-    padding: 0;
-    border: none;
-    background: none;
-    text-decoration: none;
-    cursor:pointer;
-    font-weight: bold;
-}
 
 .navigation ul li:hover span .navigation-item{
     opacity: 1;
@@ -261,7 +249,6 @@ body{
     border-radius: 0%;
     display: block;
     text-align: center;
-    transition: 0.5s;
 
     width: 75%;
     height: 100%;
@@ -271,8 +258,7 @@ body{
     padding: 0;
     position: absolute; 
     background: none;
-    color: magenta;
-    border-radius: 0.2rem;
+    color: white;
     border: none;
     font-size: 3rem;
     line-height: normal;
@@ -331,13 +317,8 @@ body{
 .grid-container .skates-grid{
     padding: 2em;
 
-    /* display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 40px; */
-
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 500px));
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
     grid-column-gap: 15px;
     grid-row-gap: 35px;
 }
@@ -482,6 +463,7 @@ padding: 10px;
 
     #modal 
     {
+        z-index: 2;
         cursor: auto;
         position: fixed;
         width: 100%;
@@ -552,6 +534,7 @@ padding: 10px;
     }
 
     #modalContent #product img{
+        max-width: 100%;
         padding: 5em;
     }
 
@@ -586,6 +569,24 @@ padding: 10px;
     .grid-container .skates-grid .skate .productName{
         text-align: left;
         font-size: 24px;
+    }
+
+    @keyframes modal_load
+    {
+        from 
+        {
+            width: 0%;
+            height:0%
+        }
+        to 
+        {
+            width: 75%;
+            height: 95%
+        }
+    }
+
+    #modalContent #product img{
+        padding: 1em;
     }
 }
 /*end of table of cars */
