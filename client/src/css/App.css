@@ -130,7 +130,7 @@ body{
 }
 
 .rightHeader {
-    flex: 3;
+    flex: 5;
     display: flex;
     align-content: center;
     justify-content: center;

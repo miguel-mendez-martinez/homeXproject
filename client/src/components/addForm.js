@@ -15,11 +15,43 @@ export default class addForm extends Component
         
         this.state = {
             type: 'Deck',
-            size: 0,
+            size: '',
             brand: '',
-            price: 0,
+            price: '',
             selectedFiles: null,
             redirect: false
+        }
+    }
+
+    validateBrand() {
+        if(this.state.brand === ''){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validateSize() {
+        if(this.state.size === '' || isNaN(this.state.size)){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validatePrice() {
+        if(this.state.price === '' || isNaN(this.state.price)){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validation(){
+        return {
+            Brand: this.validateBrand(),
+            Size: this.validateSize(),
+            Price: this.validatePrice()
         }
     }
 
@@ -68,14 +100,16 @@ export default class addForm extends Component
                 console.log("Record not added")
             }
         }).catch(err =>{
-            console.log(err.response) //No se p q con err.response.data me petaba la pagina
+            console.log("err:" + err.response.data) 
         })
     }
  
     render() 
     {   
-        return (   
-            
+        const formInputsState = this.validation()
+        const inputsAreAllValid = Object.keys(formInputsState).every(index => formInputsState[index]) 
+
+        return (
             <div className="web-container">
                 <WebHeader/>
                 <div className="form-container">
@@ -94,7 +128,7 @@ export default class addForm extends Component
                     <label>Brand:<input type="text" name="brand" onChange={this.handleChange}/></label><br/>
                     <label>Price:<input type="text" name="price" onChange={this.handleChange}/></label><br/>
                     <input type = "file" multiple onChange = {this.handleFileChange}/><br/>
-                    <input type="submit" value="submit" onClick={this.addProduct}></input>
+                    <input type="button" className="green-button" value="Add" disabled = {!inputsAreAllValid} onClick={this.addProduct}></input>
                     <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
                 </div> 
             </div>

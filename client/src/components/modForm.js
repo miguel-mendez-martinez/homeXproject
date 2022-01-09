@@ -19,9 +19,9 @@ export default class modForm extends Component
         
         this.state = {
             type:'',
-            size: 0,
+            size: '',
             brand: '',
-            price: 0,
+            price: '',
             mounted: false,
             redirect: false
         }
@@ -53,6 +53,38 @@ export default class modForm extends Component
         })
     }
 
+    validateBrand() {
+        if(this.state.brand === ''){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validateSize() {
+        if(this.state.size === '' || isNaN(this.state.size)){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validatePrice() {
+        if(this.state.price === '' || isNaN(this.state.price)){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validation(){
+        return {
+            Brand: this.validateBrand(),
+            Size: this.validateSize(),
+            Price: this.validatePrice()
+        }
+    }
+
     handleChange = e =>{
         this.setState({[e.target.name]: e.target.value})
     }
@@ -79,6 +111,8 @@ export default class modForm extends Component
             {
                 console.log("Record not added")
             }
+        }).catch(err =>{
+            console.log("err:" + err.response.data) 
         })
     }
 
@@ -97,6 +131,9 @@ export default class modForm extends Component
         if(this.state.type === 'Wheels'){
             selectedOptions[2] = true
         }
+
+        const formInputsState = this.validation()
+        const inputsAreAllValid = Object.keys(formInputsState).every(index => formInputsState[index]) 
         return (  
             
             <div className="web-container">
@@ -118,7 +155,7 @@ export default class modForm extends Component
                     <label>Size:<input type="text" name="size" onChange={this.handleChange} value={this.state.size}/></label><br/>
                     <label>Brand:<input type="text" name="brand" onChange={this.handleChange} value={this.state.brand}/></label><br/>
                     <label>Price:<input type="text" name="price" onChange={this.handleChange} value={this.state.price}/></label><br/>
-                    <input type="submit" value="submit" onClick={this.modProduct}></input>
+                    <input type="button" className="green-button" value="Modify" disabled = {!inputsAreAllValid} onClick={this.modProduct}></input>
                     <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
                 </div> 
             </div>

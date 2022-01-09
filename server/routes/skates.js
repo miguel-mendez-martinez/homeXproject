@@ -2,6 +2,7 @@ const router = require(`express`).Router()
 const skatesModel = require(`../models/skates`)
 const jwt = require('jsonwebtoken')
 const fs = require('fs');
+var createError = require('http-errors')
 
 const multer  = require('multer')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
@@ -39,8 +40,7 @@ const findById = (req, res, next) =>{
     skatesModel.findById(req.params.id, (error, data) => 
     {
         if(error){
-            createError(400, `Product not found`)
-            res.json({errorMessage: `Product not found`})
+            return next(createError(400, `Product not found`))
         }
         else{
             res.json(data)
@@ -64,8 +64,7 @@ const addProduct = (req, res, next) =>{
     skatesModel.create(productDetails, (error, data) =>
     {
         if(error){
-            createError(400, `Error on creation: ${error}`)
-            res.json({errorMessage: `${error}`})
+            return next(createError(400, `Error on creation.`))
         }else{
             res.json(data)
         }
@@ -77,8 +76,7 @@ const deleteProduct = (req, res, next) =>{
     skatesModel.findByIdAndRemove(req.params.id, (error, data) => 
     {
         if(error){
-            createError(400, `Error on delete: ${error}`)
-            res.json({errorMessage: `${error}`})
+            return next(createError(400, `Error on delete.`))
         }else{
             res.json(data)
         }
@@ -89,8 +87,7 @@ const updateProduct = (req, res, next) =>{
     skatesModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (error, data) => 
     {
         if(error){
-            createError(400, `Error on update: ${error}`)
-            res.json({errorMessage: `${error}`})
+            return next(createError(400, `Error on update.`))
         }else{
             res.json(data)
         }
