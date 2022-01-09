@@ -7,7 +7,7 @@ import {SANDBOX_CLIENT_ID, PRODUCTION_CLIENT_ID, SERVER_HOST} from "../config/gl
 import PaypalButton from 'react-paypal-express-checkout'
 import PayPalMessage from "./PayPalMessage"
 
-export default class BuyCar extends Component 
+export default class Buy extends Component 
 {
     constructor(props)
     {
@@ -21,7 +21,7 @@ export default class BuyCar extends Component
     
     onSuccess = paymentData =>
     {      
-        axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${this.props.carID}/${this.props.price}/${paymentData.address.recipient_name}/${paymentData.email}`, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
+        axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${this.props.productID}/${this.props.price}/${paymentData.address.recipient_name}/${paymentData.email}`, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
         .then(res => 
         {                   
             this.setState({payPalMessageType:PayPalMessage.messageType.SUCCESS, 
