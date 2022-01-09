@@ -69,7 +69,9 @@ export default class SkateModal extends Component{
                         </div>
                         <div id="product">
                             <div id="productPicture">
-                                {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                                <span>
+                                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                                </span>
                             </div>
                             <div id="productInfo">
                                 <h2>Brand: {this.state.skate.brand}</h2>
