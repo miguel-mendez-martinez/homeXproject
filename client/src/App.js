@@ -15,6 +15,8 @@ import deleteForm from "./components/deleteForm.js"
 import resetDB from "./components/resetDB.js"
 import LoggedInRoute from "./components/LoggedInRoute"
 import Home from "./components/Home"
+import Buy from "./components/Buy"
+import PayPalMessage from "./components/PayPalMessage"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import Categories from "./components/Categories"
@@ -38,6 +40,8 @@ export default class App extends Component
                     <Route exact path="/about" component={About}/>
                     <Route exact path="/userForm" component={userForm}/>
                     <Route exact path="/logInForm" component={logInForm}/>
+                    <Route exact path="/Buy/:id" component={Buy} />
+                    <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
                     <LoggedInRoute exact path="/logOut" component={logOut}/>
                     <LoggedInRoute exact path="/addForm" component={addForm}/>
                     <LoggedInRoute exact path="/deleteForm/:id" component={deleteForm}/>
