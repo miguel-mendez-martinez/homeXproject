@@ -458,7 +458,7 @@ padding: 10px;
         }
         to 
         {
-            width: 75%;
+            width: 55%;
             height: 75%
         }
     }
@@ -608,5 +608,12 @@ padding: 10px;
 
     .rightHeader img{
         margin-top: 10px;
+    }
+
+    #productPicture{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
     }
 }
