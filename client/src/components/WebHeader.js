@@ -40,7 +40,9 @@ export default class WebHeader extends Component
                              <div className="rightHeader"> 
                                 <span>
                                     <Link className="red-button" to="/logOut"> LogOut </Link>
-                                    <img src={require("../images/profilePic.png")} alt=""/>
+                                    <Link  to={ { pathname: '/account', state: { id: localStorage.name } }}> 
+                                    <img src={require("../images/profilePic.png")} alt=""/> 
+                                    </Link> 
                                 </span>
                              </div>}
                     </div>
