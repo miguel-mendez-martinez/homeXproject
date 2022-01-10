@@ -54,7 +54,7 @@ export default class PayPalMessage extends Component
                 
                 {this.props.match.params.messageType === PayPalMessage.messageType.SUCCESS ? <p>Your PayPal payment confirmation is <span id="payPalPaymentID">{this.props.match.params.payPalPaymentID}</span></p> : null}
                 
-                <p id="payPalPaymentIDButton"><Link className={this.state.buttonColour} to={"/SkatesDisplay"}>Continue</Link></p>                                     
+                <p id="payPalPaymentIDButton"><Link className={this.state.buttonColour} to={"/"}>Continue</Link></p>                                     
             </div>
         )
     }

@@ -2,7 +2,9 @@ import React, {Component} from "react"
 import axios from "axios"
 import {Link} from "react-router-dom"
 
-import {SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
+import Buy from './Buy.js'
+
+import {SERVER_HOST, ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
 
 export default class SkateModal extends Component{
@@ -79,15 +81,14 @@ export default class SkateModal extends Component{
                                 <h2>{this.props.skate.price}€</h2>
                             </div>
                         </div>
-                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                        {localStorage.accessLevel < ACCESS_LEVEL_ADMIN ? 
+                        <div id="buttons"> 
+                            <Buy productID={this.state.id} price={this.state.skate.price} />
+                        </div>: 
                         <div id="buttons">
                             <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>
                             <Link className="red-button" to={{pathname: `deleteForm/${this.state.id}`}}> Delete </Link>
-                            </div> : null}
-                        {localStorage.accessLevel === ACCESS_LEVEL_NORMAL_USER ? 
-                        <div id="buttons">
-                            <Link className="buy-button" to={{pathname: `modForm/${this.state.id}`}}> Buy </Link>
-                        </div> : null }
+                        </div>}
                     </div>
                 </div>
             </div>
