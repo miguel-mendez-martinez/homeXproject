@@ -11,6 +11,14 @@ export const SANDBOX_CLIENT_ID = "AReXuG8eF2xUoUsEw76IW4groDOqYRTgl5408h0n7sYTaV
 //credit card details
 
 /* 
+Card Type: Visa
+
+Card Number: 4020029273449808
+
+Expiration Date: 03/2023
+
+CVV: 633
+
     Card Type: Visa
 
     Card Number: 4063339830992366
