@@ -9,7 +9,7 @@ let salesSchema = new mongoose.Schema(
         customerEmail: {type: String, required:true}
    },
    {
-       collection: `sales`
+       collection: `Sales`
    })
 
 module.exports = mongoose.model(`sales`, salesSchema)

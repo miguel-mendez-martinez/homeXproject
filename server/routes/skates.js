@@ -73,15 +73,24 @@ const addProduct = (req, res, next) =>{
 }
 
 const deleteProduct = (req, res, next) =>{
+    let pathArray = __dirname.split('\\')
+    let path = pathArray.splice(-0, pathArray.length - 1).join('\\')
+    console.log(path)
     skatesModel.findByIdAndRemove(req.params.id, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on delete.`))
         }else{
-            res.json(data)
+            fs.unlink(`${path}\\uploads\\${data.photos[0].filename}`, (err) => {
+                if(err)
+                    return next(createError(400, `Error on image deleting.`))
+                else
+                    res.json(data)
+            })
         }
     })
 }
+
 
 const updateProduct = (req, res, next) =>{
     skatesModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (error, data) => 
