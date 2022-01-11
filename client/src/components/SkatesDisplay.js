@@ -29,11 +29,13 @@ export default class SkateDisplay extends Component
 
     componentDidMount() 
     { 
+        console.log(this.props.location.state)
 
-        if(typeof this.props.location.apply == true){
+        if(this.props.location.state.apply === true){
             axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}/${this.props.location.state.brand}/${this.props.location.state.size}/${this.props.location.state.price}`)
             .then(res => 
             {
+                console.log(1, res.data)
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
@@ -45,7 +47,7 @@ export default class SkateDisplay extends Component
                     }
             })
         }
-        else if(typeof this.props.location.state != 'undefined'){
+        else if(typeof this.props.location.state.id != 'undefined' || this.props.location.state.id !== ""){
 
             //aqui se hace un get con categoria=lo que viene del redirect
 
@@ -53,6 +55,7 @@ export default class SkateDisplay extends Component
             axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}`)
             .then(res => 
             {
+                console.log(2, res.data)
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
@@ -69,6 +72,7 @@ export default class SkateDisplay extends Component
             axios.get(`${SERVER_HOST}/DisplayAllSkates`)
             .then(res => 
             {
+                console.log(3, res.data)
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
@@ -80,8 +84,15 @@ export default class SkateDisplay extends Component
                     }
             }) 
         }      
-        
-        
+    }
+
+
+    clickOn = e => {
+        this.showFilterModal()
+    }
+
+    showFilterModal(){
+        this.setState({filterModal: !this.state.filterModal})
     }
    
  
@@ -95,7 +106,7 @@ export default class SkateDisplay extends Component
                         <h1>Products</h1>
                         
                             <div className="buttons-container">
-                                <button className="filter-button">Filters</button>
+                                <button className="filter-button" onClick={this.clickOn}>Filters</button>
                                 {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
                                 <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
                             </div>
@@ -105,7 +116,7 @@ export default class SkateDisplay extends Component
                 </div>
                 {this.state.filterModal ? <FilterModal 
                                         category = {this.props.location.id}
-                                        closeModal = {this.showModal.bind(this)}
+                                        closeModal = {this.showFilterModal.bind(this)}
                                       /> : null}
             </div> 
             

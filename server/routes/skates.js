@@ -123,9 +123,14 @@ router.get('/DisplayAllSkates/:category', (req, res) =>
     })
 })
 
-router.get('/DisplayAllSkates/:category/:brand/:size/:price', (req, res) => ////////////
+router.get('/DisplayAllSkates/:category/:brand/:size/:price', (req, res) => 
 {
-    skatesModel.find({type: req.params.category}, (error, data) =>
+    skatesModel.find({ $or: [
+                            {type: req.params.category},
+                            {brand: req.params.brand},
+                            {size: req.params.size},
+                            {$lt: {type: req.params.price}},
+                            ]}, (error, data) =>
     {
         if(!error){
             res.json(data)
