@@ -3,9 +3,11 @@ const router = require(`express`).Router()
 const salesModel = require(`../models/sales`)
 const skatesModel = require(`../models/skates`)
 
+const jwt = require('jsonwebtoken')
+
 
 const createNewSaleDocument = (req, res, next) => 
-{           
+{          
     // Use the PayPal details to create a new sale document                
     let saleDetails = new Object()
            
@@ -13,7 +15,15 @@ const createNewSaleDocument = (req, res, next) =>
     saleDetails.productID = req.params.productID
     saleDetails.price = req.params.price
     saleDetails.customerName = req.params.customerName
-    saleDetails.customerEmail = req.params.customerEmail
+    saleDetails.productName = req.params.productName
+    saleDetails.date = req.params.date
+
+    if(req.decodedToken){
+        saleDetails.customerEmail = req.decodedToken.email
+    }else{
+        saleDetails.customerEmail = 'GUEST'
+    }
+    
         
         
     skatesModel.findByIdAndRemove(req.params.productID, (error, data) => 
@@ -38,7 +48,8 @@ const getUserLoggedIn = (req, res, next) => {
     jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
         if (err) 
         { 
-            return next(createError(400, "User is not logged in."))
+            req.decodedToken = null
+            return next()
         }
         else 
         {
@@ -62,7 +73,7 @@ const getSales = (req, res, next) => {
 
 
 // Save a record of each Paypal payment
-router.post('/sales/:paymentID/:productID/:price/:customerName/:customerEmail', createNewSaleDocument)
+router.post('/sales/:paymentID/:productID/:price/:customerName/:productName/:date', getUserLoggedIn, createNewSaleDocument)
 
 router.get('/sales', getUserLoggedIn, getSales)
 

@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import axios from "axios"
 import {Redirect} from "react-router-dom"
 
-import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../config/global_constants"
+import {SANDBOX_CLIENT_ID, SERVER_HOST, PRODUCTION_CLIENT_ID} from "../config/global_constants"
 
 import PaypalButton from 'react-paypal-express-checkout'
 import PayPalMessage from "./PayPalMessage"
@@ -21,7 +21,11 @@ export default class Buy extends Component
     
     onSuccess = paymentData =>
     {      
-        axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${this.props.productID}/${this.props.price}/${paymentData.address.recipient_name}/${paymentData.email}`, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
+        let formData = new FormData()
+
+        let now = Date.now()
+
+        axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${this.props.productID}/${this.props.price}/${paymentData.address.recipient_name}/${this.props.productName}/${now}`, formData, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
         .then(res => 
         {                   
             this.setState({payPalMessageType:PayPalMessage.messageType.SUCCESS, 
@@ -58,7 +62,8 @@ export default class Buy extends Component
     {            
         const environment = "sandbox"  // must be either "sandbox" or "production"
         
-        const client_id = {sandbox:SANDBOX_CLIENT_ID}
+        const client_id = {sandbox:SANDBOX_CLIENT_ID,
+                         production: PRODUCTION_CLIENT_ID}
 
         const redirect = `/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalPaymentID}`
                 

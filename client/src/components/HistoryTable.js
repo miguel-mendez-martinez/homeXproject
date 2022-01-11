@@ -10,11 +10,10 @@ export default class HistoryTable extends Component
             <table>
                 <thead>
                     <tr>
-                        <th>Transaction</th>
                         <th>Name</th>
                         <th>Date</th>
                         <th>Price</th>
-                        {/* <th>Photos</th> */}
+                        <th>Transaction</th>
                     </tr>
                 </thead>
                   

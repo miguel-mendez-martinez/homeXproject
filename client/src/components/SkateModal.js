@@ -83,7 +83,7 @@ export default class SkateModal extends Component{
                         </div>
                         {localStorage.accessLevel < ACCESS_LEVEL_ADMIN ? 
                         <div id="buttons"> 
-                            <Buy productID={this.state.id} price={this.state.skate.price} />
+                            <Buy productID={this.state.id} productName={productInfo} price={this.state.skate.price} />
                         </div>: 
                         <div id="buttons">
                             <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>

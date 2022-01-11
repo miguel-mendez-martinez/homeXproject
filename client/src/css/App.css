@@ -9,6 +9,40 @@ body{
     width: 100px;
 }
 
+.history-table table
+{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-table thead
+{
+    background-color: #aaa;
+    color:#fff;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.history-table tbody tr
+{
+    height:3em;
+}
+
+.history-table thead th,
+.history-table tbody td
+{
+    padding:5px;
+}
+.history-table tbody tr:nth-child(odd) 
+{
+    background-color: #eee;
+}
+
+.history-table tbody tr:nth-child(even) 
+{
+    background-color: #ffa;
+}
+
 .form-container{
     max-width: 98%;
     border:thin solid #aaaaaa;

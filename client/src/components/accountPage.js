@@ -56,7 +56,7 @@ export default class AccountPage extends Component
                     <div className="errorDiv">No history found for this user.</div>
                     : 
                     <div className="history-table">
-                    <HistoryTable transactions={this.state.transactions} /> 
+                        <HistoryTable transactions={this.state.transactions} /> 
                     </div>} 
                 </div>
             </div>
