@@ -93,21 +93,22 @@ export default class SkateDisplay extends Component
                 <div className="content-container">
                     <div className="grid-container">
                         <h1>Products</h1>
-                        {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                        
                             <div className="buttons-container">
-                                <Link className="blue-button" to="/addForm"> Add Product </Link>
-                                {this.state.filterModal ? <FilterModal 
-                                        category = {this.props.location.id}
-                                        closeModal = {this.showModal.bind(this)}
-                                      /> : null}
+                                <button className="filter-button">Filters</button>
+                                {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
+                                <Link className="blue-button" to="/addForm"> Add Product </Link> : null}
                             </div>
-                        : null}
                         {this.state.mounted ? <SkateGrid skates={this.state.products}/> : null}
                         
                     </div>     
                 </div>
-                
+                {this.state.filterModal ? <FilterModal 
+                                        category = {this.props.location.id}
+                                        closeModal = {this.showModal.bind(this)}
+                                      /> : null}
             </div> 
+            
 
         )
     }

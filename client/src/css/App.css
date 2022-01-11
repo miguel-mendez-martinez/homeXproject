@@ -436,7 +436,8 @@ body{
 /* link buttons */
 .green-button,
 .red-button,
-.blue-button
+.blue-button,
+.filter-button
 {
   padding: 10px 13px;
   font-size: 1rem;
@@ -464,6 +465,12 @@ body{
 .blue-button
 {
     background-color: #3545dc;
+}
+
+.filter-button
+{
+    border-color: #dbdbdb;
+    background-color: #9a1fd3;
 }
 
 .green-button:hover,

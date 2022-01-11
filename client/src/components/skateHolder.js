@@ -48,7 +48,6 @@ export default class SkateHolder extends Component
                 }
                 else
                 {           
-                    /* document.getElementById(photo.filename).src = `data:;base64,${res.data.image}`  */         
                     this.setState({picture: res.data.image})
                     this.setState({mounted: true})
                 }   
