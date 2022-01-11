@@ -50,7 +50,7 @@ export default class AccountPage extends Component
                 <WebHeader/>
                 <div className="content-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
-                    <h2> {this.state.name}'s personal page.</h2> <br/>
+                    <h2> {this.state.name}'s history page.</h2> <br/>
 
                     {this.state.transactions === null ? 
                     <div className="errorDiv">No history found for this user.</div>

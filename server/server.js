@@ -1,6 +1,7 @@
 // Server-side global variables
 require(`dotenv`).config({path:`./config/.env`})
 require(`./config/db`)
+const createError = require('http-errors')
 
 
 // Express

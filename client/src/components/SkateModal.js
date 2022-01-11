@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 
 import Buy from './Buy.js'
 
-import {SERVER_HOST, ACCESS_LEVEL_ADMIN} from "../config/global_constants"
+import {SERVER_HOST, ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 
 
 export default class SkateModal extends Component{
@@ -16,7 +16,7 @@ export default class SkateModal extends Component{
         this.state = {skate: this.props.skate,
                       id: this.props.skate._id,
                       picture: '',
-                      mounted: false  }
+                      mounted: false }
     }
 
     componentDidMount() 
@@ -36,6 +36,30 @@ export default class SkateModal extends Component{
                     /* document.getElementById(photo.filename).src = `data:;base64,${res.data.image}`  */         
                     this.setState({picture: res.data.image})
                     this.setState({mounted: true})
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
+        })
+    }
+
+    addToCart = e =>{
+        let formData = new FormData() 
+
+        axios.put(`${SERVER_HOST}/Users/addToCart/${this.state.id}`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
+        .then(res => 
+        {
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {           
+                    console.log('Product added to the shopping cart.')
                 }   
             }
             else
@@ -84,6 +108,7 @@ export default class SkateModal extends Component{
                         {localStorage.accessLevel < ACCESS_LEVEL_ADMIN ? 
                         <div id="buttons"> 
                             <Buy productID={this.state.id} productName={productInfo} price={this.state.skate.price} />
+                            {localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? null : <input type="button" className="green-button" value="Add To Cart" onClick={this.addToCart}/>}
                         </div>: 
                         <div id="buttons">
                             <Link className="blue-button" to={{pathname: `modForm/${this.state.id}`}}> Modify </Link>

@@ -5,6 +5,7 @@ import {ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 import { HomeOutline } from 'react-ionicons'
 import { SkullOutline } from 'react-ionicons'
 import { ReorderThreeOutline } from 'react-ionicons'
+import { CartOutline } from 'react-ionicons'
 
 import {Link} from "react-router-dom"
 
@@ -44,6 +45,10 @@ export default class WebHeader extends Component
                                     <img src={require("../images/profilePic.png")} alt=""/> 
                                     </Link> 
                                 </span>
+                             </div>}
+                             {localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? null: 
+                             <div className="shopCart">
+                                <CartOutline color={'#00000'} height="50px" width="50px"/>
                              </div>}
                     </div>
                     <div className="navigation">

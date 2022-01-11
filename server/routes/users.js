@@ -2,7 +2,7 @@ const router = require(`express`).Router()
 const usersModel = require(`../models/users`)
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-var createError = require('http-errors')
+const createError = require('http-errors')
 
 
 //Middleware
@@ -111,6 +111,34 @@ const createAdmin = (req, res, next) => {
     })
 }
 
+const checkUserLogged = (req, res, next) =>
+{
+    jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    {
+        if (err) 
+        { 
+            return next(createError(400, "User is not logged in."))
+        }
+        else 
+        {
+            req.decodedToken = decodedToken
+            return next()
+        }
+    })
+}
+
+const addToUserCart = (req, res, next) => 
+{
+    usersModel.findOneAndUpdate({email: req.decodedToken.email}, {$push: {"cart": req.params.productID}}, (error, data) => 
+    {
+        if(error){
+            return next(createError(400, `Error on update.`))
+        }else{
+            res.json(data)
+        }
+    })
+}
+
 
 router.post(`/Users/register/:name/:email/:password`, checkUserNotExists, createUser, logInUser)
 
@@ -132,19 +160,6 @@ router.get('/Users', (req, res) =>
     })
 })
 
-router.post('/Users/validateUser', (req, res) => 
-{
-    console.log(req.headers.Authorization)
-    //we verify the user and return name, access level and token in order to avoid changes in web from changing the access level in app display on dev tools
-    jwt.verify(req.headers.Authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
-
-        if( typeof decodedToken  == 'undefined'){
-            res.json({accessLevel: 0})
-        }else{ç
-            res.json({accessLevel: decodedToken.accessLevel})
-        }
-        
-    })
-})
+router.put('/Users/addToCart/:productID', checkUserLogged, addToUserCart)
 
 module.exports = router
