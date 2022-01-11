@@ -8,6 +8,8 @@ import { ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants
 
 import WebHeader from "./WebHeader"
 import SkateGrid from "./skateGrid"
+import FilterModal from "./FilterModal"
+
 
 
 export default class SkateDisplay extends Component 
@@ -19,6 +21,7 @@ export default class SkateDisplay extends Component
         this.state = {
             products:[],//Aqui se cargarian las ids de los productos
             mounted: false,
+            filterModal: false,
             redirectAddForm: false
         }
     }
@@ -27,7 +30,22 @@ export default class SkateDisplay extends Component
     componentDidMount() 
     { 
 
-        if(typeof this.props.location.state != 'undefined'){
+        if(typeof this.props.location.apply == true){
+            axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}/${this.props.location.state.brand}/${this.props.location.state.size}/${this.props.location.state.price}`)
+            .then(res => 
+            {
+                if(res.data)
+                    {
+                        this.setState({products: res.data}) 
+                        this.setState({mounted: true})
+                    }
+                    else
+                    {
+                        console.log("Records not found")
+                    }
+            })
+        }
+        else if(typeof this.props.location.state != 'undefined'){
 
             //aqui se hace un get con categoria=lo que viene del redirect
 
@@ -78,15 +96,14 @@ export default class SkateDisplay extends Component
                         {localStorage.accessLevel > ACCESS_LEVEL_NORMAL_USER ? 
                             <div className="buttons-container">
                                 <Link className="blue-button" to="/addForm"> Add Product </Link>
+                                {this.state.filterModal ? <FilterModal 
+                                        category = {this.props.location.id}
+                                        closeModal = {this.showModal.bind(this)}
+                                      /> : null}
                             </div>
                         : null}
                         {this.state.mounted ? <SkateGrid skates={this.state.products}/> : null}
                         
-                        {/* this.state.products.forEach((index) =>{ //Lo de _id peta no se p q
-                            <skateHolder key={this.state.products[index]._id} skate={this.state.products[index]}/>
-                        }) */}
-                        
-                        {/* {this.state.products[0] ? this..products.map((product) => <SkateHolder key = {product._id} skate={product}/>) : null}} */}
                     </div>     
                 </div>
                 

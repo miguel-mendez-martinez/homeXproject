@@ -123,6 +123,16 @@ router.get('/DisplayAllSkates/:category', (req, res) =>
     })
 })
 
+router.get('/DisplayAllSkates/:category/:brand/:size/:price', (req, res) => ////////////
+{
+    skatesModel.find({type: req.params.category}, (error, data) =>
+    {
+        if(!error){
+            res.json(data)
+        }
+    })
+})
+
 router.get(`/DisplayAllSkates/get/:id`, checkUserLogged, findById)
 
 //Return a photo
