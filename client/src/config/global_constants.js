@@ -13,6 +13,14 @@ export const PRODUCTION_CLIENT_ID = "TO_MAKE_A_LIVE_REAL_WORLD_APPLICATION_REPLA
 //credit card details
 
 /* 
+Card Type: Visa
+
+Card Number: 4020029273449808
+
+Expiration Date: 03/2023
+
+CVV: 633
+
     Card Type: Visa
 
     Card Number: 4063339830992366
