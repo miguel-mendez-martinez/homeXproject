@@ -23,8 +23,6 @@ const createNewSaleDocument = (req, res, next) =>
     }else{
         saleDetails.customerEmail = 'GUEST'
     }
-    
-        
         
     skatesModel.findByIdAndRemove(req.params.productID, (error, data) => 
     {
