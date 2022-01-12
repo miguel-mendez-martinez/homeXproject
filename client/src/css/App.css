@@ -623,6 +623,7 @@ padding: 10px;
     #modalContent #product{
         display: flex;
         justify-content: center;
+        height: 540px;
     }
 
     #modalContent #product #productInfo{
