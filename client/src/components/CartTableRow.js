@@ -11,26 +11,33 @@ export default class CartTableRow extends Component
         super(props)
 
         this.state = {
-            product:  [],
-            mounted: false
+            mounted: false,
+            picture: ''
         }
 
     }
 
     componentDidMount()
     {
-        axios.get(`${SERVER_HOST}/DisplayAllSkates/get/${this.props.product}`, {headers:{"authorization":localStorage.token}})
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/photo/${this.props.product.photos[0].filename}`)
         .then(res => 
         {
             if(res.data)
+            {            
+                if (res.data.errorMessage)
                 {
-                    this.setState({product: res.data}) 
-                    this.setState({mounted: true})
+                    console.log(res.data.errorMessage)    
                 }
                 else
-                {
-                    console.log("Records not found")
-                }
+                {                
+                    this.setState({picture: res.data.image})
+                    this.setState({mounted: true})
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
         })
     }
 
@@ -38,16 +45,19 @@ export default class CartTableRow extends Component
     {
         let productInfo = ''
 
-        if(this.state.type === 'Wheels'){
-            productInfo = `${this.state.product.brand} ${this.state.product.size}mm ${this.state.product.type}`
+        if(this.props.product.type === 'Wheels'){
+            productInfo = `${this.props.product.brand} ${this.props.product.size}mm ${this.props.product.type}`
         }else{
-            productInfo = `${this.state.product.brand} ${this.state.product.size}" ${this.state.product.type}`
+            productInfo = `${this.props.product.brand} ${this.props.product.size}" ${this.props.product.type}`
         }
         return (
             <tr>
+                <td className="photosRow"> {this.state.mounted ? 
+                    <div className="productPhotos">
+                        <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> 
+                    </div>: null}</td>
                 <td>{productInfo}</td>
-                <td>{this.state.product.price}€</td>    
-                <td>Fotos</td>
+                <td>{this.props.product.price}€</td>    
             </tr>
         )
     }
