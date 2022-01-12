@@ -15,9 +15,8 @@ export default class Buy extends Component
 
         this.state = {redirectToPayPalMessage:false,
                       payPalMessageType:null,
-                      payPalPaymentID:null}
+                      payPalPaymentID:null,}
     }
-    
     
     onSuccess = paymentData =>
     {      
@@ -25,19 +24,35 @@ export default class Buy extends Component
 
         let now = Date.now()
 
-        axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${this.props.productID}/${this.props.price}/${paymentData.address.recipient_name}/${this.props.productName}/${now}`, formData, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
-        .then(res => 
-        {                   
-            this.setState({payPalMessageType:PayPalMessage.messageType.SUCCESS, 
-                           payPalPaymentID:paymentData.paymentID, 
-                           redirectToPayPalMessage:true}) 
+        this.props.productID.map( (prod, index) => {
+            axios.post(`${SERVER_HOST}/sales/${paymentData.paymentID}/${prod}/${this.props.price}/${paymentData.address.recipient_name}/${this.props.productName[index]}/${now}`, formData, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
+            .then(res => 
+            {                   
+                this.setState({payPalMessageType:PayPalMessage.messageType.SUCCESS, 
+                            payPalPaymentID:paymentData.paymentID, 
+                            redirectToPayPalMessage:true}) 
+            })
+            .catch(errorData =>
+            {
+                console.log("PayPal payment unsuccessful error:", errorData)            
+                this.setState({payPalMessageType:PayPalMessage.messageType.ERROR, 
+                            redirectToPayPalMessage:true}) 
+            })
         })
-        .catch(errorData =>
-        {
-            console.log("PayPal payment unsuccessful error:", errorData)            
-            this.setState({payPalMessageType:PayPalMessage.messageType.ERROR, 
-                           redirectToPayPalMessage:true}) 
-        })
+
+        axios.put(`${SERVER_HOST}/Users/clearCart`, formData, {headers:{"authorization":localStorage.token, "Content-type": "multipart/form-data"}})
+            .then(res => 
+            {                   
+                this.setState({payPalMessageType:PayPalMessage.messageType.SUCCESS, 
+                            payPalPaymentID:paymentData.paymentID, 
+                            redirectToPayPalMessage:true}) 
+            })
+            .catch(errorData =>
+            {
+                console.log("PayPal payment unsuccessful error:", errorData)            
+                this.setState({payPalMessageType:PayPalMessage.messageType.ERROR, 
+                            redirectToPayPalMessage:true}) 
+            })
     }
     
     
@@ -77,7 +92,6 @@ export default class Buy extends Component
                 
                     currency = "EUR"
                     total = {this.props.price}
-                
                     onSuccess = {this.onSuccess}
                     onError = {this.onError}               
                     onCancel = {this.onCancel}                   

@@ -16,7 +16,8 @@ export default class CartPage extends Component
 
         this.state = {
             products: null,
-            mounted: false
+            mounted: false,
+            showError: true
         }
 
     }
@@ -28,8 +29,11 @@ export default class CartPage extends Component
         {
             if(res.data)
                 {
-                    this.setState({products: res.data}) 
-                    this.setState({mounted: true})
+                    if(res.data[0].cart.length === 0){
+                        this.setState({showError: true, products: res.data, mounted: true})
+                    }else{
+                        this.setState({showError: false,  products: res.data, mounted: true})
+                    }
                 }
                 else
                 {
@@ -46,7 +50,7 @@ export default class CartPage extends Component
                 <div className="content-container">
                     <h2> {localStorage.name}'s cart page.</h2> <br/>
 
-                    {this.state.products === null ? 
+                    {this.state.showError ? 
                     <div className="errorDiv">No cart found for this user.</div>
                     : 
                     <div className="history-table">

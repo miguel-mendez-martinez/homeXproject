@@ -44,9 +44,20 @@ export default class CartTable extends Component
 
     render() 
     {
+        let productsID = []
         let precioTotalCarrito = 0
+        let datosProductos = []
+        let productInfo = ''
+        
         this.state.product.map(product => {
+            productsID.push(product._id)
             precioTotalCarrito += product.price
+            if(product.type === 'Wheels'){
+                productInfo = `${product.brand} ${product.size}mm ${product.type}`
+            }else{
+                productInfo = `${product.brand} ${product.size}" ${product.type}`
+            }
+            datosProductos.push(productInfo)
             return null
         })
         return (
@@ -62,7 +73,7 @@ export default class CartTable extends Component
                 <tbody>
                     { this.state.product.map(element => <CartTableRow key={element._id} product={element}/>) } 
                     <tr id="totalCartPrice">
-                    <td> { <Buy productID='hola' productName='buenas' price={precioTotalCarrito} /> } </td>
+                    <td> { <Buy productID={productsID} productName={datosProductos} price={precioTotalCarrito} /> } </td>
                         <td>Total</td>
                         <td> {precioTotalCarrito}€</td>
                     </tr>

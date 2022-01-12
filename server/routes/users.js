@@ -150,6 +150,17 @@ const getCartProducts = (req, res, next) =>
     })
 }
 
+const clearCart = (req, res, next) => {
+    usersModel.findOneAndUpdate({email: req.decodedToken.email}, {$set: {"cart": []}}, (error, data) => 
+    {
+        if(error){
+            return next(createError(400, `Error adding to cart.`))
+        }else{
+            res.json(data)
+        }
+    })
+}
+
 
 router.post(`/Users/register/:name/:email/:password`, checkUserNotExists, createUser, logInUser)
 
@@ -175,4 +186,5 @@ router.put('/Users/addToCart/:productID', checkUserLogged, addToUserCart)
 
 router.get('/Users/shopCart', checkUserLogged, getCartProducts)
 
+router.put('/Users/clearCart', checkUserLogged, clearCart)
 module.exports = router

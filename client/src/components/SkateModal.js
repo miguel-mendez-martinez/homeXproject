@@ -107,7 +107,7 @@ export default class SkateModal extends Component{
                         </div>
                         {localStorage.accessLevel < ACCESS_LEVEL_ADMIN ? 
                         <div id="buttons"> 
-                            <Buy productID={this.state.id} productName={productInfo} price={this.state.skate.price} />
+                            <Buy productID={[this.state.id]} productName={[productInfo]} price={this.state.skate.price} />
                             {localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? null : <input type="button" className="green-button" value="Add To Cart" onClick={this.addToCart}/>}
                         </div>: 
                         <div id="buttons">
