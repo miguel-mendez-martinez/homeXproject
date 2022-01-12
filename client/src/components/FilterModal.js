@@ -1,5 +1,7 @@
 import React, {Component} from "react"
-import {Link} from "react-router-dom"
+
+import {Redirect} from 'react-router-dom'
+
 
 
 
@@ -10,11 +12,10 @@ export default class FilterModal extends Component{
         super(props)
 
         this.state = {
-                    category: this.props.category,
                     brand: '',
                     size: 8,
                     price: 50,
-                    apply : false  }
+                    redirect : false  }
     }
 
 
@@ -36,9 +37,17 @@ export default class FilterModal extends Component{
         this.setState({brand: e.target.value})
     }
 
+    onClick = e =>{
+        if(e.target.name === 'apply')
+            this.props.changeFilters(this.state.brand, this.state.size, this.state.price)
+        else
+            this.setState({redirect: true})
+    }
+
     render(){
         return(
             <div id="modal"> 
+            {this.state.redirect? <Redirect to="/Home"/>: null}
                 <div id="modalContent">
                     <div className="modal-body">
                         <div id="info">
@@ -64,8 +73,8 @@ export default class FilterModal extends Component{
                             </div>
                         </div>
                         <div id="buttons">
-                            <Link className="green-button" to={ { pathname: `/Home`, state: { id: this.state.category, brand: this.state.brand, size: this.state.size, price: this.state.price, filters: true} }}>Apply</Link>
-                            <Link className="blue-button" to={ { pathname: `DisplayAllSkates`, state: { id: '', filters: false} }}>Clear</Link>
+                            <button name="apply" className="green-button" onClick={this.onClick}>Apply</button>
+                            <button name="clear" className="red-button" onClick={this.onClick}>Clear</button>
                         </div>
                     </div>
                 </div>

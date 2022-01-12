@@ -30,24 +30,7 @@ export default class SkateDisplay extends Component
     componentDidMount() 
     { 
         console.log(this.props.location.state)
-
-        if(this.props.location.state.filters === true){
-            axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}/${this.props.location.state.brand}/${this.props.location.state.size}/${this.props.location.state.price}`)
-            .then(res => 
-            {
-                console.log(1, res.data)
-                if(res.data)
-                    {
-                        this.setState({products: res.data}) 
-                        this.setState({mounted: true})
-                    }
-                    else
-                    {
-                        console.log("Records not found")
-                    }
-            })
-        }
-        else if(typeof this.props.location.state.id !== 'undefined' || this.props.location.state.id !== ""){
+        if(typeof this.props.location.state !== 'undefined' && typeof this.props.location.state.id !== 'undefined' ){
 
             //aqui se hace un get con categoria=lo que viene del redirect
 
@@ -86,6 +69,22 @@ export default class SkateDisplay extends Component
         }      
     }
 
+    changeFilters(brand, size, price){
+        console.log(this.props.location.state.id,brand, size, price)
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/filters/${this.props.location.state.id}/${brand}/${size}/${price}`)
+        .then(res => 
+        {
+            console.log(1, res.data)
+            if(res.data)
+                {
+                    this.setState({products: res.data}) 
+                }
+                else
+                {
+                    console.log("Records not found")
+                }
+        })
+    }
 
     clickOn = e => {
         this.showFilterModal()
@@ -117,7 +116,7 @@ export default class SkateDisplay extends Component
                 {this.state.filterModal ? <FilterModal 
                                         category = {this.props.location.id}
                                         closeModal = {this.showFilterModal.bind(this)}
-                                        filterChange = {this.changeFilters.bind(this)}
+                                        changeFilters = {this.changeFilters.bind(this)}
                                       /> : null}
             </div> 
             
