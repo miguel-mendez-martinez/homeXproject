@@ -23,13 +23,21 @@ const createNewSaleDocument = (req, res, next) =>
     }else{
         saleDetails.customerEmail = 'GUEST'
     }
-    
-        
+
+    let pathArray = __dirname.split('\\')
+    let path = pathArray.splice(-0, pathArray.length - 1).join('\\')
         
     skatesModel.findByIdAndRemove(req.params.productID, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on delete: ${error}`))
+        }else{
+            fs.unlink(`${path}\\uploads\\${data.photos[0].filename}`, (err) => {
+                if(err)
+                    return next(createError(400, `Error on image deleting.`))
+                else
+                    res.json(data)
+            })
         }
     })
     

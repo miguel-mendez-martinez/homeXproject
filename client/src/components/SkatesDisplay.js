@@ -70,8 +70,13 @@ export default class SkateDisplay extends Component
     }
 
     changeFilters(brand, size, price){
-        console.log(this.props.location.state.id,brand, size, price)
-        axios.get(`${SERVER_HOST}/DisplayAllSkates/filters/${this.props.location.state.id}/${brand}/${size}/${price}`)
+        let category = ''
+        typeof this.props.location.state === 'undefined'? category = 'none' : category = this.props.location.state.id
+        if(category === '') category = 'none'
+        
+        if(brand === '') brand = 'none'
+        
+        axios.get(`${SERVER_HOST}/DisplayAllSkates/filters/${category}/${brand}/${size}/${price}`)
         .then(res => 
         {
             console.log(1, res.data)

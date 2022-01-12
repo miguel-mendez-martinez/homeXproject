@@ -75,7 +75,7 @@ const addProduct = (req, res, next) =>{
 const deleteProduct = (req, res, next) =>{
     let pathArray = __dirname.split('\\')
     let path = pathArray.splice(-0, pathArray.length - 1).join('\\')
-    console.log(path)
+
     skatesModel.findByIdAndRemove(req.params.id, (error, data) => 
     {
         if(error){
@@ -103,11 +103,90 @@ const updateProduct = (req, res, next) =>{
     })
 }
 
+const checkFilterParams = (req, res, next) =>{
+    req.filters = -1
+    let num = 0
+
+    if(req.params.category !== 'none') num += 1
+    if(req.params.brand !== 'none') num +=2
+
+    switch(num){
+        case 0: req.filters = 0 
+            break
+        case 1: req.filters = 1
+            break
+        case 2: req.filters = 2
+            break
+        case 3: req.filters = 3
+            break
+    }
+
+    return next()
+}
+
+const filter = (req, res, next) =>{
+    console.log(req.params)
+    switch(req.filters){
+        case 0:
+            skatesModel.find({$and : [
+                    {price: {$lte: req.params.price}},
+                    {size: req.params.size}]}, (error, data) =>
+                {
+                if(error)
+                    return next(createError(400, `Error on filters.,${error}`))
+                else
+                    res.json(data)
+                })
+            break
+        case 1:
+            skatesModel.find({$and : [
+                {type: req.params.category},
+                {price: {$lte: req.params.price}},
+                {size: req.params.size}]}, (error, data) =>
+            {
+            if(error)
+                return next(createError(400, `Error on filters.`))
+            else
+                res.json(data)
+            })
+            break
+        case 2:
+            skatesModel.find({$and : [
+                {brand: req.params.brand},
+                {price: {$lte: req.params.price}},
+                {size: req.params.size}]}, (error, data) =>
+            {
+            if(error)
+                return next(createError(400, `Error on filters.`))
+            else
+                res.json(data)
+            })
+            break   
+        case 3:
+            skatesModel.find({$and : [
+                {type: req.params.category},
+                {brand: req.params.brand},
+                {price: {$lte: req.params.price}},
+                {size: req.params.size}]}
+            , (error, data) =>
+            {
+            if(error)
+                return next(createError(400, `Error on filters.`))
+            else
+                res.json(data)
+            })
+            break  
+    }
+    
+}
+
 router.get('/DisplayAllSkates', (req, res) => 
 {
     skatesModel.find({}, (error, data) =>
     {
-        if(!error){
+        if(error){
+            return createError(400, `Error on get.`)
+        }else{
             res.json(data)
         }
     })
@@ -117,27 +196,31 @@ router.get('/DisplayAllSkates/:category', (req, res) =>
 {
     skatesModel.find({type: req.params.category}, (error, data) =>
     {
-        if(!error){
+        if(error){
+            return createError(400, `Error on getting categories.`)
+        }else{
             res.json(data)
         }
     })
 })
 
-router.get('/DisplayAllSkates/filters/:category/:brand/:size/:price', (req, res) => 
-{
+/* router.get('/DisplayAllSkates/filters/:category/:brand/:size/:price', (req, res) =>{
     console.log(req.params)
-    skatesModel.find({ $or: [
-                            {type: req.params.category},
-                            {brand: req.params.brand},
-                            {size: req.params.size},
-                            {$lt: {type: req.params.price}},
-                            ]}, (error, data) =>
+
+
+    skatesModel.find({$and :[
+        {type: req.params.category},
+        {size: req.params.size}
+    ]}, (error, data) =>
     {
-        if(!error){
+        if(error){
+            return next(createError(400, `Error on filters.`))
+        }else{
             res.json(data)
         }
     })
-})
+}) */
+
 
 router.get(`/DisplayAllSkates/get/:id`, checkUserLogged, findById)
 
@@ -156,6 +239,8 @@ router.get(`/DisplayAllSkates/photo/:filename`, (req, res) =>
         }
     })             
 })
+
+router.get('/DisplayAllSkates/filters/:category/:brand/:size/:price', checkFilterParams, filter) 
 
 router.post('/DisplayAllSkates', upload.array("productPhotos", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, checkIfAdmin, addProduct)
 
