@@ -1,13 +1,13 @@
 import React, {Component} from "react"
 
-import HistoryTable from './HistoryTable.js'
+import CartTable from './CartTable.js'
 
 import axios from "axios"
 
 import {SERVER_HOST} from "../config/global_constants"
 import WebHeader from "./WebHeader"
 
-export default class AccountPage extends Component 
+export default class CartPage extends Component 
 {
 
     constructor(props) 
@@ -15,21 +15,20 @@ export default class AccountPage extends Component
         super(props)
 
         this.state = {
-            name: this.props.location.state.id,
-            transactions: null
+            products: null,
+            mounted: false
         }
 
     }
 
     componentDidMount()
     {
-        //we need to get the history from the account
-        axios.get(`${SERVER_HOST}/sales`, {headers:{"authorization":localStorage.token}})
+        axios.get(`${SERVER_HOST}/Users/shopCart`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {
             if(res.data)
                 {
-                    this.setState({transactions: res.data}) 
+                    this.setState({products: res.data}) 
                     this.setState({mounted: true})
                 }
                 else
@@ -42,17 +41,16 @@ export default class AccountPage extends Component
     render() 
     {   
         return (       
-            
             <div className="web-container">
                 <WebHeader/>
                 <div className="content-container">
-                    <h2> {this.state.name}'s history page.</h2> <br/>
+                    <h2> {localStorage.name}'s cart page.</h2> <br/>
 
-                    {this.state.transactions === null ? 
-                    <div className="errorDiv">No history found for this user.</div>
+                    {this.state.products === null ? 
+                    <div className="errorDiv">No cart found for this user.</div>
                     : 
                     <div className="history-table">
-                        <HistoryTable transactions={this.state.transactions} /> 
+                        {this.state.products.map((product) => <CartTable products={product} key={product}/>)}
                     </div>} 
                 </div>
             </div>

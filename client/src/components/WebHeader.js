@@ -48,7 +48,7 @@ export default class WebHeader extends Component
                              </div>}
                              {localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER ? null: 
                              <div className="shopCart">
-                                <CartOutline color={'#00000'} height="50px" width="50px"/>
+                                <Link to='/shoppingCart'> <CartOutline color={'#00000'} height="50px" width="50px"/> </Link>
                              </div>}
                     </div>
                     <div className="navigation">

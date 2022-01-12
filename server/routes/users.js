@@ -132,7 +132,18 @@ const addToUserCart = (req, res, next) =>
     usersModel.findOneAndUpdate({email: req.decodedToken.email}, {$push: {"cart": req.params.productID}}, (error, data) => 
     {
         if(error){
-            return next(createError(400, `Error on update.`))
+            return next(createError(400, `Error adding to cart.`))
+        }else{
+            res.json(data)
+        }
+    })
+}
+
+const getCartProducts = (req, res, next) => 
+{
+    usersModel.find({email: req.decodedToken.email}, {cart: 1, _id: 0}, (error, data) => {
+        if(error){
+            return next(createError(400, `Error on getting items from the cart.`))
         }else{
             res.json(data)
         }
@@ -161,5 +172,7 @@ router.get('/Users', (req, res) =>
 })
 
 router.put('/Users/addToCart/:productID', checkUserLogged, addToUserCart)
+
+router.get('/Users/shopCart', checkUserLogged, getCartProducts)
 
 module.exports = router

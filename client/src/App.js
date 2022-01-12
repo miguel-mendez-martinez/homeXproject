@@ -17,10 +17,11 @@ import LoggedInRoute from "./components/LoggedInRoute"
 import Home from "./components/Home"
 import Buy from "./components/Buy"
 import PayPalMessage from "./components/PayPalMessage"
-
-import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import Categories from "./components/Categories"
 import AccountPage from "./components/accountPage"
+import CartPage from "./components/CartPage"
+
+import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 
 if (typeof localStorage.accessLevel === "undefined")
     {
@@ -48,6 +49,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/deleteForm/:id" component={deleteForm}/>
                     <LoggedInRoute exact path="/modForm/:id" component={modForm}/>
                     <LoggedInRoute exact path="/account" component={AccountPage}/>
+                    <LoggedInRoute exact path="/shoppingCart" component={CartPage}/>
                     <Route exact path="/resetDB" component={resetDB}/>
                     <Route exact path="/categories" component={Categories}/>
                     <Route exact path="/Home" component={Home}/>
