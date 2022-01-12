@@ -72,14 +72,9 @@ export default class SkateModal extends Component{
     render(){
         let productInfo = ''
         let productSize = ''
-
-        if(this.state.type === 'Wheels'){
-            productInfo = `${this.state.skate.brand} ${this.state.skate.size}mm ${this.state.skate.type}`
-            productSize = `${this.state.skate.size}mm`
-        }else{
-            productInfo = `${this.state.skate.brand} ${this.state.skate.size}" ${this.state.skate.type}`
-            productSize = `${this.state.skate.size}"`
-        }
+        productInfo = `${this.state.skate.brand} ${this.state.skate.size}" ${this.state.skate.type}`
+        productSize = `${this.state.skate.size}"`
+        
 
         return(
             <div id="modal"> 

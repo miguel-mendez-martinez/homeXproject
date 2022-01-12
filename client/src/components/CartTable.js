@@ -52,11 +52,8 @@ export default class CartTable extends Component
         this.state.product.map(product => {
             productsID.push(product._id)
             precioTotalCarrito += product.price
-            if(product.type === 'Wheels'){
-                productInfo = `${product.brand} ${product.size}mm ${product.type}`
-            }else{
-                productInfo = `${product.brand} ${product.size}" ${product.type}`
-            }
+            productInfo = `${product.brand} ${product.size}" ${product.type}`
+            
             datosProductos.push(productInfo)
             return null
         })

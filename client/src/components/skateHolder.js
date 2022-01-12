@@ -63,11 +63,7 @@ export default class SkateHolder extends Component
     render() 
     {
         let productInfo = ''
-        if(this.state.type === 'Wheels'){
-            productInfo = `${this.state.brand} ${this.state.size}mm ${this.state.type}`
-        }else{
-            productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
-        }
+        productInfo = `${this.state.brand} ${this.state.size}" ${this.state.type}`
         let productPrice = `${this.state.price}€`
         return (
             <div className="skate" onClick={this.clickOn}>

@@ -29,7 +29,6 @@ export default class SkateDisplay extends Component
 
     componentDidMount() 
     { 
-        console.log(this.props.location.state)
         if(typeof this.props.location.state !== 'undefined' && typeof this.props.location.state.id !== 'undefined' ){
 
             //aqui se hace un get con categoria=lo que viene del redirect
@@ -38,7 +37,6 @@ export default class SkateDisplay extends Component
             axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}`)
             .then(res => 
             {
-                console.log(2, res.data)
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
@@ -55,7 +53,6 @@ export default class SkateDisplay extends Component
             axios.get(`${SERVER_HOST}/DisplayAllSkates`)
             .then(res => 
             {
-                console.log(3, res.data)
                 if(res.data)
                     {
                         this.setState({products: res.data}) 
