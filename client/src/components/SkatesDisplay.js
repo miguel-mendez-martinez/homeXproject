@@ -31,7 +31,7 @@ export default class SkateDisplay extends Component
     { 
         console.log(this.props.location.state)
 
-        if(this.props.location.state.apply === true){
+        if(this.props.location.state.filters === true){
             axios.get(`${SERVER_HOST}/DisplayAllSkates/${this.props.location.state.id}/${this.props.location.state.brand}/${this.props.location.state.size}/${this.props.location.state.price}`)
             .then(res => 
             {
@@ -47,7 +47,7 @@ export default class SkateDisplay extends Component
                     }
             })
         }
-        else if(typeof this.props.location.state.id != 'undefined' || this.props.location.state.id !== ""){
+        else if(typeof this.props.location.state.id !== 'undefined' || this.props.location.state.id !== ""){
 
             //aqui se hace un get con categoria=lo que viene del redirect
 
@@ -117,6 +117,7 @@ export default class SkateDisplay extends Component
                 {this.state.filterModal ? <FilterModal 
                                         category = {this.props.location.id}
                                         closeModal = {this.showFilterModal.bind(this)}
+                                        filterChange = {this.changeFilters.bind(this)}
                                       /> : null}
             </div> 
             

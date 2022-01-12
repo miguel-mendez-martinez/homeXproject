@@ -56,7 +56,7 @@ export default class WebHeader extends Component
                             <li>
                                 <span>
                                     <HomeOutline className="navigation-icon" color={'#00000'} title={"home"} height="25px" width="25px"/>
-                                    <Link className="navigation-item" to='/Home'> Home </Link>
+                                    <Link className="navigation-item" to="/Home" > Home </Link>
                                 </span>
                             </li>
                             <li>

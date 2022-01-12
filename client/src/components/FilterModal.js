@@ -12,8 +12,8 @@ export default class FilterModal extends Component{
         this.state = {
                     category: this.props.category,
                     brand: '',
-                    size: 50,
-                    price: 8,
+                    size: 8,
+                    price: 50,
                     apply : false  }
     }
 
@@ -64,8 +64,8 @@ export default class FilterModal extends Component{
                             </div>
                         </div>
                         <div id="buttons">
-                            <Link className="green-button" to={ { pathname: `DisplayAllSkates`, state: { id: this.state.category, brand: this.state.brand, size: this.state.size, price: this.state.price, apply: true} }}>Apply</Link>
-                            <Link className="blue-button" to={ { pathname: `DisplayAllSkates`, state: { id: '', apply: false} }}>Clear</Link>
+                            <Link className="green-button" to={ { pathname: `/Home`, state: { id: this.state.category, brand: this.state.brand, size: this.state.size, price: this.state.price, filters: true} }}>Apply</Link>
+                            <Link className="blue-button" to={ { pathname: `DisplayAllSkates`, state: { id: '', filters: false} }}>Clear</Link>
                         </div>
                     </div>
                 </div>

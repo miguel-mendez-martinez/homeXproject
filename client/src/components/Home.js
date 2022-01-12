@@ -6,9 +6,8 @@ export default class Home extends Component
 {
     render() 
     {   
-        return (           
-            
-            <Redirect to={{ pathname: '/displayAllSkates', state: { id: '' } }}/> 
+        return (       
+            <Redirect to={{ pathname: '/DisplayAllSkates', state: { id: '' } }}/> 
         )
     }
 }
