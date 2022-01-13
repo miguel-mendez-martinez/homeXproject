@@ -37,6 +37,8 @@ export default class CartTable extends Component
                     {
                         console.log("Records not found")
                     }
+            }).catch(error =>{
+                console.log("err:" + error.response.data)
             })
             return null
         })

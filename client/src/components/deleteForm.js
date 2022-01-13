@@ -30,7 +30,7 @@ export default class deleteForm extends Component
             }else{
                 console.log("Record not deleted")
             }
-        }).catch(err =>{
+        }).catch(error =>{
             console.log("err:" + error.response.data)
         })                    
     }

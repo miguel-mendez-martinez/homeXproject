@@ -38,6 +38,8 @@ export default class CartTableRow extends Component
             {
                 console.log("Record not found")
             }
+        }).catch(error =>{
+            console.log("err:" + error.response.data)
         })
     }
 

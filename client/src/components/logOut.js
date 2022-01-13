@@ -47,6 +47,8 @@ export default class LogOut extends Component
             {
                 console.log("Logout failed")
             }
+        }).catch(error =>{
+            console.log("err:" + error.response.data)
         })                     
     }
 

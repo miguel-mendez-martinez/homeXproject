@@ -39,6 +39,8 @@ export default class CartPage extends Component
                 {
                     console.log("Records not found")
                 }
+        }).catch(error =>{
+            console.log("err:" + error.response.data)
         })
     }
 
