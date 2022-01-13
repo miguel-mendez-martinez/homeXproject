@@ -29,13 +29,15 @@ export default class AccountPage extends Component
         {
             if(res.data)
                 {
-                    this.setState({transactions: res.data}) 
-                    this.setState({mounted: true})
+                this.setState({transactions: res.data}) 
+                this.setState({mounted: true})
                 }
-                else
+            else
                 {
-                    console.log("Records not found")
+                console.log("Records not found")
                 }
+        }).catch(error =>{
+            console.log("err:" + error.response.data)
         })
     }
 

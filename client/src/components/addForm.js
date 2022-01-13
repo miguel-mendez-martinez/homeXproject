@@ -115,7 +115,7 @@ export default class addForm extends Component
                 <div className="form-container">
                     {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null} 
                     <label>
-                        Type:{/* <input type="text" name="type" onChange={this.handleChange}/> */}
+                        Type:
                         <div className="customSelect">
                             <select name="type" defaultValue="Deck" onChange={this.handleChange}>
                                 <option value="Deck">Deck</option>
