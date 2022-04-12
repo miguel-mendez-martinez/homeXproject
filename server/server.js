@@ -18,9 +18,7 @@ app.listen(process.env.SERVER_PORT, () =>
     console.log(`Connected to port ` + process.env.SERVER_PORT)
 })
 
-app.use(require(`./routes/skates`))
 app.use(require(`./routes/users`))
-app.use(require(`./routes/sales`))
 // Error 404
 app.use((req, res, next) => {next(createError(404))})
 

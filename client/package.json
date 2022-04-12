@@ -1,5 +1,5 @@
 {
-  "name": "skateshop-project",
+  "name": "rentalweb-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -35,8 +35,8 @@
       "last 1 safari version"
     ]
   },
-  "description": "Final project for Mobile Devices course 2021, a skate shop.",
+  "description": "Final project for software engireering.",
   "main": "index.js",
-  "author": "Pablo Souto Soneira & Miguel Mendez",
+  "author": "Group 3",
   "license": "ISC"
 }
