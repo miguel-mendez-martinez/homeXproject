@@ -9,11 +9,10 @@ let userSchema = new mongoose.Schema(
         name: {type: String, required: true},
         email: {type: String, match: [emailPattern, "Email must be valid."], required: true},
         password: {type: String, required: true},
-        accessLevel: {type: Number, match: [accessLevels, "Invalid Access Level"], required: true},
-        cart: { type : Array , "default" : [] }
+        accessLevel: {type: Number, match: [accessLevels, "Invalid Access Level"], required: true}
    },
    {
-        collection: `Users`
+        collection: `users`
    })
 
-module.exports = mongoose.model(`Users`, userSchema)
+module.exports = mongoose.model(`users`, userSchema)

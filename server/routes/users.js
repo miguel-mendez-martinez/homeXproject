@@ -1,9 +1,11 @@
 const router = require(`express`).Router()
 const usersModel = require(`../models/users`)
+const tenantModel = require(`../models/tenants`)
+const residentModel = require(`../models/residents`)
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const createError = require('http-errors')
-
+const multer  = require('multer')
 
 //Middleware
 const checkUserExists = (req, res, next) =>
@@ -66,7 +68,7 @@ const createUser = (req, res, next) =>
         {
             return next(err)
         }
-        usersModel.create({name:req.params.name,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
+        usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
         {
             if(err)
             {
@@ -76,6 +78,33 @@ const createUser = (req, res, next) =>
             return next()
         })
     })
+}
+
+const createTypeUser = (req, res, next) => 
+{
+      
+    //here we check if the user is a tenant or a resident and next we will create an object of one of those 
+    if(req.params.type == "Tenant"){
+        tenantModel.create({userID: req.data._id, name:req.params.name, id:req.params.id, phoneNumber:req.params.phoneNumber}, (err, data) => 
+        {
+            if(err)
+            {
+                return next(err)
+            }
+            req.data = data
+            return next()
+        })
+    }else{
+        residentModel.create({userID: req.data._id, name:req.params.name, id:req.params.id, phoneNumber:req.params.phoneNumber}, (err, data) => 
+        {
+            if(err)
+            {
+                return next(err)
+            }
+            req.data = data
+            return next()
+        })
+    }
 }
 
 const eliminateCollection = (req, res, next) =>
@@ -127,42 +156,8 @@ const checkUserLogged = (req, res, next) =>
     })
 }
 
-const addToUserCart = (req, res, next) => 
-{
-    usersModel.findOneAndUpdate({email: req.decodedToken.email}, {$push: {"cart": req.params.productID}}, (error, data) => 
-    {
-        if(error){
-            return next(createError(400, `Error adding to cart.`))
-        }else{
-            res.json(data)
-        }
-    })
-}
 
-const getCartProducts = (req, res, next) => 
-{
-    usersModel.find({email: req.decodedToken.email}, {cart: 1, _id: 0}, (error, data) => {
-        if(error){
-            return next(createError(400, `Error on getting items from the cart.`))
-        }else{
-            res.json(data)
-        }
-    })
-}
-
-const clearCart = (req, res, next) => {
-    usersModel.findOneAndUpdate({email: req.decodedToken.email}, {$set: {"cart": []}}, (error, data) => 
-    {
-        if(error){
-            return next(createError(400, `Error adding to cart.`))
-        }else{
-            res.json(data)
-        }
-    })
-}
-
-
-router.post(`/Users/register/:name/:email/:password`, checkUserNotExists, createUser, logInUser)
+router.post(`/Users/register/:userName/:email/:type/:name/:id/:phoneNumber/:password`, checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
 
 router.post(`/Users/login/:email/:password`, checkUserExists, checkLogIn, logInUser) 
 
@@ -181,10 +176,4 @@ router.get('/Users', (req, res) =>
         }
     })
 })
-
-router.put('/Users/addToCart/:productID', checkUserLogged, addToUserCart)
-
-router.get('/Users/shopCart', checkUserLogged, getCartProducts)
-
-router.put('/Users/clearCart', checkUserLogged, clearCart)
 module.exports = router

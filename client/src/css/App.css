@@ -1,3 +1,28 @@
 body{
     background-color: #D39DD1;
 }
+
+span {
+    position:absolute;
+    top:-2px;
+    left: 195px;
+    font-size: 20px;
+    color:green;
+    vertical-align: middle;  
+    display:none;
+}
+
+/* we should change the position of the check when the style is finished this is only for confirmations */
+
+.CorrectTick
+{
+    display:block !important;
+}
+
+.nameContainer,
+.emailContainer,
+.passwordContainer,
+.confirmPasswordContainer
+{
+    position:relative;  
+}
