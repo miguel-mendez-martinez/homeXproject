@@ -1,10 +1,6 @@
 const mongoose = require(`mongoose`)
 
-const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-const accessLevels = [0, 1, 2]
-
-let tenantSchema = new mongoose.Schema(
+let residentSchema = new mongoose.Schema(
    {
         userID: {type: String, required:true},
         name: {type: String, required: true},
@@ -15,4 +11,4 @@ let tenantSchema = new mongoose.Schema(
         collection: `residents`
    })
 
-module.exports = mongoose.model(`residents`, tenantSchema)
+module.exports = mongoose.model(`residents`, residentSchema)

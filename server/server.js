@@ -19,6 +19,8 @@ app.listen(process.env.SERVER_PORT, () =>
 })
 
 app.use(require(`./routes/users`))
+app.use(require(`./routes/properties`))
+app.use(require(`./routes/contracts`))
 // Error 404
 app.use((req, res, next) => {next(createError(404))})
 
