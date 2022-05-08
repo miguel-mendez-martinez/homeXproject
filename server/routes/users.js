@@ -156,17 +156,17 @@ const checkUserLogged = (req, res, next) =>
     })
 }
 
-
+//Register
 router.post(`/Users/register/:userName/:email/:type/:name/:id/:phoneNumber/:password`, checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
-
+//Log in
 router.post(`/Users/login/:email/:password`, checkUserExists, checkLogIn, logInUser) 
-
+//Drop Database
 router.post(`/Users/resetUsers`, eliminateCollection, createAdmin)
-
+//Log out
 router.post(`/Users/logout`, (req,res) => {       
     res.json({})
 })
-
+//Retrive all users
 router.get('/Users', (req, res) => 
 {
     usersModel.find({}, (error, data) =>
@@ -176,4 +176,5 @@ router.get('/Users', (req, res) =>
         }
     })
 })
+
 module.exports = router

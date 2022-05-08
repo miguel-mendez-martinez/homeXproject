@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 import Home from "./components/Home"
 import userCreationForm from "./components/userCreationForm"
+import logInForm from "./components/logInForm"
+
 
 
 export default class App extends Component 
@@ -16,7 +18,8 @@ export default class App extends Component
                 <Switch>                 
                     <Route exact path="/" component={Home} />
                     <Route exact path="/registerUser" component={userCreationForm} />
-                    <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/> {/* si es mala la url sale esto */}                           
+                    <Route exact path="/logInForm" component={logInForm}/>
+                    <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
                 </Switch>
             </BrowserRouter>
         )

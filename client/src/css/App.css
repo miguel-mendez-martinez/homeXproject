@@ -1,5 +1,5 @@
 body{
-    background-color: #D39DD1;
+    background-color: #F2F8FF;
 }
 
 span {
@@ -25,4 +25,68 @@ span {
 .confirmPasswordContainer
 {
     position:relative;  
+}
+
+input{
+    text-align: center;
+}
+
+.web-container
+{
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #F2F8FF;
+}
+
+.login-container{
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    border:thin solid #172ec9;
+}
+
+.logo-container{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    border:thin solid #ee0505;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.form-container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border:thin solid #ee0505;
+    padding: 20px;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    display: flex;  
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.left-button{
+    padding: 40px;
+    flex: 15;
+}
+
+.right-button{
+    flex: 1;
+    padding-right: 30px;
 }

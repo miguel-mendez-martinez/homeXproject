@@ -193,9 +193,11 @@ export default class userForm extends Component
         return (       
             
             <div className="web-container">
+                {this.state.redirect ? <Redirect to="/"/> : null}
+                <div className="logo-container">
+                    <img src={require("../images/logo.png")} alt=""/>
+                </div>
                 <div className="form-container">
-                    {this.state.redirect ? <Redirect to="/"/> : null}
-                    <h2>User Registration</h2>
                     {this.state.userExitsError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
 
                     <div className="nameContainer">
@@ -279,7 +281,7 @@ export default class userForm extends Component
 
                     <input type="button" className="green-button" value="Add User" disabled = {!inputsAreAllValid} onClick={this.addUser}/>
                     {/* <input type="button" value="Cancel" onClick={this.cancelCar}/> */} {/* it should be a link */}
-                    <Link className="red-button" to="/DisplayAllSkates"> Cancel </Link>
+                    <Link className="red-button" to="/LogInForm"> Cancel </Link>
                 </div> 
             </div>
         )
