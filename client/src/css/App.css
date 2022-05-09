@@ -53,9 +53,12 @@ input{
     display: flex;
     justify-content: center;
     margin: 0 auto;
-    border:thin solid #ee0505;
-    margin-top: 100px;
     margin-bottom: 30px;
+}
+
+.logo-container #bigSizeLogo{
+    width: auto;
+    height: 400px;
 }
 
 .form-container
@@ -63,14 +66,18 @@ input{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border:thin solid #ee0505;
+    align-items: center;
     padding: 20px;
     width: 30%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
-    margin-top: 60px;
-    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.form-container input{
+    width: 100%;
+    height: 77px;
 }
 
 .button-container{
@@ -82,11 +89,69 @@ input{
 }
 
 .left-button{
+    border: thin solid red;
     padding: 40px;
     flex: 15;
 }
 
 .right-button{
+    border: thin solid red;
     flex: 1;
     padding-right: 30px;
+}
+
+/*special buttons*/
+.green-button,
+.red-button,
+.blue-button
+{
+    padding: 10px 13px;
+    font-size: 1rem;
+    line-height: normal;
+    border-radius: 0.2rem;
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    margin-right: 10px;
+    position: relative;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+.green-button
+{
+    background-color: #28a745;
+}
+
+.red-button
+{
+    background-color: #dc3545;
+}
+
+.blue-button
+{
+    background-color: #3545dc;
+}
+
+.green-button:hover,
+.red-button:hover,
+.blue-button:hover
+{
+    text-decoration: none;
+    color:#fff;
+}
+
+.green-button:hover
+{
+    background-color: #107020; 
+}
+
+.red-button:hover
+{
+  background-color: #a01020; 
+}
+
+.blue-button:hover
+{
+  background-color: #1020a0; 
 }

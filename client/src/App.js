@@ -16,7 +16,7 @@ export default class App extends Component
         return (
             <BrowserRouter>
                 <Switch>                 
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={logInForm} />
                     <Route exact path="/registerUser" component={userCreationForm} />
                     <Route exact path="/logInForm" component={logInForm}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           

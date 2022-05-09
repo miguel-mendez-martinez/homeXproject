@@ -87,21 +87,21 @@ export default class logInForm extends Component
                 {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
                 <div className="login-container">
                     <div className="logo-container">
-                        <img src={require("../images/logo.png")} alt=""/>
+                        <img id="bigSizeLogo" src={require("../images/logo.png")} alt=""/>
                     </div>
 
                     <div className="form-container">
                         {this.state.logInError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
-                        <input id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
-                        <input id="password" type="password" name="password"  placeholder="Password" onChange={this.handleChange}/><br/>  
+                        <input class="form-control" id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
+                        <input class="form-control" id="password" type="password" name="password"  placeholder="Password" onChange={this.handleChange}/><br/>  
                     </div>
 
                     <div className="button-container">
                         <div className="left-button">
-                            <Link className="red-button" to="/registerUser"> Register </Link>
+                            <Link class="red-button" to="/registerUser"> Register </Link>
                         </div>
                         <div className="right-button">
-                            <input type="button" className="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
+                            <input type="button" class="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
                         </div> 
                     </div>
                 </div>
