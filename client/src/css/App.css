@@ -46,7 +46,6 @@ input{
     width: 100%;
     align-items: center;
     flex-direction: column;
-    border:thin solid #172ec9;
 }
 
 .logo-container{
@@ -86,22 +85,25 @@ input{
     display: flex;  
     margin-top: 60px;
     margin-bottom: 40px;
+    margin-right: 30px;
 }
 
 .left-button{
-    border: thin solid red;
     padding: 40px;
     flex: 15;
 }
 
+
 .right-button{
-    border: thin solid red;
-    flex: 1;
+    flex: 3;
+    display: flex;
     justify-content: center;
     align-items: center;
-    align-content: center;
-    padding-right: 30px;
-    padding-top: 30px;
+}
+
+.right-button #loginButton{
+    width: 80%;
+    height: 50%;
 }
 
 /*special buttons*/
@@ -116,7 +118,6 @@ input{
     color: #fff;
     background-color: #28a745;
     border-color: #28a745;
-    margin-right: 10px;
     position: relative;
     text-decoration: none;
     cursor:pointer;

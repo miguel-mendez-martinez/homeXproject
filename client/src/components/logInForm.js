@@ -18,7 +18,8 @@ export default class logInForm extends Component
         this.state = {
             email: '',
             password: '',
-            redirect:false,
+            redirectTenant:false,
+            redirectResident:false,
             logInError: false,
             errorMessage: ''
         }
@@ -60,7 +61,7 @@ export default class logInForm extends Component
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
             
-            this.setState({redirect:true})
+            this.setState({redirectTenant:true})
         }).catch((error)=>
         {
             console.log("error:", error.response.data)
@@ -84,7 +85,7 @@ export default class logInForm extends Component
         return (      
             
             <div className="web-container">
-                {this.state.redirect ? <Redirect to="/DisplayAllSkates"/> : null}
+                {this.state.redirectTenant ? <Redirect to="/tenantHome"/> : null}
                 <div className="login-container">
                     <div className="logo-container">
                         <img id="bigSizeLogo" src={require("../images/logo.png")} alt=""/>
@@ -98,10 +99,10 @@ export default class logInForm extends Component
 
                     <div className="button-container">
                         <div className="left-button">
-                            <Link class="red-button" to="/registerUser"> Register </Link>
+                            <Link id="registerButton" class="blue-button" to="/registerUser"> Register New User </Link>
                         </div>
                         <div className="right-button">
-                            <input type="button" class="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
+                            <input id="loginButton" type="button" class="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
                         </div> 
                     </div>
                 </div>

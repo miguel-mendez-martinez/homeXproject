@@ -10,12 +10,12 @@ const multer  = require('multer')
 //Middleware
 const checkUserExists = (req, res, next) =>
 {
+    console.log(req.params.email, req.params.password)
     usersModel.findOne({email:req.params.email}, (error, data) => 
     {
-        if(error){
+        if(error || data==null){
             return next(createError(400), `User doesn't exists.`)
         }
-
         req.data = data            
         return next()        
     })    
