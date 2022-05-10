@@ -1,12 +1,13 @@
 import React, {Component} from "react"
+import NavBar from "./NavBar"
 
 export default class HomeTenant extends Component 
 {
     render() 
     {   
         return (       
-            <div className="content-container">
-                <h1>Base Page</h1>
+            <div className="web-container"> 
+                <NavBar/>
             </div>
         )
     }
