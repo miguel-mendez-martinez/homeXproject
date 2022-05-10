@@ -6,7 +6,7 @@ import { PersonOutline } from 'react-ionicons'
 import { LogOutOutline } from 'react-ionicons'
 
 
-export default class navBar extends Component 
+export default class NavBar extends Component 
 {
     constructor(props) 
     {
@@ -24,45 +24,25 @@ export default class navBar extends Component
                 </div>
                 <div className="nav-items">
                     <div className="item-1">
-                        <HomeOutline
-                        color={'#00000'} 
-                        title={Home}
-                        height="250px"
-                        width="250px"
-                        />
+                        <HomeOutline color={'#00000'} title={"home"} height="25px"width="25px"/>
+                        <h2>Home</h2>
                     </div>
                     <div className="item-2">
-                        <DocumentsOutline
-                        color={'#00000'} 
-                        title={Contracts}
-                        height="250px"
-                        width="250px"
-                        />
+                        <DocumentsOutline color={'#00000'} title={"contracts"} height="25px" width="25px"/>
+                        <h2>Contracts</h2>
                     </div>
                     <div className="item-3">
-                        <WalletOutline
-                        color={'#000000'} 
-                        title={Bills}
-                        height="250px"
-                        width="250px"
-                        />
+                        <WalletOutline color={'#000000'} title={"bills"} height="25px" width="25px"/>
+                        <h2>Bills</h2>
                     </div>
                     <div className="item-4">
-                        <PersonOutline
-                        color={'#000000'} 
-                        title={Profile}
-                        height="250px"
-                        width="250px"
-                        />
+                        <PersonOutline color={'#000000'} title={"profile"} height="25px" width="25px"/>
+                        <h2>Profile</h2>
                     </div>
                 </div>
                 <div className="logout-container">
-                    <LogOutOutline
-                    color={'#ff0000'} 
-                    title={LogOut}
-                    height="250px"
-                    width="250px"
-                    />
+                    <LogOutOutline color={'#ff0000'} title={"logout"} height="25px" width="25px"/>
+                    <h2>LogOut</h2>
                 </div>
             </div>
         )
