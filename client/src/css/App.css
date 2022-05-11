@@ -1,5 +1,7 @@
 body{
     background-color: #F2F8FF;
+    min-height: 100vh;
+    min-width: 100vh;
 }
 
 span {
@@ -34,9 +36,9 @@ input{
 .web-container
 {
     width: 100%;
+    min-height: 100vh;
     display: flex;
     margin: 0 auto;
-    padding: 20px;
     margin-left: auto;
     margin-right: auto;
     background: #F2F8FF;
@@ -106,9 +108,113 @@ input{
     height: 50%;
 }
 
-.navbar-container .nav-items ul li{
-    list-style: none;
+.content-container{
+    width: 80%;
 }
+
+.navbar-container{
+    width: 20%;
+    background-color: #d9eaff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+
+}
+
+.navbar-container .logo-container{
+    margin: 4px;
+}
+
+
+.navbar-container .nav-items{
+    width: 74%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 20;
+}
+
+
+.navbar-container .nav-items .navBar-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+.navbar-container .nav-items .navBar-item-b{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-top: 5px;
+    border-radius: 10px;
+
+    background-color: #007CFF;
+    /*#517CFF */
+}
+
+#homeText,
+#billsText{
+    position: absolute;
+    top: 4px;
+    position: relative;
+}
+
+#profileText{
+    position: absolute;
+    bottom: 2px;
+    position: relative;
+}
+
+.navbar-container .nav-items .navBar-item-b .navBarItemIcon,
+.navbar-container .nav-items .navBar-item .navBarItemIcon{
+    width: 20%;
+    height: 45px;
+}
+
+.navbar-container .nav-items .navBar-item-b h2,
+.navbar-container .nav-items .navBar-item h2{
+    font-size:1.5vw;
+    margin-left: 40px;
+    font-family: roboto;
+}
+
+.navbar-container .logout-container{
+    flex: 4;
+    padding: 35px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: row;
+
+    align-items: cross-end;
+
+    text-decoration: none;
+}
+
+.navbar-container .logout-container:hover{
+    text-decoration: none;
+}
+
+.navbar-container .logout-container h2{
+    color: red;
+    margin-left: 10px;
+    margin-top: -2px;
+    font-family: roboto;
+
+    text-decoration: none;
+}
+
+
+
+.navbar-container .logout-container .navBarItemIcon{
+    width: 40px;
+    height: 60px;
+}
+
 
 
 /*special buttons*/

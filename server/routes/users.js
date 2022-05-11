@@ -57,7 +57,7 @@ const logInUser = (req, res, next) =>
 {
     const token = jwt.sign({email:req.data.email, accessLevel:req.data.accessLevel}, process.env.JWT_PRIVATE_KEY, {algorithm:'HS256', expiresIn:process.env.JWT_EXPIRY})     
            
-    res.json({name: req.data.name, accessLevel:req.data.accessLevel, token:token})
+    res.json({name: req.data.name, accessLevel:req.data.accessLevel, token:token, type})
 }
 
 const createUser = (req, res, next) => 
@@ -68,15 +68,27 @@ const createUser = (req, res, next) =>
         {
             return next(err)
         }
-        usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
-        {
-            if(err)
+        if(req.params.type == "Tenant"){
+            usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_ADMIN}, (err, data) => 
             {
-                return next(err)
-            }
-            req.data = data
-            return next()
-        })
+                if(err)
+                {
+                    return next(err)
+                }
+                req.data = data
+                return next()
+            })
+        }else{
+            usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
+            {
+                if(err)
+                {
+                    return next(err)
+                }
+                req.data = data
+                return next()
+            })
+        }
     })
 }
 

@@ -1,6 +1,5 @@
 import React, {Component} from "react"
-import {Redirect, Link} from 'react-router-dom'
-import NavBar from "./NavBar"
+import NavBar from "./NavBarResidents"
 
 export default class HomeTenant extends Component 
 {
@@ -10,10 +9,9 @@ export default class HomeTenant extends Component
             <div className="web-container"> 
                 <NavBar selected="0"/>
                 <div className="content-container">
-                    <h1>TENANTS PAGE</h1>
+                    <h1>RESIDENTS PAGE</h1>
                 </div>
             </div>
-
         )
     }
 }

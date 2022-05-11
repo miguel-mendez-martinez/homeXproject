@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {Redirect, Link} from 'react-router-dom'
 
 
-export default class NavBar extends Component 
+export default class NavBarResidents extends Component 
 {
     constructor(props) 
     {
@@ -36,12 +36,6 @@ export default class NavBar extends Component
                             <img className="navBarIcon" src={require("../images/billsIcon.png")} alt="" />
                         </div>
                         <h2 id="billsText">Bills</h2>
-                    </div>
-                    <div className="navBar-item">
-                        <div className="navBarItemIcon">
-                            <img className="navBarIcon" src={require("../images/scheduleIcon.png")} alt="" />
-                        </div>
-                        <h2>Schedule</h2>
                     </div>
                     <div className="navBar-item">
                         <div className="navBarItemIcon">

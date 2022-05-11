@@ -4,7 +4,7 @@ import {Redirect, Link} from 'react-router-dom'
 
 import axios from "axios"
 
-import {SERVER_HOST} from "../config/global_constants"
+import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants"
 
 import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
 
@@ -61,7 +61,13 @@ export default class logInForm extends Component
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
             
-            this.setState({redirectTenant:true})
+            if(res.data.accessLevel === ACCESS_LEVEL_ADMIN){
+                this.setState({redirectTenant:true})
+            }else{
+                this.setState({redirectResident:true})
+            }
+
+            
         }).catch((error)=>
         {
             console.log("error:", error.response.data)
@@ -86,6 +92,7 @@ export default class logInForm extends Component
             
             <div className="web-container">
                 {this.state.redirectTenant ? <Redirect to="/tenantHome"/> : null}
+                {this.state.redirectResident ? <Redirect to="/residentHome"/> : null}
                 <div className="login-container">
                     <div className="logo-container">
                         <img id="bigSizeLogo" src={require("../images/logo.png")} alt=""/>
