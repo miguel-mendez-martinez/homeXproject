@@ -54,7 +54,8 @@ export default class logInForm extends Component
     logInUser = e => {  
         localStorage.name = "GUEST"
         localStorage.accessLevel = ACCESS_LEVEL_GUEST 
-        axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${this.state.password}`)
+        let encodedPass = encodeURIComponent(this.state.password, "UTF-8")
+        axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${encodedPass}`)
         .then(res => 
         {    
             localStorage.name = res.data.name
@@ -100,16 +101,16 @@ export default class logInForm extends Component
 
                     <div className="form-container">
                         {this.state.logInError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
-                        <input class="form-control" id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
-                        <input class="form-control" id="password" type="password" name="password"  placeholder="Password" onChange={this.handleChange}/><br/>  
+                        <input className="form-control" id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
+                        <input className="form-control" id="password" type="password" name="password"  placeholder="Password" onChange={this.handleChange}/><br/>  
                     </div>
 
                     <div className="button-container">
                         <div className="left-button">
-                            <Link id="registerButton" class="blue-button" to="/registerUser"> Register New User </Link>
+                            <Link id="registerButton" className="blue-button" to="/registerUser"> Register New User </Link>
                         </div>
                         <div className="right-button">
-                            <input id="loginButton" type="button" class="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
+                            <input id="loginButton" type="button" className="green-button" value="Log In" disabled = {!inputsAreAllValid} onClick={this.logInUser}/>
                         </div> 
                     </div>
                 </div>

@@ -5,12 +5,13 @@ const residentModel = require(`../models/residents`)
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const createError = require('http-errors')
+var urlencode = require('urlencode');
 const multer  = require('multer')
 
 //Middleware
 const checkUserExists = (req, res, next) =>
 {
-    console.log(req.params.email, req.params.password)
+    req.params.password = urlencode.decode(req.params.password)
     usersModel.findOne({email:req.params.email}, (error, data) => 
     {
         if(error || data==null){
@@ -23,6 +24,7 @@ const checkUserExists = (req, res, next) =>
 
 const checkUserNotExists = (req, res, next) =>
 {
+    req.params.password = urlencode.decode(req.params.password)
     usersModel.findOne({email:req.params.email}, (err, data) => 
     {
         if(data){
@@ -38,6 +40,7 @@ const checkUserNotExists = (req, res, next) =>
 
 const checkLogIn = (req, res, next) =>
 {    
+    console.log(req.params.password)
     bcrypt.compare(req.params.password, req.data.password, (err, result) =>
     {     
         if(err){
@@ -57,7 +60,7 @@ const logInUser = (req, res, next) =>
 {
     const token = jwt.sign({email:req.data.email, accessLevel:req.data.accessLevel}, process.env.JWT_PRIVATE_KEY, {algorithm:'HS256', expiresIn:process.env.JWT_EXPIRY})     
            
-    res.json({name: req.data.name, accessLevel:req.data.accessLevel, token:token, type})
+    res.json({name: req.data.name, accessLevel:req.data.accessLevel, token:token})
 }
 
 const createUser = (req, res, next) => 
