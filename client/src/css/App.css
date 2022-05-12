@@ -34,7 +34,7 @@ input{
 }
 
 #registerWeb{
-    margin-top: 15px;
+    padding-top: 15px;
 }
 
 .logo-container #bigSizeLogo{
@@ -58,6 +58,7 @@ input{
     padding: 15px;
     display: flex;
     column-gap: 100px;
+    
 }
 
 .register-buttons .red-button{
