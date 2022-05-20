@@ -8,8 +8,15 @@ import HomeResident from "./components/homeResident"
 import userCreationForm from "./components/userCreationForm"
 import logInForm from "./components/logInForm"
 import LogOut from "./components/logOut"
-
-
+import LoggedInRoute from "./components/LoggedInRoute"
+import LoggedInRouteTen from "./components/LoggedInRouteTen"
+import ContractTenant from "./components/contractsTenant"
+import BillsTenant from "./components/billsTenant"
+import ScheduleTenant from "./components/scheduleTenant"
+import ProfileTenant from "./components/profileTenant"
+import ContractsResident from "./components/contractsResident"
+import BillsResident from "./components/billsResident"
+import ProfileResident from "./components/profileResident"
 
 export default class App extends Component 
 {
@@ -19,11 +26,18 @@ export default class App extends Component
             <BrowserRouter>
                 <Switch>                 
                     <Route exact path="/" component={logInForm} />
-                    <Route exact path="/logOut" component={LogOut} />
+                    <LoggedInRoute exact path="/logOut" component={LogOut} />
                     <Route exact path="/registerUser" component={userCreationForm} />
                     <Route exact path="/logInForm" component={logInForm}/>
-                    <Route exact path="/tenantHome" component={HomeTenant}/>
-                    <Route exact path="/residentHome" component={HomeResident}/>
+                    <LoggedInRouteTen exact path="/tenantHome" component={HomeTenant}/>
+                    <LoggedInRouteTen exact path="/tenantContracts" component={ContractTenant}/>
+                    <LoggedInRouteTen exact path="/tenantBills" component={BillsTenant}/>
+                    <LoggedInRouteTen exact path="/tenantSchedule" component={ScheduleTenant}/>
+                    <LoggedInRouteTen exact path="/tenantProfile" component={ProfileTenant}/>
+                    <LoggedInRoute exact path="/residentHome" component={HomeResident}/>
+                    <LoggedInRoute exact path="/residentContracts" component={ContractsResident}/>
+                    <LoggedInRoute exact path="/residentBills" component={BillsResident}/>
+                    <LoggedInRoute exact path="/residentProfile" component={ProfileResident}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
                 </Switch>
             </BrowserRouter>

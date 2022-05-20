@@ -171,7 +171,7 @@ input{
     flex: 20;
 }
 
-
+.navbar-container .nav-items .navBar-item-b,
 .navbar-container .nav-items .navBar-item{
     width: 100%;
     display: flex;
@@ -179,16 +179,12 @@ input{
     padding: 20px;
     margin-top: 5px;
     border-radius: 10px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
 }
 
 .navbar-container .nav-items .navBar-item-b{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    margin-top: 5px;
-    border-radius: 10px;
-
     background-color: #007CFF;
     /*#517CFF */
 }
