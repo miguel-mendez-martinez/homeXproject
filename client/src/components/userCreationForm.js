@@ -133,7 +133,7 @@ export default class userForm extends Component
             .then(res => 
             {
 
-                localStorage.name = res.data.name
+                localStorage.email = res.data.email
                 localStorage.accessLevel = res.data.accessLevel
                 localStorage.token = res.data.token
 

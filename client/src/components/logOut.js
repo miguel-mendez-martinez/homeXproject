@@ -36,7 +36,7 @@ export default class LogOut extends Component
                     console.log("User logged out")
                     localStorage.clear()   
     
-                    localStorage.name = "GUEST"
+                    localStorage.emial = "GUEST"
                     localStorage.accessLevel = ACCESS_LEVEL_GUEST
                     localStorage.token = null
 

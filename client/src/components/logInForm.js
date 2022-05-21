@@ -52,13 +52,13 @@ export default class logInForm extends Component
     }
 
     logInUser = e => {  
-        localStorage.name = "GUEST"
+        localStorage.email = "GUEST"
         localStorage.accessLevel = ACCESS_LEVEL_GUEST 
         let encodedPass = encodeURIComponent(this.state.password, "UTF-8")
         axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${encodedPass}`)
         .then(res => 
         {    
-            localStorage.name = res.data.name
+            localStorage.email = res.data.email
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
             
@@ -72,7 +72,7 @@ export default class logInForm extends Component
         }).catch((error)=>
         {
             console.log("error:", error.response.data)
-            localStorage.name = "GUEST"
+            localStorage.email = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST
             this.setState({logInError: true, errorMessage: error.response.data})
         })

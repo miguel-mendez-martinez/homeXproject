@@ -17,6 +17,17 @@ import ProfileTenant from "./components/profileTenant"
 import ContractsResident from "./components/contractsResident"
 import BillsResident from "./components/billsResident"
 import ProfileResident from "./components/profileResident"
+import addPropForm from "./components/addPropForm"
+
+import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
+
+if (typeof localStorage.accessLevel === "undefined" || localStorage.accessLevel > 0)
+{
+    localStorage.clear()
+    localStorage.email = "GUEST"
+    localStorage.accessLevel = ACCESS_LEVEL_GUEST
+    localStorage.token = null
+}
 
 export default class App extends Component 
 {
@@ -38,6 +49,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/residentContracts" component={ContractsResident}/>
                     <LoggedInRoute exact path="/residentBills" component={BillsResident}/>
                     <LoggedInRoute exact path="/residentProfile" component={ProfileResident}/>
+                    <LoggedInRoute exact path="/tenantAddPropForm" component={addPropForm}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
                 </Switch>
             </BrowserRouter>

@@ -40,7 +40,6 @@ const checkUserNotExists = (req, res, next) =>
 
 const checkLogIn = (req, res, next) =>
 {    
-    console.log(req.params.password)
     bcrypt.compare(req.params.password, req.data.password, (err, result) =>
     {     
         if(err){
@@ -60,7 +59,7 @@ const logInUser = (req, res, next) =>
 {
     const token = jwt.sign({email:req.data.email, accessLevel:req.data.accessLevel}, process.env.JWT_PRIVATE_KEY, {algorithm:'HS256', expiresIn:process.env.JWT_EXPIRY})     
            
-    res.json({name: req.data.name, accessLevel:req.data.accessLevel, token:token})
+    res.json({email:req.data.email, accessLevel:req.data.accessLevel, token:token})
 }
 
 const createUser = (req, res, next) => 
