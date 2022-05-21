@@ -20,7 +20,8 @@ export default class addPropForm extends Component
             price: '',
             redirect:false,
             propExitsError: false,
-            errorMessage: ''
+            errorMessage: '',
+            images: []
         }
 
     }
@@ -55,7 +56,6 @@ export default class addPropForm extends Component
     }
 
     validation(){
-        //creamos un objeto 
         return {
             address: this.validateAdress(),
             area: this.validateArea(),
@@ -71,24 +71,43 @@ export default class addPropForm extends Component
 
     }
 
-    addUser = e => {
+    addProperty = e => {
 
-        //clientSide validation
-        let encodedPass = encodeURIComponent(this.state.password, "UTF-8")
-        //we post the changes into the database
-        axios.post(`${SERVER_HOST}/Properties/AddNew`)
+        let formData = new FormData()  
+        formData.append("address", this.state.address)
+        formData.append("area", this.state.area)
+        formData.append("price", this.state.price) 
+        formData.append("tenant", this.state.tenant) 
+
+        if(this.state.selectedFiles)
+        {
+            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            {
+                formData.append("propertyImages", this.state.images[i])
+            }
+        }
+
+        axios.post(`${SERVER_HOST}/Properties/AddNew`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
         .then(res => 
-        {
-
-            localStorage.email = res.data.email
-            localStorage.accessLevel = res.data.accessLevel
-            localStorage.token = res.data.token
-
-            this.setState({redirect: !this.state.redirect})
-
-        }).catch((err) => 
-        {
-            this.setState({userExitsError: !this.state.userExitsError, errorMessage: err.response.data})
+        {   
+            if(res.data)
+            {
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {   
+                    console.log("Record added")
+                    this.setState({redirect: !this.state.redirect})
+                } 
+            }
+            else
+            {
+                console.log("Record not added")
+            }
+        }).catch(err =>{
+            console.log("err:" + err.response.data) 
         })
     }
 
