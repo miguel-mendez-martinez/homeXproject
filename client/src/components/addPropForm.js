@@ -79,9 +79,9 @@ export default class addPropForm extends Component
         formData.append("price", this.state.price) 
         formData.append("tenant", this.state.tenant) 
 
-        if(this.state.selectedFiles)
+        if(this.state.images)
         {
-            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            for(let i = 0; i < this.state.images.length; i++)
             {
                 formData.append("propertyImages", this.state.images[i])
             }

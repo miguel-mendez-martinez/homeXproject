@@ -10,6 +10,7 @@ var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 const checkUserLogged = (req, res, next) =>
 {
+    console.log("llega")
     jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
     {
         if (err) 
@@ -29,14 +30,19 @@ const checkPropertyDontExists = (req, res, next) =>
     propertiesModel.findOne({address}, (error, data) =>
     {
         if(error){
-            return next(createError(400, "Property already exists"))
-        }else
-            return next()  
+            return next(createError(400, "Error checking property existance"))
+        }else{
+            if(!data)
+                return next()
+            else
+                return next(createError(400, "Property already exists"))
+        }
     })
 }
 
 const addProperty = (req, res, next) =>
 {
+    console.log("body: " + req.body)
     let property = new Object()
     property.tenant = req.body.tenant
     property.address = req.body.address
