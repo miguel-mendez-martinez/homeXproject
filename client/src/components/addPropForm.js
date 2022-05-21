@@ -157,6 +157,10 @@ export default class addPropForm extends Component
                             onChange={this.handleChange}/>
                     </div>
                     {formInputsState.price ? "" : validPrice}
+
+                    <div className="button-container">
+                        <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
+                    </div>              
                 </div>
             </div>
         )

@@ -2,6 +2,9 @@ const router = require(`express`).Router()
 const propertiesModel = require(`../models/property`)
 const contractsModel = require(`../models/contracts`)
 const createError = require('http-errors')
+const fs = require('fs');
+const multer  = require('multer')
+var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 //Middleware
 
