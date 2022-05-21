@@ -3,6 +3,7 @@ const propertiesModel = require(`../models/property`)
 const contractsModel = require(`../models/contracts`)
 const createError = require('http-errors')
 const fs = require('fs');
+const jwt = require('jsonwebtoken')
 const multer  = require('multer')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
@@ -10,7 +11,6 @@ var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 const checkUserLogged = (req, res, next) =>
 {
-    console.log("llega")
     jwt.verify(req.headers.authorization, process.env.JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
     {
         if (err) 
@@ -27,7 +27,7 @@ const checkUserLogged = (req, res, next) =>
 
 const checkPropertyDontExists = (req, res, next) =>
 {
-    propertiesModel.findOne({address}, (error, data) =>
+    propertiesModel.findOne({address: req.body.address}, (error, data) =>
     {
         if(error){
             return next(createError(400, "Error checking property existance"))
@@ -42,7 +42,6 @@ const checkPropertyDontExists = (req, res, next) =>
 
 const addProperty = (req, res, next) =>
 {
-    console.log("body: " + req.body)
     let property = new Object()
     property.tenant = req.body.tenant
     property.address = req.body.address

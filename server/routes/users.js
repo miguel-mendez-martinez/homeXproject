@@ -6,7 +6,10 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const createError = require('http-errors')
 var urlencode = require('urlencode');
+
+//this is for multipart form data
 const multer  = require('multer')
+const upload = multer()
 
 //Middleware
 const checkUserExists = (req, res, next) =>
@@ -24,8 +27,8 @@ const checkUserExists = (req, res, next) =>
 
 const checkUserNotExists = (req, res, next) =>
 {
-    req.params.password = urlencode.decode(req.params.password)
-    usersModel.findOne({email:req.params.email}, (err, data) => 
+    req.body.password = urlencode.decode(req.body.password)
+    usersModel.findOne({email:req.body.email}, (err, data) => 
     {
         if(data){
             if(err){
@@ -64,14 +67,14 @@ const logInUser = (req, res, next) =>
 
 const createUser = (req, res, next) => 
 {
-    bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
+    bcrypt.hash(req.body.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
     {
         if(err)
         {
             return next(err)
         }
-        if(req.params.type == "Tenant"){
-            usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_ADMIN}, (err, data) => 
+        if(req.body.userType == "Tenant"){
+            usersModel.create({name:req.body.userName,email:req.body.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_ADMIN}, (err, data) => 
             {
                 if(err)
                 {
@@ -81,7 +84,7 @@ const createUser = (req, res, next) =>
                 return next()
             })
         }else{
-            usersModel.create({name:req.params.userName,email:req.params.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
+            usersModel.create({name:req.body.userName,email:req.body.email,password:hash, accessLevel: process.env.ACCESS_LEVEL_NORMAL_USER}, (err, data) => 
             {
                 if(err)
                 {
@@ -98,8 +101,8 @@ const createTypeUser = (req, res, next) =>
 {
       
     //here we check if the user is a tenant or a resident and next we will create an object of one of those 
-    if(req.params.type == "Tenant"){
-        tenantModel.create({userID: req.data._id, name:req.params.name, id:req.params.id, phoneNumber:req.params.phoneNumber}, (err, data) => 
+    if(req.body.userType == "Tenant"){
+        tenantModel.create({userID: req.data._id, name:req.body.name, id:req.body.id, phoneNumber:req.body.phoneNumber}, (err, data) => 
         {
             if(err)
             {
@@ -109,7 +112,7 @@ const createTypeUser = (req, res, next) =>
             return next()
         })
     }else{
-        residentModel.create({userID: req.data._id, name:req.params.name, id:req.params.id, phoneNumber:req.params.phoneNumber}, (err, data) => 
+        residentModel.create({userID: req.data._id, name:req.body.name, id:req.body.id, phoneNumber:req.body.phoneNumber}, (err, data) => 
         {
             if(err)
             {
@@ -171,7 +174,7 @@ const checkUserLogged = (req, res, next) =>
 }
 
 //Register
-router.post(`/Users/register/:userName/:email/:type/:name/:id/:phoneNumber/:password`, checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
+router.post(`/Users/register`, upload.none(), checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
 //Log in
 router.post(`/Users/login/:email/:password`, checkUserExists, checkLogIn, logInUser) 
 //Drop Database

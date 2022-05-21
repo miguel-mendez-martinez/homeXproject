@@ -127,22 +127,37 @@ export default class userForm extends Component
         }else if(!this.state.confirmPassword.match(this.state.password)){
             console.log('Passwords must match.')
         }else{
+            //we encode the pass for cases with especial character
             let encodedPass = encodeURIComponent(this.state.password, "UTF-8")
-            //we post the changes into the database
-            axios.post(`${SERVER_HOST}/Users/register/${this.state.userName}/${this.state.email}/${this.state.userType}/${this.state.name}/${this.state.id}/${this.state.phoneNumber}/${encodedPass}`)
-            .then(res => 
-            {
 
-                localStorage.email = res.data.email
-                localStorage.accessLevel = res.data.accessLevel
-                localStorage.token = res.data.token
+            //we create the formData that will be passed to the server
+            var bodyFormData = new FormData();
+            bodyFormData.append('userName', this.state.userName)
+            bodyFormData.append('email', this.state.email)
+            bodyFormData.append('userType', this.state.userType)
+            bodyFormData.append('id', this.state.id)
+            bodyFormData.append('phoneNumber', this.state.phoneNumber)
+            bodyFormData.append('password', encodedPass)
+            bodyFormData.append('name', this.state.name)
 
-                this.setState({redirect: !this.state.redirect})
+            axios({
+                method: "post",
+                url: `${SERVER_HOST}/Users/register`,
+                data: bodyFormData,
+                headers: { "Content-Type": "multipart/form-data" },
+              }).then(res => 
+                {
+                    //handle success
+                    localStorage.email = res.data.email
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
 
-            }).catch((err) => 
-            {
-                this.setState({userExitsError: !this.state.userExitsError, errorMessage: err.response.data})
-            })
+                    this.setState({redirect: !this.state.redirect})
+                }).catch(err =>
+                {
+                    //handle error
+                    this.setState({userExitsError: !this.state.userExitsError, errorMessage: err.response.data})
+                });
         }
     }
 
@@ -198,7 +213,7 @@ export default class userForm extends Component
                             name="userName" placeholder="User Name" 
                             onChange={this.handleChange} ref = {input => {this.inputToFocus = input}}/>
                     </div>
-                    {formInputsState.name ? "" : nameEmpty}
+                    {formInputsState.userName ? "" : nameEmpty}
 
                     <div className="item-container">
                         <div className="sub-item-container">
