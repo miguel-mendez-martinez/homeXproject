@@ -1,58 +1,55 @@
-import React, {Component} from "react"
-import {Redirect, Link} from 'react-router-dom'
+import React, { Component } from "react"
+import { Redirect, Link } from 'react-router-dom'
 
 
-export default class NavBarResidents extends Component 
-{
-    constructor(props) 
-    {
+export default class NavBarResidents extends Component {
+    constructor(props) {
         super(props)
         this.state = {
             selected: this.props.selected
         }
     }
-    render() 
-    {   
-        return (       
+    render() {
+        return (
             <div className="navbar-container">
                 <div className="logo-container">
-                    <img id="littleSizeLogo" src={require("../images/logo.png")} alt=""/>
+                    <img id="littleSizeLogo" src={require("../images/logo.png")} alt="" />
                 </div>
                 <div className="nav-items">
-                    <Link className={this.props.selected == 0 ? "navBar-item-b":"navBar-item"} to="/residentHome">
+                    <Link className={this.props.selected == 0 ? "navBar-item-b" : "navBar-item"} to="/residentHome">
                         <div className="navBarItemIcon">
                             <img className="navBarIcon" src={require("../images/homeIcon.png")} alt="" />
                         </div>
-                        <h2 id="homeText">Home</h2>
+                        <h2 id="homeText" className="menuText">Home</h2>
                     </Link>
 
-                    <Link className={this.props.selected == 1 ? "navBar-item-b":"navBar-item"} to="/residentContracts">
-                        <div className="navBarItemIcon">                       
+                    <Link className={this.props.selected == 1 ? "navBar-item-b" : "navBar-item"} to="/residentContracts">
+                        <div className="navBarItemIcon">
                             <img className="navBarIcon" src={require("../images/contractsIcon.png")} alt="" />
                         </div>
-                        <h2>Contracts</h2>
+                        <h2 className="menuText">Contracts</h2>
                     </Link>
 
-                    <Link className={this.props.selected == 2 ? "navBar-item-b":"navBar-item"} to="/residentBills">
+                    <Link className={this.props.selected == 2 ? "navBar-item-b" : "navBar-item"} to="/residentBills">
                         <div className="navBarItemIcon">
                             <img className="navBarIcon" src={require("../images/billsIcon.png")} alt="" />
                         </div>
-                        <h2 id="billsText">Bills</h2>
+                        <h2 id="billsText" className="menuText">Bills</h2>
                     </Link>
 
-                    <Link className={this.props.selected == 3 ? "navBar-item-b":"navBar-item"} to="/residentProfile">
+                    <Link className={this.props.selected == 3 ? "navBar-item-b" : "navBar-item"} to="/residentProfile">
                         <div className="navBarItemIcon">
                             <img className="navBarIcon" src={require("../images/profileIcon.png")} alt="" />
                         </div>
-                        <h2 id="profileText">Profile</h2>
+                        <h2 id="profileText" className="menuText">Profile</h2>
                     </Link>
                 </div>
-                <Link to="/logOut">
+                <Link to="/logOut" className="logout">
                     <div className="logout-container">
                         <div className="navBarItemIcon">
                             <img className="navBarIcon" src={require("../images/logOutIcon.png")} alt="" />
                         </div>
-                        <h2>Log Out</h2>
+                        <h2 className="menuText">Log Out</h2>
                     </div>
                 </Link>
             </div>

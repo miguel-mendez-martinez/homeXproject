@@ -14,10 +14,7 @@ input{
 {
     width: 100%;
     min-height: 100vh;
-    display: flex;
     margin: 0 auto;
-    margin-left: auto;
-    margin-right: auto;
     background: #F2F8FF;
 }
 
@@ -144,109 +141,126 @@ input{
     height: 50%;
 }
 
+
+/*Before right button # login Button
+/* NAVBAR START*/   /*NAVBAR min resolution 1024px */
+
+
+.web-container
+{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.navbar-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d9eaff;
+    flex-basis: 25%;
+    max-width: 300px;
+}
+
+
+
 .content-container{
     width: 80%;
 }
 
-.navbar-container{
-    width: 20%;
-    background-color: #d9eaff;
+.logo-container{
+    margin: 0 auto;
+}
+
+
+
+ .nav-items{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    min-height: 100%;
-
-}
-
-.navbar-container .logo-container{
-    margin: 4px;
+    margin: 0 auto;
+    max-width: 80%;
 }
 
 
-.navbar-container .nav-items{
-    width: 74%;
+.navBar-item{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    flex: 20;
-}
-
-.navbar-container .nav-items .navBar-item-b,
-.navbar-container .nav-items .navBar-item{
+    min-height: 85px;
     width: 100%;
+    margin: 10px auto;
+    padding: 0 20px;
+}
+
+
+
+
+.navBar-item-b{
     display: flex;
     align-items: center;
-    padding: 20px;
-    margin-top: 5px;
+    min-height: 85px;
+    width: 100%;
+    margin: 10px 0;
     border-radius: 10px;
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
-}
-
-.navbar-container .nav-items .navBar-item-b{
     background-color: #007CFF;
-    /*#517CFF */
+    margin: 10px auto;
+    padding: 0 20px;
 }
 
-#homeText,
-#billsText{
-    position: absolute;
-    top: 4px;
-    position: relative;
-}
-
-#profileText{
-    position: absolute;
-    bottom: 2px;
-    position: relative;
-}
-
-.navbar-container .nav-items .navBar-item-b .navBarItemIcon,
-.navbar-container .nav-items .navBar-item .navBarItemIcon{
-    width: 20%;
-    height: 45px;
-}
-
-.navbar-container .nav-items .navBar-item-b h2,
-.navbar-container .nav-items .navBar-item h2{
-    font-size:1.5vw;
-    margin-left: 40px;
-    font-family: roboto;
-}
-
-.navbar-container .logout-container{
-    flex: 4;
-    padding: 35px;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: row;
-
-    align-items: cross-end;
-
+a{
+    color: initial;
     text-decoration: none;
 }
 
-.navbar-container .logout-container:hover{
-    text-decoration: none;
-}
-
-.navbar-container .logout-container h2{
-    color: red;
-    margin-left: 10px;
-    margin-top: -2px;
-    font-family: roboto;
-
+a:hover{
     text-decoration: none;
 }
 
 
 
-.navbar-container .logout-container .navBarItemIcon{
+.navBarItemIcon{
+    height: auto;
     width: 40px;
-    height: 60px;
 }
 
+.menuText{
+    margin-left: 13%;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-size:1.3rem; 
+    font-family: roboto;
+}
+
+
+.logout-container{
+    display: flex;
+    align-items: center;
+    min-height: 85px;
+    width: 100%;
+    margin: 10px auto;
+    padding: 0 20px;
+}
+
+
+
+ .logout-container:hover{
+    text-decoration: none;
+}
+
+.logout-container h2{
+    color: red;
+    text-decoration: none;
+}
+
+.logout{
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+/* NAVBAR END */
 
 
 /*special buttons*/
