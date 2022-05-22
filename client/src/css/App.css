@@ -22,68 +22,72 @@ input{
 }
 
 
-#registerWeb{
-    padding-top: 15px;
-}
-
-.logo-container #bigSizeLogo{
+#bigSizeLogo{
     width: auto;
     height: 280px;
 }
 
+
 #registerLogoContainer{
-    width: 20%;
+    margin-top: 10vh;
+    max-width: 300px;
+    flex-basis: 30%;
 }
 
+.registerLogo{
+    width: 100%;
+    height: auto;
+}
+
+.logo-container{
+    margin: 0 auto;
+}
+
+.register-form-container input:not(.green-button){
+    min-width: 300px;
+    max-width: 400px;
+}
 .register-form-container{
-    width: 60%;
+    width: 80%;
     padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: center;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .register-buttons{
-    padding: 15px;
     display: flex;
-    column-gap: 100px;
-    
+    width: 100%;
+    justify-content: space-evenly;
 }
 
-.register-buttons .red-button{
-    position: absolute;
-    top: 10px;
-    position: relative;
-}
-
-.register-form-container .item-container{
-    margin: 5px;
+.item-container{
+    margin: 5px 0;
     display: flex;
+    padding: 10px 0;
+    width: 100%;
     justify-content: center;
-    width: 100%;
-    padding: 10px;
-
 }
 
-.register-form-container .item-container .sub-item-container{
-    width: 100%;
+.sub-item-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    margin: 0 20px;
+    flex-basis: 50%;
 }
 
-.register-form-container .item-container input{
+.item-container input{
     padding: 10px;
-    width: 40%;
-    height: 47px;
+    min-height: 40px;
+    margin: 5px 0;
 }
 
-.register-form-container .item-container .sub-item-container input{
-    width: 70%;
-}
 
-.register-form-container .item-container label{
+.item-container label{
     text-align: center;
 }
 
@@ -103,6 +107,8 @@ input{
     width: 100%;
     height: 57px;
 }
+
+
 
 .button-container{
     display: flex;
@@ -141,10 +147,6 @@ input{
 
 .content-container{
     width: 80%;
-}
-
-.logo-container{
-    margin: 0 auto;
 }
 
 
