@@ -4,31 +4,23 @@ body{
     min-width: 100vh;
 }
 
-
-
 input{
     text-align: center;
 }
 
 .web-container
 {
-    width: 100%;
-    min-height: 100vh;
     margin: 0 auto;
     background: #F2F8FF;
 }
 
 .login-container{
-    width: 100%;
-    align-items: center;
+    display: flex;
     flex-direction: column;
+    flex-basis: 100%;
+    justify-content: center;
 }
 
-.logo-container{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
 
 #registerWeb{
     padding-top: 15px;
@@ -99,14 +91,12 @@ input{
 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin: 25px auto;
     padding: 20px;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
+    min-width: 350px;
+    width: 33vw;
+    max-width: 450px;
     border-radius: 5px;
-    margin-top: 40px;
 }
 
 .form-container input{
@@ -116,30 +106,13 @@ input{
 
 .button-container{
     display: flex;
-    justify-content: center;
-    display: flex;  
-    margin-top: 60px;
-    margin-bottom: 40px;
-    margin-right: 30px;
+    justify-content: space-between;
 }
 
-.left-button{
-    padding: 40px;
-    flex: 15;
+.left-button, .right-button{
+    padding: 0 5vw;
 }
 
-
-.right-button{
-    flex: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.right-button #loginButton{
-    width: 80%;
-    height: 50%;
-}
 
 
 /*Before right button # login Button
@@ -270,19 +243,20 @@ a:hover{
 {
     padding: 10px 13px;
     font-size: 1rem;
-    line-height: normal;
     border-radius: 0.2rem;
     color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-    position: relative;
-    text-decoration: none;
+    text-align: center;
+    min-width: 200px;
+    display: inline-block;
+    border: none;
     cursor:pointer;
+    transition: all ease-in-out 0.3s;
 }
 
 .green-button
 {
     background-color: #28a745;
+    
 }
 
 .red-button
