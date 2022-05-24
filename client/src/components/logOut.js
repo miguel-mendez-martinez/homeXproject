@@ -38,7 +38,6 @@ export default class LogOut extends Component
     
                     localStorage.emial = "GUEST"
                     localStorage.accessLevel = ACCESS_LEVEL_GUEST
-                    localStorage.token = null
 
                     this.setState({redirect: true})
                 }

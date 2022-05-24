@@ -147,6 +147,7 @@ input{
 
 .content-container{
     width: 80%;
+    display: flex;
 }
 
 
@@ -299,4 +300,66 @@ a:hover{
 input:disabled {
     background-color: lightslategray;
     cursor: default;
+}
+
+.addProp-form-container{
+    background-color: #d9eaff;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    max-width: 1100px;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
+.addProp-form-container .name-container{
+    width: 100%;
+}
+
+.addProp-form-container .name-container h1{
+    margin-left: 30px;
+    font-size: 34px;
+    font-family: roboto;
+}
+
+.addProp-form-container .address-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: thin solid black;
+}
+
+.addProp-form-container .address-container .inputs-container{
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
+#steet{
+    flex-basis: 50%;
+}
+
+#number{
+    flex-basis: 25%;
+}
+
+#floor{
+    flex-basis: 25%;
+}
+
+.addProp-form-container .props-container{
+    width: 100%;
+    border: thin solid red;
+}
+
+.addProp-form-container .button-container{
+    width: 100%;
+    border: thin solid blue;
 }

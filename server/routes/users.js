@@ -177,6 +177,10 @@ const checkUserLogged = (req, res, next) =>
 router.post(`/Users/register`, upload.none(), checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
 //Log in
 router.post(`/Users/login`, upload.none(), checkUserExists, checkLogIn, logInUser) 
+//check Log in
+router.get('/Users/checkLogIn', checkUserLogged, (req, res) => {
+    res.json({email:req.decodedToken.email, accessLevel:req.decodedToken.accessLevel, token: req.headers.authorization})
+})
 //Drop Database
 router.post(`/Users/resetUsers`, eliminateCollection, createAdmin)
 //Log out

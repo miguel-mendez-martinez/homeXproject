@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 
 import axios from "axios"
 
-import { SERVER_HOST } from "../config/global_constants"
+import { ACCESS_LEVEL_GUEST, SERVER_HOST } from "../config/global_constants"
 
 export default class userForm extends Component {
 
@@ -151,6 +151,8 @@ export default class userForm extends Component {
                 this.setState({ redirect: !this.state.redirect })
             }).catch(err => {
                 //handle error
+                localStorage.email = 'GUEST'
+                localStorage.accessLevel = ACCESS_LEVEL_GUEST
                 this.setState({ userExitsError: !this.state.userExitsError, errorMessage: err.response.data })
             });
         }

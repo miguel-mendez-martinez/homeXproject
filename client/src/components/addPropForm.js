@@ -166,7 +166,7 @@ export default class addPropForm extends Component
                         </div>
                         <div className="address-container">
                             <div className="text-container">
-                                <h3> Address </h3>
+                                <h4> Address </h4>
                             </div>
                             <div className="inputs-container">
                                 <input className = "form-control"
@@ -211,9 +211,6 @@ export default class addPropForm extends Component
 
                             <input type="file" multiple onChange={this.handleFileChange}/>
                         </div>
-
-                        
-
                         <div className="button-container">
                             <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
                         </div> 
