@@ -1,5 +1,6 @@
 const router = require(`express`).Router()
 const propertiesModel = require(`../models/property`)
+const usersModel = require(`../models/users`)
 const contractsModel = require(`../models/contracts`)
 const createError = require('http-errors')
 const fs = require('fs');
@@ -24,6 +25,17 @@ const checkUserLogged = (req, res, next) =>
         }
     })
 }
+
+const findUser = (req, res, next) => {
+    usersModel.findOne({email: req.params.email}, (error, data) => 
+        {
+            if(error || data==null){
+                return next(createError(400), `User doesn't exists.`)
+            }
+            req.user = data            
+            return next()        
+        }) 
+}   
 
 const checkPropertyDontExists = (req, res, next) =>
 {
@@ -150,14 +162,39 @@ const generateContract = (req, res, next) =>{
 
 
 //routes
-router.get('/Properties', (req, res) => 
+router.get('/Properties/resident', (req, res) => 
 {
-    propertiesModel.find({}, (error, data) =>
+    propertiesModel.find({residents: 'none'}, (error, data) =>
     {
         if(!error){
             res.json(data)
         }
     })
+})
+
+router.get('/Properties/tenant/:email', checkUserLogged, findUser, (req, res) => 
+{
+    propertiesModel.find({tenant: req.user.id}, (error, data) =>
+    {
+        if(!error){
+            res.json(data)
+        }
+    })
+})
+
+router.get(`/Properties/images/:filename`, (req, res) => 
+{   
+    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, fileData) => 
+        {        
+        if(fileData)
+        {  
+            res.json({image:fileData})                           
+        }   
+        else
+        {
+            res.json({image:null})
+        }
+    })             
 })
 
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)

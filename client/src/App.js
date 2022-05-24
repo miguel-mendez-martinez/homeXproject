@@ -18,6 +18,8 @@ import ContractsResident from "./components/contractsResident"
 import BillsResident from "./components/billsResident"
 import ProfileResident from "./components/profileResident"
 import addPropForm from "./components/addPropForm"
+import rentForm from "./components/rentForm"
+
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 
@@ -50,6 +52,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/residentBills" component={BillsResident}/>
                     <LoggedInRoute exact path="/residentProfile" component={ProfileResident}/>
                     <LoggedInRoute exact path="/tenantAddPropForm" component={addPropForm}/>
+                    <LoggedInRoute exact path="/rentForm/:id" component={rentForm}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
                 </Switch>
             </BrowserRouter>
