@@ -13,7 +13,7 @@ export default class SkateModal extends Component{
 
         this.state = {property: this.props.property,
                       id: this.props.property._id,
-                      pictures: '',
+                      pictures: [],
                       mounted: false }
     }
 
@@ -32,7 +32,7 @@ export default class SkateModal extends Component{
                     }
                     else
                     {           
-                        images.append(res.data.image)      
+                        images.push(res.data.image)      
                     }   
                 }
                 else
@@ -46,7 +46,7 @@ export default class SkateModal extends Component{
     }
 
     updateProperty = () => {
-        
+
     }
 
 
@@ -64,9 +64,9 @@ export default class SkateModal extends Component{
                                 <img src= {require("../images/exit.png")} alt="/"/>
                             </div>
                         </div>
-                        {/* <div id="propertyImages">
-                            {this.state.mounted ? this.state.pictures.map((picture) => {<img id={picture} src={`data:;base64,${picture}`} alt=""/>}) : null}
-                        </div> */}
+                        <div id="propertyImages">
+                            {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt=""/>) : null}
+                        </div>
                         <div id="buttons">
                             <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
                         </div>

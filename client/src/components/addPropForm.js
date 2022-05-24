@@ -26,7 +26,6 @@ export default class addPropForm extends Component
             redirect:false,
             propExitsError: false,
             errorMessage: '',
-            images: []
         }
 
     }
@@ -113,15 +112,7 @@ export default class addPropForm extends Component
         {
             for(let i = 0; i < this.state.selectedFiles.length; i++)
             {
-                formData.append("productPhotos", this.state.selectedFiles[i])
-            }
-        }
-
-        if(this.state.images)
-        {
-            for(let i = 0; i < this.state.images.length; i++)
-            {
-                formData.append("propertyImages", this.state.images[i])
+                formData.append("propertyImages", this.state.selectedFiles[i])
             }
         }
 
@@ -218,7 +209,7 @@ export default class addPropForm extends Component
                             </div>
                             {formInputsState.price ? "" : validPrice}
 
-                            <input type = "file" multiple onChange = {this.handleFileChange}/>
+                            <input type="file" multiple onChange={this.handleFileChange}/>
                         </div>
 
                         

@@ -96,12 +96,12 @@ const deleteProperty = (req, res, next) =>{
     let pathArray = __dirname.split('\\')
     let path = pathArray.splice(-0, pathArray.length - 1).join('\\')
 
-    propertyModel.findByIdAndRemove(req.params.id, (error, data) => 
+    propertiesModel.findByIdAndRemove(req.params.id, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on property delete.`))
         }else{
-            fs.unlink(`${path}\\uploads\\${data.images[0].filename}`, (err) => {
+            fs.unlink(`${path}\\uploads\\${data.images[0].filename}`, (err) => { //Only deletes one image for now
                 if(err)
                     return next(createError(400, `Error on image deleting.`))
                 else
