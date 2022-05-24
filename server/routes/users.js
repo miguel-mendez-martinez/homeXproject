@@ -14,8 +14,8 @@ const upload = multer()
 //Middleware
 const checkUserExists = (req, res, next) =>
 {
-    req.params.password = urlencode.decode(req.params.password)
-    usersModel.findOne({email:req.params.email}, (error, data) => 
+    req.body.password = urlencode.decode(req.body.password)
+    usersModel.findOne({email:req.body.email}, (error, data) => 
     {
         if(error || data==null){
             return next(createError(400), `User doesn't exists.`)
@@ -43,7 +43,7 @@ const checkUserNotExists = (req, res, next) =>
 
 const checkLogIn = (req, res, next) =>
 {    
-    bcrypt.compare(req.params.password, req.data.password, (err, result) =>
+    bcrypt.compare(req.body.password, req.data.password, (err, result) =>
     {     
         if(err){
             return next(err)
@@ -176,7 +176,7 @@ const checkUserLogged = (req, res, next) =>
 //Register
 router.post(`/Users/register`, upload.none(), checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
 //Log in
-router.post(`/Users/login/:email/:password`, checkUserExists, checkLogIn, logInUser) 
+router.post(`/Users/login`, upload.none(), checkUserExists, checkLogIn, logInUser) 
 //Drop Database
 router.post(`/Users/resetUsers`, eliminateCollection, createAdmin)
 //Log out

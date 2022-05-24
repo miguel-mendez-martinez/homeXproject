@@ -55,27 +55,34 @@ export default class logInForm extends Component
         localStorage.email = "GUEST"
         localStorage.accessLevel = ACCESS_LEVEL_GUEST 
         let encodedPass = encodeURIComponent(this.state.password, "UTF-8")
-        axios.post(`${SERVER_HOST}/Users/login/${this.state.email}/${encodedPass}`)
-        .then(res => 
-        {    
+
+        var bodyFormData = new FormData();
+        bodyFormData.append('email', this.state.email)
+        bodyFormData.append('password', encodedPass)
+
+        axios({
+            method: "post",
+            url: `${SERVER_HOST}/Users/login`,
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+        }).then(res => {
+            //handle success
             localStorage.email = res.data.email
             localStorage.accessLevel = res.data.accessLevel
             localStorage.token = res.data.token
-            
+
             if(res.data.accessLevel === ACCESS_LEVEL_ADMIN){
                 this.setState({redirectTenant:true})
             }else{
                 this.setState({redirectResident:true})
             }
-
-            
-        }).catch((error)=>
-        {
-            console.log("error:", error.response.data)
+        }).catch(err => {
+            //handle error
+            console.log("error:", err.response.data)
             localStorage.email = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST
-            this.setState({logInError: true, errorMessage: error.response.data})
-        })
+            this.setState({logInError: true, errorMessage: err.response.data})
+        });
     }
 
     cancelUser = e => {

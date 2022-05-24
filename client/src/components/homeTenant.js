@@ -11,10 +11,11 @@ export default class HomeTenant extends Component
                 <NavBar selected="0"/>
                 <div className="content-container">
                     <h1>TENANTS PAGE</h1>
-                </div>
+                    
                 <Link className="blue-button" to="/tenantAddPropForm">
                     <h1> Add New Property </h1>
                 </Link>
+                </div>
             </div>
 
         )
