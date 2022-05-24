@@ -293,3 +293,10 @@ a:hover{
 {
   background-color: #1020a0; 
 }
+
+/* New css made by miguel and pablo */
+
+input:disabled {
+    background-color: lightslategray;
+    cursor: default;
+}

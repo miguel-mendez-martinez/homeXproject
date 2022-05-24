@@ -6,6 +6,7 @@ const createError = require('http-errors')
 const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const multer  = require('multer')
+const { isDataView } = require('util/types')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 //Middleware
@@ -26,16 +27,17 @@ const checkUserLogged = (req, res, next) =>
     })
 }
 
-const findUser = (req, res, next) => {
-    usersModel.findOne({email: req.params.email}, (error, data) => 
+/* const findUser = (req, res, next) => {
+    usersModel.findOne({email: req.decodedToken.email}, (error, data) => 
         {
             if(error || data==null){
                 return next(createError(400), `User doesn't exists.`)
             }
+            console.log(data)
             req.user = data            
             return next()        
         }) 
-}   
+}  */  
 
 const checkPropertyDontExists = (req, res, next) =>
 {
@@ -172,11 +174,13 @@ router.get('/Properties/resident', (req, res) =>
     })
 })
 
-router.get('/Properties/tenant/:email', checkUserLogged, findUser, (req, res) => 
+router.get('/Properties/tenant/', checkUserLogged, (req, res) => 
 {
-    propertiesModel.find({tenant: req.user.id}, (error, data) =>
+    propertiesModel.find({tenant: req.decodedToken.email}, (error, data) =>
     {
+        console.log("aqui")
         if(!error){
+            console.log(data)
             res.json(data)
         }
     })

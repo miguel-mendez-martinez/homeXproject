@@ -13,7 +13,7 @@ export default class PropertyHolder extends Component
         
         this.state = { 
             property: this.props.property,
-            image: this.props.property.images[0],
+            //image: this.props.property.images[0],
             picture: '',
             mounted: false,
             modal: false
@@ -30,7 +30,7 @@ export default class PropertyHolder extends Component
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/Properties/images/${fileName}`)
+        /* axios.get(`${SERVER_HOST}/Properties/images/${this.state.image}`)
         .then(res => 
         {
             if(res.data)
@@ -49,7 +49,7 @@ export default class PropertyHolder extends Component
             {
                 console.log("Record not found")
             }
-        })
+        }) */
     }
     
     

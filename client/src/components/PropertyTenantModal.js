@@ -68,7 +68,7 @@ export default class SkateModal extends Component{
                             {this.state.mounted ? this.state.pictures.map((picture) => {<img id={picture} src={`data:;base64,${picture}`} alt=""/>}) : null}
                         </div> */}
                         <div id="buttons">
-                            <input type="button" className="green-button" value="Update" disabled = {!inputsAreAllValid} onClick={this.updateProperty}/>
+                            <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
                         </div>
                     </div>
                 </div>

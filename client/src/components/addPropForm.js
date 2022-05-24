@@ -15,9 +15,14 @@ export default class addPropForm extends Component
 
         this.state = {
             tenant: localStorage.email,
-            address: '',
+            address: {
+                street: '',
+                number: '',
+                floor: ''
+            },
             area: '',
             price: '',
+            selectedFiles: null,
             redirect:false,
             propExitsError: false,
             errorMessage: '',
@@ -32,7 +37,7 @@ export default class addPropForm extends Component
     }
 
     validateAdress() {
-        if(this.state.address === ""){
+        if(this.state.address.street === '' || this.state.address.number === '' || this.state.address.floor === ''){
             return false
         }else{
             return true
@@ -40,18 +45,28 @@ export default class addPropForm extends Component
     }
 
     validateArea() {
-        if(this.state.area === "" && this.state.area <= 0){
+        let num = parseInt(this.state.area) || 'NaN'
+        if( num === 'NaN' ){
             return false
         }else{
-            return true
+            if(parseInt(this.state.area) <= 0){
+                return false
+            }else{
+                return true
+            }
         }
     }
 
     validatePrice() {
-        if(this.state.price === "" && this.state.price <= 0){
+        let num = parseInt(this.state.price) || 'NaN'
+        if( num === 'NaN' ){
             return false
         }else{
-            return true
+            if(parseInt(this.state.price) <= 0){
+                return false
+            }else{
+                return true
+            }
         }
     }
 
@@ -66,18 +81,41 @@ export default class addPropForm extends Component
 
 
     handleChange = e => {
-
         this.setState({[e.target.name]: e.target.value})
 
+    }
+
+    handleAddress = e => {
+        const changeAddress = function(e, component){
+            let address = component.state.address;
+            address[e.target.name] = e.target.value;
+            return { address };
+        }
+        this.setState(changeAddress(e, this))
+        
+    }
+
+    handleFileChange = (e) => 
+    {
+        this.setState({selectedFiles: e.target.files})
     }
 
     addProperty = e => {
 
         let formData = new FormData()  
-        formData.append("address", this.state.address)
+        let textAddress = this.state.address.street + ', number ' + this.state.address.number + ', ' + this.state.address.floor + '.'
+        formData.append("address", textAddress)
         formData.append("area", this.state.area)
         formData.append("price", this.state.price) 
         formData.append("tenant", this.state.tenant) 
+
+        if(this.state.selectedFiles)
+        {
+            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            {
+                formData.append("productPhotos", this.state.selectedFiles[i])
+            }
+        }
 
         if(this.state.images)
         {
@@ -131,36 +169,64 @@ export default class addPropForm extends Component
                 {this.state.redirect ? <Redirect to="/tenantHome"/> : null}
                 <NavBar selected="0"/>
                 <div className="content-container">
-                    <div className="item-container">
-                        <input className = {"form-control" ? "" : "error"}
-                            id="address" 
-                            type="text" 
-                            name="address" placeholder="Property Adress" 
-                            onChange={this.handleChange} ref = {input => {this.inputToFocus = input}}/>
-                    </div>
-                    {formInputsState.address ? "" : addressEmpty}
+                    <div className="addProp-form-container">
+                        <div className="name-container">
+                            <h1>Add New Property</h1>
+                        </div>
+                        <div className="address-container">
+                            <div className="text-container">
+                                <h3> Address </h3>
+                            </div>
+                            <div className="inputs-container">
+                                <input className = "form-control"
+                                    id="street" 
+                                    type="text" 
+                                    name="street" placeholder="Property Street" 
+                                    onChange={this.handleAddress} ref = {input => {this.inputToFocus = input}}/>
 
-                    <div className="item-container">
-                        <input className = {"form-control" ? "" : "error"}
-                            id="area" 
-                            type="number" 
-                            name="area" placeholder="Property Area" 
-                            onChange={this.handleChange}/>
-                    </div>
-                    {formInputsState.area ? "" : validArea}
-                
-                    <div className="item-container">
-                        <input className = {"form-control" ? "" : "error"}
-                            id="price" 
-                            type="number" 
-                            name="price" placeholder="Property Price" 
-                            onChange={this.handleChange}/>
-                    </div>
-                    {formInputsState.price ? "" : validPrice}
 
-                    <div className="button-container">
-                        <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
-                    </div>              
+                                <input className = "form-control"
+                                    id="number" 
+                                    type="text" 
+                                    name="number" placeholder="Street Number" 
+                                    onChange={this.handleAddress}/>
+
+                                <input className = "form-control"
+                                    id="floor" 
+                                    type="text" 
+                                    name="floor" placeholder="Building's Floor" 
+                                    onChange={this.handleAddress}/>
+                            </div>
+                            {formInputsState.address ? "" : addressEmpty}
+                        </div>
+                        <div className="props-container">
+                            <div className="item-container">
+                                <input className = {"form-control"}
+                                    id="area" 
+                                    type="text" 
+                                    name="area" placeholder="Property Area" 
+                                    onChange={this.handleChange}/>
+                            </div>
+                            {formInputsState.area ? "" : validArea}
+                        
+                            <div className="item-container">
+                                <input className = {"form-control"}
+                                    id="price" 
+                                    type="text" 
+                                    name="price" placeholder="Property Price" 
+                                    onChange={this.handleChange}/>
+                            </div>
+                            {formInputsState.price ? "" : validPrice}
+
+                            <input type = "file" multiple onChange = {this.handleFileChange}/>
+                        </div>
+
+                        
+
+                        <div className="button-container">
+                            <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
+                        </div> 
+                    </div>             
                 </div>
             </div>
         )

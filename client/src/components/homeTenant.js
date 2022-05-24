@@ -1,9 +1,9 @@
 import axios from "axios"
 import React, {Component} from "react"
 import {Redirect, Link} from 'react-router-dom'
-import Property from "../../../server/models/property"
 import NavBar from "./NavBar"
 import PropertyHolder from "./PropertyHolder"
+import {SERVER_HOST} from "../config/global_constants"
 
 export default class HomeTenant extends Component 
 {
@@ -19,9 +19,12 @@ export default class HomeTenant extends Component
     }
 
     componentDidMount(){
-        axios.get(`${SERVER_HOST}/Properties/tenant/${localStorage.email}`)
-        .then(res => 
-        {
+        axios({
+            method: "get",
+            url: `${SERVER_HOST}/Properties/tenant/`,
+            headers: { "authorization": localStorage.token },
+        }).then(res => {
+            //handle success
             if(res.data)
             {            
                 if (res.data.errorMessage)
@@ -38,7 +41,10 @@ export default class HomeTenant extends Component
             {
                 console.log("Record not found")
             }
-        })
+        }).catch(err => {
+            //handle error
+            console.log(err)
+        });
     }
 
     render() 
