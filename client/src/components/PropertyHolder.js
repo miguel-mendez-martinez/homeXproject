@@ -30,7 +30,7 @@ export default class PropertyHolder extends Component
 
     componentDidMount() 
     {
-        /* axios.get(`${SERVER_HOST}/Properties/images/${this.state.image}`)
+        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image}`)
         .then(res => 
         {
             if(res.data)
@@ -49,20 +49,19 @@ export default class PropertyHolder extends Component
             {
                 console.log("Record not found")
             }
-        }) */
+        }) 
     }
     
     
     render() 
     {
-        let propertyInfo = 'holi'
         return (
             <div className="property" onClick={this.clickOn}>
                 <div className="propertyMainImage">
-                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt="Loading..."/> : null}
                 </div>
                 <div className="propertyName">
-                    {propertyInfo}
+                    {this.state.property.address}
                 </div>
                 <div className="propertyPrice">
                     {this.state.property.price}
@@ -70,8 +69,7 @@ export default class PropertyHolder extends Component
                 {this.state.modal ? <PropertyTenantModal 
                                         property = {this.state.property}
                                         closeModal = {this.showModal.bind(this)}
-                                      /> : null}   
-                
+                                      /> : null}               
             </div>        
         )
     }

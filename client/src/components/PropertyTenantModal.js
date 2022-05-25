@@ -1,11 +1,11 @@
 import React, {Component} from "react"
 import axios from "axios"
-import {Link} from "react-router-dom"
+import {Redirect,Link} from "react-router-dom"
 
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export default class SkateModal extends Component{
+export default class PropertyTenantModal extends Component{ //Not possible to update images yet
 
     constructor(props) 
     {
@@ -14,7 +14,9 @@ export default class SkateModal extends Component{
         this.state = {property: this.props.property,
                       id: this.props.property._id,
                       pictures: [],
-                      mounted: false }
+                      selectedFiles: null,
+                      mounted: false,
+                      redirect: false }
     }
 
     componentDidMount() 
@@ -45,8 +47,64 @@ export default class SkateModal extends Component{
         })
     }
 
-    updateProperty = () => {
+    handleFileChange = (e) => 
+    {
+        this.setState({selectedFiles: e.target.files})
+    }
 
+    handleChange = e => {
+        this.setState({[e.target.name]: e.target.value})
+
+    }
+
+    updateProperty = () => {
+        const property = {area: this.state.property.area, price: this.state.property.price, residents: this.state.property.residents, images: this.state.property.images } 
+        axios.put(`${SERVER_HOST}/Properties/${this.state.id}`, property, {headers:{"authorization":localStorage.token}})
+        .then(res => 
+        {   
+            if(res.data)
+            {
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {   
+                    console.log("Record added")
+                    this.setState({redirect: true})
+                } 
+            }
+            else
+            {
+                console.log("Record not added")
+            }
+        }).catch(err =>{
+            console.log("err:" + err.response.data) 
+        })
+    }
+    
+
+    deleteProperty = () => {
+        axios.delete(`${SERVER_HOST}/Properties/${this.state.id}`, {headers:{"authorization":localStorage.token}})
+        .then(res => 
+        {
+            if(res.data)
+            {          
+                this.setState({redirect: true})
+                console.log("Record deleted")
+            }else{
+                console.log("Record not deleted")
+            }
+        }).catch(error =>{
+            console.log("err:" + error.response.data)
+        })   
+    }
+
+    anyResident = () => {
+        if(this.state.property.residents.lenght === 0)
+            return false
+        else
+            return true
     }
 
 
@@ -54,6 +112,7 @@ export default class SkateModal extends Component{
 
         return(
             <div id="modal"> 
+            {this.state.redirect ? <Redirect to="/tenantHome"/> : null}
                 <div id="modalContent">
                     <div className="modal-body">
                         <div id="info">
@@ -67,8 +126,15 @@ export default class SkateModal extends Component{
                         <div id="propertyImages">
                             {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt=""/>) : null}
                         </div>
+                        <div id="propertyFieldsMod">
+                            <label>Area:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.area}/></label><br/>
+                            <label>Price:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.price}/></label><br/>
+                            <label>Residents:<input type="text" name="size" onChange={this.handleChange} value={this.state.residents}/></label><br/>
+                       </div>
                         <div id="buttons">
+                            <input type="file" multiple onChange={this.handleFileChange}/>
                             <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
+                            <input type="button" className="red-button" value="Delete" disabled={this.anyResident} onClick={this.deleteProperty}/>
                         </div>
                     </div>
                 </div>
