@@ -169,47 +169,62 @@ export default class addPropForm extends Component
                                 <h4> Address </h4>
                             </div>
                             <div className="inputs-container">
+                                <div className="item1">
                                 <input className = "form-control"
                                     id="street" 
                                     type="text" 
                                     name="street" placeholder="Property Street" 
                                     onChange={this.handleAddress} ref = {input => {this.inputToFocus = input}}/>
+                                </div>
 
+                                <div className="item2">
+                                    <input className = "form-control"
+                                        id="number" 
+                                        type="text" 
+                                        name="number" placeholder="Street Number" 
+                                        onChange={this.handleAddress}/>
+                                </div>
 
-                                <input className = "form-control"
-                                    id="number" 
-                                    type="text" 
-                                    name="number" placeholder="Street Number" 
-                                    onChange={this.handleAddress}/>
-
-                                <input className = "form-control"
-                                    id="floor" 
-                                    type="text" 
-                                    name="floor" placeholder="Building's Floor" 
-                                    onChange={this.handleAddress}/>
+                                <div className="item3">
+                                    <input className = "form-control"
+                                        id="floor" 
+                                        type="text" 
+                                        name="floor" placeholder="Building's Floor" 
+                                        onChange={this.handleAddress}/>
+                                </div>
                             </div>
                             {formInputsState.address ? "" : addressEmpty}
                         </div>
                         <div className="props-container">
-                            <div className="item-container">
-                                <input className = {"form-control"}
-                                    id="area" 
-                                    type="text" 
-                                    name="area" placeholder="Property Area" 
-                                    onChange={this.handleChange}/>
+                            <div className="items-container">
+                                <div className="items-container">
+                                    <div className="item">
+                                        <input className = {"form-control"}
+                                            id="area" 
+                                            type="text" 
+                                            name="area" placeholder="Property Area" 
+                                            onChange={this.handleChange}/>
+                                        m<sup>2</sup>
+                                    </div>
+                                {formInputsState.area ? "" : validArea}
+                                </div>
+                                <div className="items-container">
+                                    <div className="item">
+                                        <input className = {"form-control"}
+                                            id="price" 
+                                            type="text" 
+                                            name="price" placeholder="Property Price" 
+                                            onChange={this.handleChange}/>
+                                            €.
+                                    </div>
+                                    {formInputsState.price ? "" : validPrice}
+                                </div>
                             </div>
-                            {formInputsState.area ? "" : validArea}
-                        
-                            <div className="item-container">
-                                <input className = {"form-control"}
-                                    id="price" 
-                                    type="text" 
-                                    name="price" placeholder="Property Price" 
-                                    onChange={this.handleChange}/>
-                            </div>
-                            {formInputsState.price ? "" : validPrice}
 
-                            <input type="file" multiple onChange={this.handleFileChange}/>
+                            <div className="images-container">
+                                <input type="file" multiple onChange={this.handleFileChange}/>
+                                <h1> PLEASE FIX THIS MAKE IT MULTIPLE AND STYLE IT :3</h1>
+                            </div>
                         </div>
                         <div className="button-container">
                             <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>

@@ -331,7 +331,6 @@ input:disabled {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: thin solid black;
 }
 
 .addProp-form-container .address-container .inputs-container{
@@ -342,24 +341,183 @@ input:disabled {
     margin: 0 auto;
 }
 
-#steet{
+.addProp-form-container .address-container .inputs-container .item1{
     flex-basis: 50%;
+    margin-left: 15px;
+}
+
+.addProp-form-container .address-container .inputs-container .item2{
+    flex-basis: 25%;
+}
+
+.addProp-form-container .address-container .inputs-container .item3{
+    flex-basis: 25%;
+}
+
+#street, #floor, #number{
+    height: 50px;
+}
+
+#street{
+    width: 80%;
 }
 
 #number{
-    flex-basis: 25%;
+    width: 50%;
 }
 
 #floor{
-    flex-basis: 25%;
+    width: 60%;
 }
 
 .addProp-form-container .props-container{
     width: 100%;
-    border: thin solid red;
+    display: flex;
+
+}
+
+.addProp-form-container .props-container .items-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 50%;
+    width: 100%;
+}
+
+.addProp-form-container .props-container .items-container .item{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.addProp-form-container .props-container .items-container .item input{
+    width: 30%;
+    height: 50px;
+}
+
+.addProp-form-container .props-container .images-container{
+    border: thin solid black;
+    flex-basis: 50%;
 }
 
 .addProp-form-container .button-container{
     width: 100%;
-    border: thin solid blue;
+    display: flex;
+    justify-content: center;
+}
+
+.error{
+    border-radius: 10px;
+    font-family: roboto;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    align-self: center;
+}
+
+
+
+
+/* modals */
+@keyframes modal_load
+{
+    from 
+    {
+        width: 0%;
+        height:0%
+    }
+    to 
+    {
+        width: 55%;
+        height: 75%
+    }
+}
+
+#modal 
+{
+    z-index: 2;
+    cursor: auto;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: rgba(0,0,0, 0.7);
+}
+#modalContent 
+{
+    animation: modal_load both 0.2s linear;
+    /* overflow:hidden; */
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 15%;
+    bottom: 15%;
+    margin: auto;
+    background: white;
+    border-radius:10px;
+    padding:5px;
+    border:thin solid black;
+}
+
+#modalContent #info{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#modalContent #info #title{
+    display: flex;
+    justify-content: center;
+    flex:3;
+}
+
+#modalContent #info #exit{
+    width: 25px;
+    height: 25px;
+}
+
+#modalContent #info #exit img{
+    max-width:100%;
+    max-height:100%;
+}
+
+#modalContent #info #exit img:hover{
+    filter:brightness(150%);
+    transform: scale(1.2);
+    cursor:pointer;
+}
+
+#modalContent #product{
+    display: flex;
+    justify-content: center;
+    height: 540px;
+}
+
+#modalContent #product #productInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+}
+
+#modalContent #product img{
+    max-width: 100%;
+    padding: 5em;
+}
+
+#modalContent #buttons{
+    display: flex;
+    padding: 5px;
+    justify-content: center;
 }

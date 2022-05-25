@@ -61,7 +61,7 @@ const addProperty = (req, res, next) =>
     property.address = req.body.address
     property.area = req.body.area
     property.price = req.body.price
-    property.residents = 'none'
+    property.residents = []
     property.images = []
 
     req.files.map((file, index) =>
@@ -203,7 +203,7 @@ router.get(`/Properties/images/:filename`, (req, res) =>
 
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)
 
-router.put('/Properties/:id', checkUserLogged, updateProperty)
+router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, updateProperty)
 
 router.delete('/Properties/:id', checkUserLogged, deleteProperty)
 

@@ -11,7 +11,7 @@ let propertySchema = new mongoose.Schema(
         address: {type: String, required: true}, //the PK property will be considered on middleware not here
         area: {type: Number, validate: function(){return this.area > 0} ,required: true},
         price: {type: Number,validate: function(){return this.price > 0}, required: true},
-        residents: {type: String, required:false},
+        residents: {type: Array, required:false},
         images: [propImagesSchema]
    },
    {
