@@ -19,36 +19,7 @@ import BillsResident from "./components/billsResident"
 import ProfileResident from "./components/profileResident"
 import addPropForm from "./components/addPropForm"
 import rentForm from "./components/rentForm"
-import axios from "axios"
-import { SERVER_HOST } from "./config/global_constants"
-
-import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
-
-
-if (typeof localStorage.accessLevel === "undefined" || !localStorage.token || localStorage.accessLevel == ACCESS_LEVEL_GUEST)
-{
-    localStorage.clear()
-    localStorage.email = "GUEST"
-    localStorage.accessLevel = ACCESS_LEVEL_GUEST
-    //localStorage.token = null 
-}else{
-    axios({
-        method: "get",
-        url: `${SERVER_HOST}/Users/checkLogIn`,
-        headers: { "authorization": localStorage.token },
-    }).then(res => {
-        //handle success
-        localStorage.email = res.data.email
-        localStorage.accessLevel = res.data.accessLevel
-        localStorage.token = res.data.token
-
-    }).catch(err => {
-        //handle error
-        localStorage.clear()
-        localStorage.email = "GUEST"
-        localStorage.accessLevel = ACCESS_LEVEL_GUEST
-    });
-}
+import checkLogIn from "./components/checkLogIn"
 
 export default class App extends Component 
 {
@@ -57,7 +28,7 @@ export default class App extends Component
         return (
             <BrowserRouter>
                 <Switch>                 
-                    <Route exact path="/" component={logInForm} />
+                    <Route exact path="/" component={checkLogIn} />
                     <LoggedInRoute exact path="/logOut" component={LogOut} />
                     <Route exact path="/registerUser" component={userCreationForm} />
                     <Route exact path="/logInForm" component={logInForm}/>
