@@ -2,7 +2,7 @@ import axios from "axios"
 import React, {Component} from "react"
 import {Redirect, Link} from 'react-router-dom'
 import NavBar from "./NavBar"
-import PropertyHolder from "./PropertyHolder"
+import PropertyHolderTenant from "./PropertyHolderTenant"
 import {SERVER_HOST} from "../config/global_constants"
 
 export default class HomeTenant extends Component 
@@ -56,7 +56,7 @@ export default class HomeTenant extends Component
                     <h1>TENANTS PAGE</h1>
 
                     <div className="propertiesGrid">
-                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolder key={property._id} property={property}/>) : null}
+                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderTenant key={property._id} property={property}/>) : null}
                     </div>
                     
                 <Link className="blue-button" to="/tenantAddPropForm">

@@ -1,9 +1,9 @@
 import React, {Component} from "react"
 import axios from "axios"
 import {SERVER_HOST} from "../config/global_constants"
-import PropertyTenantModal from "./PropertyTenantModal"
+import PropertyResidentModal from "./PropertyResidentModal"
 
-export default class PropertyHolder extends Component 
+export default class PropertyHolderResident extends Component 
 {
 
     constructor(props) 
@@ -13,7 +13,7 @@ export default class PropertyHolder extends Component
         
         this.state = { 
             property: this.props.property,
-            //image: this.props.property.images[0],
+            image: this.props.property.images[0],
             picture: '',
             mounted: false,
             modal: false
@@ -66,7 +66,7 @@ export default class PropertyHolder extends Component
                 <div className="propertyPrice">
                     {this.state.property.price}
                 </div>
-                {this.state.modal ? <PropertyTenantModal 
+                {this.state.modal ? <PropertyResidentModal 
                                         property = {this.state.property}
                                         closeModal = {this.showModal.bind(this)}
                                       /> : null}               

@@ -108,7 +108,9 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
     }
 
 
-    render(){        
+    render(){ 
+        let residentsString = ''
+        this.state.property.residents.map(res => residentsString += res + '\n')       
 
         return(
             <div id="modal"> 
@@ -129,7 +131,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                         <div id="propertyFieldsMod">
                             <label>Area:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.area}/></label><br/>
                             <label>Price:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.price}/></label><br/>
-                            <label>Residents:<input type="text" name="size" onChange={this.handleChange} value={this.state.residents}/></label><br/>
+                            <label>Residents:<input type="text" name="size" onChange={this.handleChange} value={residentsString}/></label><br/>
                        </div>
                         <div id="buttons">
                             <input type="file" multiple onChange={this.handleFileChange}/>

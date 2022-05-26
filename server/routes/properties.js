@@ -166,7 +166,7 @@ const generateContract = (req, res, next) =>{
 //routes
 router.get('/Properties/resident', (req, res) => 
 {
-    propertiesModel.find({residents: 'none'}, (error, data) =>
+    propertiesModel.find({ residents: { $exists: true, $type: 'array', $eq: [] }}, (error, data) =>
     {
         if(!error){
             res.json(data)
