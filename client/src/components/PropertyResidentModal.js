@@ -51,11 +51,6 @@ export default class PropertyResidentModal extends Component{
 
     }
 
-    rentProperty = () => {
-        
-    }
-
-
     render(){ 
         return(
             <div id="modal"> 
@@ -77,7 +72,7 @@ export default class PropertyResidentModal extends Component{
                             <label>Price: {this.state.property.price}</label><br/>
                        </div>
                         <div id="buttons">
-                            <Link id="rentButton" className="green-button" to="/rentForm"> Rent </Link>
+                            <Link id="rentButton" className="green-button" to={{pathname: `rentForm/${this.state.id}`}}> Rent Request </Link>
                         </div>
                     </div>
                 </div>
