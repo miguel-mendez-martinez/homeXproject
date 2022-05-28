@@ -113,13 +113,13 @@ const deleteProperty = (req, res, next) =>{
 
 const checkAvaliable = (req, res, next) =>{
 
-    propertiesModel.findOne(req.params.id, (error, data) =>
+    propertiesModel.findOne(req.params.idProp, (error, data) =>
     {
         if(error){
             return next(createError(400, "Error checking avaliability"))
         }else{
             if(data){
-                if(data.residents == 'none')
+                if(data.resident === 'none')
                     return next()
                 else
                 return next(createError(400, "Property is not avaliable"))
@@ -131,7 +131,7 @@ const checkAvaliable = (req, res, next) =>{
 
 const rentProperty = (req, res, next) =>{
 
-    propertiesModel.findByIdAndUpdate(req.params.id, {"residents": req.body.residents}, (error, data) => 
+    propertiesModel.findByIdAndUpdate(req.params.idProp, {"resident": req.param.resident}, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on property renting.`))
@@ -145,9 +145,10 @@ const generateContract = (req, res, next) =>{
 
     let contract = new Object()
     contract.date = req.body.date
+    contract.status = 'requested'
     contract.tenant = req.body.tenant
     contract.residents = req.body.residents
-    contract.property = req.body.property
+    contract.property = req.params.idProp
     contract.expireDate = req.body.expireDate
     contract.moneyAmount = req.body.moneyAmount
     contract.monthlyDeadLine = req.body.monthlyDeadLine
@@ -178,9 +179,7 @@ router.get('/Properties/tenant/', checkUserLogged, (req, res) =>
 {
     propertiesModel.find({tenant: req.decodedToken.email}, (error, data) =>
     {
-        console.log("aqui")
         if(!error){
-            console.log(data)
             res.json(data)
         }
     })
@@ -207,6 +206,6 @@ router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.en
 
 router.delete('/Properties/:id', checkUserLogged, deleteProperty)
 
-router.post('/Properties/rentProperty/:id/:residents', checkUserLogged, checkAvaliable, rentProperty, generateContract)
+router.post('/Properties/rentProperty/:idProp/:idResident', checkUserLogged, checkAvaliable, rentProperty, generateContract)
 
 module.exports = router
