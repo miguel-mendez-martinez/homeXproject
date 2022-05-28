@@ -17,7 +17,7 @@ const checkUserExists = (req, res, next) =>
     req.body.password = urlencode.decode(req.body.password)
     usersModel.findOne({email:req.body.email}, (error, data) => 
     {
-        if(error || data==null){
+        if(error || !data){
             return next(createError(400), `User doesn't exists.`)
         }
         req.data = data            

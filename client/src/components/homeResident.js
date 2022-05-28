@@ -20,7 +20,7 @@ export default class HomeResident extends Component
     componentDidMount(){
         axios({
             method: "get",
-            url: `${SERVER_HOST}/Properties/resident/`,
+            url: `${SERVER_HOST}/Properties/resident`,
             headers: { "authorization": localStorage.token },
         }).then(res => {
             //handle success
@@ -32,6 +32,7 @@ export default class HomeResident extends Component
                 }
                 else
                 {           
+                    console.log(res.data)
                     this.setState({properties: res.data})
                     this.setState({mounted: true})
                 }   

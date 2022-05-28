@@ -84,10 +84,9 @@ export default class logInForm extends Component
             }
         }).catch(err => {
             //handle error
-            console.log("error:", err.response.data)
             localStorage.email = "GUEST"
             localStorage.accessLevel = ACCESS_LEVEL_GUEST
-            this.setState({logInError: true, errorMessage: err.response.data})
+            this.setState({logInError: true, errorMessage: 'Error on login, credentials does not match.'})
         });
     }
 
@@ -113,7 +112,7 @@ export default class logInForm extends Component
                     </div>
 
                     <div className="form-container">
-                        {this.state.logInError ? <div className="errorDiv">{this.state.errorMessage}</div> : null}
+                        {this.state.logInError ? <div className="error">{this.state.errorMessage}</div> : null}
                         <input className="form-control" id="email" type="text" name="email" placeholder="Email" onChange={this.handleChange}/><br/>
                         <input className="form-control" id="password" type="password" name="password"  placeholder="Password" onChange={this.handleChange}/><br/>  
                     </div>

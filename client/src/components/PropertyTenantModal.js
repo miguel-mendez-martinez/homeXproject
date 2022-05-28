@@ -45,6 +45,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
             this.setState({pictures: images})
             this.setState({mounted: true})
         })
+        console.log(this.state.property)
     }
 
     handleFileChange = (e) => 
@@ -101,16 +102,20 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
     }
 
     anyResident = () => {
-        if(this.state.property.residents.lenght === 0)
+        if(this.state.property.resident === 'none')
             return false
         else
             return true
     }
 
 
-    render(){ 
+    render(){  
         let residentsString = ''
-        this.state.property.residents.map(res => residentsString += res + '\n')       
+        /*if(this.state.property.resident){
+            this.state.property.resident.map(res => residentsString += res + '\n') 
+        }     */  
+
+        let canDelete = this.anyResident()
 
         return(
             <div id="modal"> 
@@ -136,7 +141,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                         <div id="buttons">
                             <input type="file" multiple onChange={this.handleFileChange}/>
                             <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
-                            <input type="button" className="red-button" value="Delete" disabled={this.anyResident} onClick={this.deleteProperty}/>
+                            <input type="button" className="red-button" value="Delete" disabled={this.anyResident()} onClick={this.deleteProperty}/>
                         </div>
                     </div>
                 </div>

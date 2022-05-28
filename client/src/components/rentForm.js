@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import axios from "axios"
 import {Redirect,Link} from "react-router-dom"
+import NavBar from "./NavBarResidents"
 
 import {SERVER_HOST} from "../config/global_constants"
 
@@ -44,7 +45,7 @@ export default class rentForm extends Component{
                 }
                 else
                 {           
-                    this.setState({property: res.data})
+                    this.setState({property: res.data[0]})
                     this.setState({mounted: true})
                 }   
             }
@@ -106,12 +107,14 @@ export default class rentForm extends Component{
 
     sendRequest = e => {
         let finalResidents = []
-        let resident = new Object()
-        this.state.residents.split(';').map(nameId =>{
+        let splittedData
+        this.state.residents.split(';').map((nameId, index) =>{
             splittedData = nameId.split(',')
-            resident.name = splitteddata[0]
-            resident.id = splittedData[1]
-            finalResidents.push(resident)
+
+            finalResidents[index] = {
+                name: splittedData[0],
+                id: splittedData[1]
+            }
         })
 
 
@@ -121,8 +124,13 @@ export default class rentForm extends Component{
         formData.append("moneyAmount", this.state.property.price) 
         formData.append("tenant", this.state.property.tenant) 
         formData.append("monthlyDeadLine", 1)
-        formData.append("residents", finalResidents)
         formData.append("resident", this.state.resident)
+
+        //for residents
+        for(let i = 0; i < finalResidents.length; i++)
+        {
+            formData.append("residents", finalResidents[i])
+        }
 
         axios.post(`${SERVER_HOST}/Properties/rentProperty/${this.props.match.params.id}`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
         .then(res => 
@@ -208,7 +216,7 @@ export default class rentForm extends Component{
                                             id="residents" 
                                             type="text" 
                                             name="residents" placeholder="Property Residents" 
-                                            onChange={this.handleChange}/>
+                                            onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
                                             €.
                                     </div>
                                     {formInputsState.residents ? "" : validResidents}

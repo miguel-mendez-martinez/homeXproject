@@ -6,7 +6,6 @@ const createError = require('http-errors')
 const fs = require('fs');
 const jwt = require('jsonwebtoken')
 const multer  = require('multer')
-const { isDataView } = require('util/types')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
 //Middleware
@@ -113,7 +112,7 @@ const deleteProperty = (req, res, next) =>{
 
 const checkAvaliable = (req, res, next) =>{
 
-    propertiesModel.findOne(req.params.idProp, (error, data) =>
+    propertiesModel.findById(req.params.idProp, (error, data) =>
     {
         if(error){
             return next(createError(400, "Error checking avaliability"))
@@ -129,33 +128,31 @@ const checkAvaliable = (req, res, next) =>{
     })
 }
 
-const rentProperty = (req, res, next) =>{
-
-    propertiesModel.findByIdAndUpdate(req.params.idProp, {"resident": req.param.resident}, (error, data) => 
-    {
-        if(error){
-            return next(createError(400, `Error on property renting.`))
-        }else{
-            return next()
-        }
-    })
-}
-
 const generateContract = (req, res, next) =>{
+
+    console.log(req.body)
 
     let contract = new Object()
     contract.date = req.body.date
     contract.status = 'requested'
     contract.tenant = req.body.tenant
-    contract.residents = req.body.residents
+    contract.resident = req.decodedToken.email
     contract.property = req.params.idProp
     contract.expireDate = req.body.expireDate
     contract.moneyAmount = req.body.moneyAmount
     contract.monthlyDeadLine = req.body.monthlyDeadLine
+    contract.residents = []
+
+    //residents
+    req.body.residents.map((resident, index) =>
+    {
+        contract.residents[index] = {name:`${resident.name}`, id:`${resident.id}`}
+    })
     
     contractsModel.create(contract, (error, data) =>
     {
         if(error){
+            console.log(error)
             return next(createError(400, `Error on contract creation.`))
         }else{
             res.json(data)
@@ -167,7 +164,7 @@ const generateContract = (req, res, next) =>{
 //routes
 router.get('/Properties/resident', (req, res) => 
 {
-    propertiesModel.find({ residents: { $exists: true, $type: 'array', $eq: [] }}, (error, data) =>
+    propertiesModel.find({ resident: 'none'}, (error, data) =>
     {
         if(!error){
             res.json(data)
@@ -200,12 +197,21 @@ router.get(`/Properties/images/:filename`, (req, res) =>
     })             
 })
 
+router.get('/Properties/:id', (req, res) =>{
+    propertiesModel.find({}, (error, data) =>
+    {
+        if(!error){
+            res.json(data)
+        }
+    })
+})
+
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)
 
 router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, updateProperty)
 
 router.delete('/Properties/:id', checkUserLogged, deleteProperty)
 
-router.post('/Properties/rentProperty/:idProp/:idResident', checkUserLogged, checkAvaliable, rentProperty, generateContract)
+router.post('/Properties/rentProperty/:idProp', upload.none(), checkUserLogged, checkAvaliable, generateContract)
 
 module.exports = router
