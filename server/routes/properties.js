@@ -198,7 +198,7 @@ router.get(`/Properties/images/:filename`, (req, res) =>
 })
 
 router.get('/Properties/:id', (req, res) =>{
-    propertiesModel.find({}, (error, data) =>
+    propertiesModel.findById(req.params.id, (error, data) =>
     {
         if(!error){
             res.json(data)
