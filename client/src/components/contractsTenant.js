@@ -60,10 +60,14 @@ export default class ContractTenant extends Component
             {
                 console.log("Record not found")
             }
-        }) 
-        axios.get(`${SERVER_HOST}/ContractsCompleted`, {headers:{"authorization":localStorage.token}})
-        .then(res => 
-        {
+        })  
+
+        axios({
+            method: "get",
+            url: `${SERVER_HOST}/ContractsCompleted`,
+            headers: { "authorization": localStorage.token },
+        }).then(res => {
+            //handle success
             if(res.data)
             {            
                 if (res.data.errorMessage)
@@ -72,6 +76,7 @@ export default class ContractTenant extends Component
                 }
                 else
                 {           
+                    console.log(res.data)
                     this.setState({completed: res.data})    
                     this.setState({mounted: true})  
                 }   
@@ -80,7 +85,9 @@ export default class ContractTenant extends Component
             {
                 console.log("Record not found")
             }
-        }) 
+        }).catch(err =>{
+            console.log("err:" + err.response.data) 
+        })
     }
     render() 
     {   

@@ -2,24 +2,23 @@ import React, {Component} from "react"
 import axios from "axios"
 import {Redirect, Link} from 'react-router-dom'
 import {SERVER_HOST} from "../config/global_constants"
-import ContractConfirmModal from "./ContractConfirmModal.js"
-import ContractCompleteModal from "./ContractCompleteModal.js"
+import ContractToSignModal from "./ContractToSignModal"
 
-export default class ContractHolderTenant extends Component 
+export default class ContractHolderResident extends Component 
 {
 
     constructor(props) 
     {
         super(props)
+
         
         this.state = { 
             contract: this.props.contract,
             property: null,
             picture: '',
             mounted: false,
-            requestedModal: false,
+            modal: false,
             redirect: false,
-            completeModal: false
         }
     }
 
@@ -47,32 +46,24 @@ export default class ContractHolderTenant extends Component
         }) 
     }
     
-    confirm = e => {
+    sign = e => {
         //confirming a contract will open a form of contract to change some data and send it to the resident 
-        this.setState({requestedModal: !this.state.requestedModal})
-    }
-
-    complete = e => {
-        this.setState({completeModal: !this.state.completeModal})
+        this.setState({modal: !this.state.modal})
     }
 
     contact = e => {
         console.log('Comunicating...')
     }
 
-    showRequestedModal(){
-        this.setState({ requestedModal: !this.state.requestedModal, redirect: true})
-    }
-
-    showCompletedModal(){
-        this.setState({ requestedModal: !this.state.completeModal, redirect: true})
+    showModal(){
+        this.setState({ modal: !this.state.modal, redirect: true})
     }
     
     render() 
     {
         return (
             <div className="contract">
-                {this.state.redirect ? <Redirect to="/tenantHome"/> : null}
+                {this.state.redirect ? <Redirect to="/residentHome"/> : null}
                 {this.state.mounted ? 
                     <><div className="propertyName">
                         {this.state.property.address}
@@ -84,21 +75,14 @@ export default class ContractHolderTenant extends Component
                         {this.state.property.price}
                     </div>
                     <div className="buttons">
-                        {this.state.contract.status === 'requested' ? <input type="button" className="green-button" value="Accept" onClick={this.confirm} /> : null}
-                        {this.state.contract.status === 'signed' ? <input type="button" className="green-button" value="Complete" onClick={this.complete} /> : null}
-                        {this.state.contract.status === 'completed' ? <input type="button" className="green-button" value="Contact" onClick={this.contact} /> : null}
+                        {this.state.contract.status == 'confirmed' ? <input type="button" className="green-button" value="Sign" onClick={this.sign} /> : null}
+                        {this.state.contract.status == 'completed' ? <input type="button" className="green-button" value="Contact" onClick={this.contact} /> : null}
                     </div></> : null}
 
-                    {this.state.requestedModal ? <ContractConfirmModal 
+                    {this.state.modal ? <ContractToSignModal 
                                         contract = {this.state.contract}
                                         property = {this.state.property}
-                                        closeModal = {this.showRequestedModal.bind(this)}
-                                      /> : null} 
-
-                    {this.state.completeModal ? <ContractCompleteModal
-                                        contract = {this.state.contract}
-                                        property = {this.state.property}
-                                        closeModal = {this.showCompletedModal.bind(this)}
+                                        closeModal = {this.showModal.bind(this)}
                                       /> : null} 
             </div>        
         )

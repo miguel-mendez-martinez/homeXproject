@@ -1,8 +1,65 @@
 import React, {Component} from "react"
+import ContractHolder from "./ContractHolderResident"
 import NavBar from "./NavBarResidents"
+import axios from "axios"
+import {SERVER_HOST} from "../config/global_constants"
 
-export default class ContractsResident extends Component 
+export default class ContractTenant extends Component 
 {
+
+    constructor(props) 
+    {
+        super(props)
+
+        
+        this.state = { 
+            confirmed: null,
+            completed: null,
+            mounted: false
+        }
+    }
+
+    componentDidMount() 
+    {
+        axios.get(`${SERVER_HOST}/ContractsConfirmed`, {headers:{"authorization":localStorage.token}})
+        .then(res => 
+        {
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {         
+                    this.setState({confirmed: res.data})    
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
+        }) 
+        axios.get(`${SERVER_HOST}/ContractsCompleted`, {headers:{"authorization":localStorage.token}})
+        .then(res => 
+        {
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {           
+                    this.setState({completed: res.data})    
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
+        }) 
+    }
     render() 
     {   
         return (       
@@ -10,8 +67,22 @@ export default class ContractsResident extends Component
                 <NavBar selected="1"/>
                 <div className="content-container">
                     <h1>RESIDENTS CONTRACTS PAGE</h1>
+
+                    {this.state.confirmed? 
+                        <div className="contractsConfirmed">
+                            <h2>Rent Offers to sign</h2>
+                            {this.state.confirmed.map((contract, index) => <ContractHolder key={index} contract={contract}/>)}
+                        </div> 
+                    : null}
+                    {this.state.completed? 
+                        <div className="contractsCompleted">
+                            <h2>Active Contracts</h2>
+                            {this.state.completed.map((contract, index) => <ContractHolder key={index+100} contract={contract}/>)}
+                        </div> 
+                    : null}
                 </div>
             </div>
+
         )
     }
 }

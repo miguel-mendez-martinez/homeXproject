@@ -1,11 +1,10 @@
 import React, {Component} from "react"
 import axios from "axios"
-import {Redirect,Link} from "react-router-dom"
 
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export default class ContractModal extends Component{ 
+export default class ContractConfirmModal extends Component{ 
 
     constructor(props) 
     {
@@ -14,7 +13,7 @@ export default class ContractModal extends Component{
         this.state = {contract: this.props.contract,
                       property: this.props.property,
                       pictures: [],
-                      mounted: false}
+                      mounted: false,}
     }
 
     componentDidMount() 
@@ -109,9 +108,6 @@ export default class ContractModal extends Component{
 
     acceptContract = e => {
         //server cll to accept the contract
-
-
-
         let formData = new FormData()  
         formData.append("date", new Date(this.state.year, this.state.month-1, 1))
         formData.append("expireDate", new Date(this.state.expireYear, this.state.expireMonth-1, 28))
@@ -139,6 +135,35 @@ export default class ContractModal extends Component{
             }
         }).catch(err =>{
             console.log("err:" + err.response.data) 
+        })
+
+    }
+
+    cancelContract = e => {
+        //server cll to accept the contract
+
+        axios({
+            method: "delete",
+            url: `${SERVER_HOST}/Contracts/tenantCancelContract/${this.props.contract._id}`,
+            headers: { "authorization": localStorage.token },
+        }).then(res => {
+            //handle success
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {       
+                    console.log('Contract Canceled')    
+                    this.props.closeModal()
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
         })
 
     }
@@ -256,6 +281,7 @@ export default class ContractModal extends Component{
                        </div>
                         <div id="buttons">
                             <input type="button" className="green-button" value="Make Offer" disabled = {!inputsAreAllValid} onClick={this.acceptContract}/>
+                            <input type="button" className="red-button" value="Cancel Offer" onClick={this.cancelContract}/>
                         </div>
                     </div>
                 </div>

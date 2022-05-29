@@ -254,6 +254,7 @@ export default class rentForm extends Component{
                         </div>
                         <div className="button-container">
                             <input type="button" className="green-button" value="Submit" disabled = {!inputsAreAllValid} onClick={this.sendRequest}/>
+                            <Link className="red-button" to="/residentContracts"> Cancel Rental</Link>
                         </div> 
                     </div>             
                 </div>

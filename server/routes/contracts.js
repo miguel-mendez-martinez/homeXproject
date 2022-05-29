@@ -35,7 +35,7 @@ const checkContractExists = (req, res, next) =>
                 return next(createError(400, "Contract doesn't exists."))
             else
             {
-                req.data.contract = data
+                req.contract = data
                 return next()
             }
         }
@@ -44,14 +44,14 @@ const checkContractExists = (req, res, next) =>
 
 const checkAvaliable = (req, res, next) =>{
 
-    propertiesModel.findOne({property: req.data.contract.property}, (error, data) =>
+    propertiesModel.findOne({_id: req.contract.property}, (error, data) =>
     {
         if(error){
             return next(createError(400, "Error checking avaliability"))
         }else{
             if(data){
                 if(data.resident === 'none'){
-                    req.data.property = data
+                    req.property = data
                     return next()
                 }
                 else{
@@ -64,7 +64,7 @@ const checkAvaliable = (req, res, next) =>{
 }
 
 const checkUserTenant = (req, res, next) => {
-    if(req.decodedToken.email === req.data.contract.tenant){
+    if(req.decodedToken.email === req.contract.tenant){
         //user logged in is the same as the one on the contract
         return next()
     }else{
@@ -74,7 +74,7 @@ const checkUserTenant = (req, res, next) => {
 }
 
 const checkUserResident = (req, res, next) => {
-    if(req.decodedToken.email === req.data.contract.resident){
+    if(req.decodedToken.email === req.contract.resident){
         //user logged in is the same as the one on the contract
         return next()
     }else{
@@ -96,7 +96,6 @@ const confirmContract = (req, res, next) =>{
         if(error){
             return next(createError(400, `Error on contract update for confirmation.`))
         }else{
-            console.log('Confirmed contract: ' + data)
             res.json(data)
         }
     })
@@ -110,7 +109,6 @@ const signContract = (req, res, next) => {
         if(error){
             return next(createError(400, `Error on contract update for signing.`))
         }else{
-            console.log('Contract signed: ' + data)
             res.json(data)
         }
     })
@@ -124,32 +122,30 @@ const completeContract = (req, res, next) => {
         if(error){
             return next(createError(400, `Error on contract update for completition.`))
         }else{
-            console.log('Final contract: ' + data)
-            req.data.contract = data
+            req.contract = data
             return next()
         }
     })
 }
 
 const rentProperty = (req, res, next) =>{
-    propertiesModel.findByIdAndUpdate(req.data.contract.property, {"resident": req.data.contract.resident}, (error, data) => 
+    propertiesModel.findByIdAndUpdate(req.contract.property, {"resident": req.contract.resident}, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on property renting.`))
         }else{
-            console.log('Final state of the property: ' + data)
             return next()
         }
     })
 }
 
 const cancelOtherContracts = (req, res, next) => {
-    contractModel.deleteMany({property: req.data.property._id}, (error, data) => 
+    contractModel.remove({property: req.property._id, status: { $ne: 'completed'}}, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on contract deleting.`))
         }else{
-            return res.json(req.data.contract)
+            return res.json(req.contract)
         }
     })
 }
@@ -160,7 +156,7 @@ const cancelContract = (req, res, next) => {
         if(error){
             return next(createError(400, `Error on contract canceling.`))
         }else{
-            return res.json({status: 'canceling success'})
+            return res.json(data)
         }
     })
 }
@@ -209,8 +205,8 @@ router.get('/ContractsSigned', checkUserLogged, (req, res) =>
 
 router.get('/ContractsCompleted', checkUserLogged, (req, res) => 
 {
-    if(req.decodedToken.accessLevel === process.env.ACCESS_LEVEL_ADMIN) {
-        contractModel.find({tenant: req.decodedToken.email, status: 'confirmed'}, (error, data) =>
+    if(req.decodedToken.accessLevel == process.env.ACCESS_LEVEL_ADMIN) {
+        contractModel.find({tenant: req.decodedToken.email, status: 'completed'}, (error, data) =>
         {
             if(!error){
                 if(data){
@@ -221,7 +217,7 @@ router.get('/ContractsCompleted', checkUserLogged, (req, res) =>
             }
         })
     }else{
-        contractModel.find({resident: req.decodedToken.email, status: 'confirmed'}, (error, data) =>
+        contractModel.find({resident: req.decodedToken.email, status: 'completed'}, (error, data) =>
         {
             if(!error){
                 if(data){
@@ -236,11 +232,12 @@ router.get('/ContractsCompleted', checkUserLogged, (req, res) =>
 
 router.put('/Contracts/confirm/:idCon', upload.none(), checkUserLogged, checkContractExists, checkAvaliable, checkUserTenant, confirmContract)
 
-router.put('/Contracts/sign/:idCon', checkUserLogged, checkContractExists, checkAvaliable, checkUserResident, signContract)
+router.put('/Contracts/sign/:idCon', upload.none(), checkUserLogged, checkContractExists, checkAvaliable, checkUserResident, signContract)
 
 router.put('/Contracts/complete/:idCon', checkUserLogged, checkContractExists, checkAvaliable, checkUserTenant, completeContract, rentProperty, cancelOtherContracts)
 
 router.delete('/Contracts/tenantCancelContract/:idCon', checkUserLogged, checkContractExists, checkUserTenant, cancelContract)
 
+router.delete('/Contracts/residentCancelContract/:idCon', checkUserLogged, checkContractExists, checkUserResident, cancelContract)
 
 module.exports = router
