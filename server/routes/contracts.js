@@ -88,7 +88,7 @@ const confirmContract = (req, res, next) =>{
     contract.date = req.body.date
     contract.status = 'confirmed'
     contract.expireDate = req.body.expireDate
-    contract.moneyAmount = req.body.moneyAmount
+    contract.moneyAmount = req.body.price
     contract.monthlyDeadLine = req.body.monthlyDeadLine
     
     contractModel.findByIdAndUpdate(req.params.idCon, {$set: contract}, (error, data) => 
