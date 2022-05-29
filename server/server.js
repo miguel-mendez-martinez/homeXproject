@@ -1,6 +1,7 @@
 // Server-side global variables
 require(`dotenv`).config({path:`./config/.env`})
 require(`./config/db`)
+var bodyParser = require('body-parser')
 const createError = require('http-errors')
 
 
@@ -8,7 +9,8 @@ const createError = require('http-errors')
 const express = require(`express`)
 const app = express()
 
-app.use(require(`body-parser`).json())
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
 
 const router = require(`express`).Router()

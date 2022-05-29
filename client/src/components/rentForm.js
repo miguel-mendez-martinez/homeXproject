@@ -45,7 +45,7 @@ export default class rentForm extends Component{
                 }
                 else
                 {           
-                    this.setState({property: res.data[0]})
+                    this.setState({property: res.data})
                     this.setState({mounted: true})
                 }   
             }
@@ -118,6 +118,7 @@ export default class rentForm extends Component{
         })
 
 
+
         let formData = new FormData()  
         formData.append("date", new Date(this.state.year, this.state.month-1, 1))
         formData.append("expireDate", new Date(this.state.expireYear, this.state.expireMonth-1, 28))
@@ -129,7 +130,7 @@ export default class rentForm extends Component{
         //for residents
         for(let i = 0; i < finalResidents.length; i++)
         {
-            formData.append("residents", finalResidents[i])
+            formData.append("residents", JSON.stringify(finalResidents[i]))
         }
 
         axios.post(`${SERVER_HOST}/Properties/rentProperty/${this.props.match.params.id}`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
@@ -217,7 +218,6 @@ export default class rentForm extends Component{
                                             type="text" 
                                             name="residents" placeholder="Property Residents" 
                                             onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
-                                            €.
                                     </div>
                                     {formInputsState.residents ? "" : validResidents}
                                 </div>

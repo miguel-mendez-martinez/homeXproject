@@ -130,8 +130,6 @@ const checkAvaliable = (req, res, next) =>{
 
 const generateContract = (req, res, next) =>{
 
-    console.log(req.body)
-
     let contract = new Object()
     contract.date = req.body.date
     contract.status = 'requested'
@@ -146,7 +144,7 @@ const generateContract = (req, res, next) =>{
     //residents
     req.body.residents.map((resident, index) =>
     {
-        contract.residents[index] = {name:`${resident.name}`, id:`${resident.id}`}
+        contract.residents[index] = {name:`${JSON.parse(resident).name}`, id:`${JSON.parse(resident).id}`}
     })
     
     contractsModel.create(contract, (error, data) =>

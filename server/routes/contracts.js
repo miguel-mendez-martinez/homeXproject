@@ -3,6 +3,7 @@ const contractModel = require(`../models/contracts`)
 const propertiesModel = require(`../models/property`)
 const usersModel = require(`../models/users`)
 const createError = require('http-errors')
+const jwt = require('jsonwebtoken')
 const multer  = require('multer')
 var upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
 
@@ -164,7 +165,7 @@ const cancelContract = (req, res, next) => {
     })
 }
 
-router.get('/ContractsRequested', checkUserLogged, (req, res) => 
+router.get('/ContractsRequested',checkUserLogged, (req, res) => 
 {
     contractModel.find({tenant: req.decodedToken.email, status: 'requested'}, (error, data) =>
     {
