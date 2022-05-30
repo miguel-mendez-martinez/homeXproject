@@ -10,6 +10,7 @@ let billSchema = new mongoose.Schema(
         property: {type: String, required: true},
         moneyAmount: {type: Number, validate: function(){return this.moneyAmount > 0}, required: true},
         monthlyDeadLine: {type: Number, validate: function(){return this.monthlyDeadLine > 0 && this.monthlyDeadLine < 30}, required: false},
+        paymentDate: {type: String, required: false}
    },
    {
         collection: `bills`

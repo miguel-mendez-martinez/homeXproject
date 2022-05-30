@@ -23,8 +23,8 @@ const checkUserLogged = (req, res, next) =>
         }
     })
 }
-router.get('/Bills/pending/:id', checkUserLogged, (req,res) =>{
-    billsModel.find({status: "pending"}, (error, data) =>
+router.get('/Bills/pending/resident', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "pending", resident: req.decodedToken.email}, (error, data) =>
     {
         if(error){
             return next(createError(400, `Error on searching.`))
@@ -35,8 +35,8 @@ router.get('/Bills/pending/:id', checkUserLogged, (req,res) =>{
     })
 })
 
-router.get('/Bills/delayed/:id', checkUserLogged, (req,res) =>{
-    billsModel.find({status: "delayed"}, (error, data) =>
+router.get('/Bills/delayed/resident', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "delayed", resident: req.decodedToken.email}, (error, data) =>
     {
         if(error){
             return next(createError(400, `Error on searching.`))
@@ -47,8 +47,44 @@ router.get('/Bills/delayed/:id', checkUserLogged, (req,res) =>{
     })
 })
 
-router.get('/Bills/paid/:id', checkUserLogged, (req,res) =>{
-    billsModel.find({status: "paid"}, (error, data) =>
+router.get('/Bills/paid/resident', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "paid", resident: req.decodedToken.email}, (error, data) =>
+    {
+        if(error){
+            return next(createError(400, `Error on searching.`))
+        }else{
+            res.json(data)
+        }
+        
+    })
+})
+
+router.get('/Bills/pending/tenant', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "pending", tenant: req.decodedToken.email}, (error, data) =>
+    {
+        if(error){
+            return next(createError(400, `Error on searching.`))
+        }else{
+            res.json(data)
+        }
+        
+    })
+})
+
+router.get('/Bills/delayed/tenant', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "delayed", tenant: req.decodedToken.email}, (error, data) =>
+    {
+        if(error){
+            return next(createError(400, `Error on searching.`))
+        }else{
+            res.json(data)
+        }
+        
+    })
+})
+
+router.get('/Bills/paid/tenant', checkUserLogged, (req,res) =>{
+    billsModel.find({status: "paid", tenant: req.decodedToken.email}, (error, data) =>
     {
         if(error){
             return next(createError(400, `Error on searching.`))
