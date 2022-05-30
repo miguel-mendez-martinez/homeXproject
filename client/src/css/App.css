@@ -146,8 +146,10 @@ input{
 
 
 .content-container{
-    width: 80%;
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    padding: 40px;
 }
 
 
@@ -313,6 +315,9 @@ input:disabled {
     max-width: 1100px;
     justify-content: space-evenly;
     margin: 0 auto;
+
+    font-family: roboto;
+    text-align: center;
 }
 
 .addProp-form-container .name-container{
@@ -323,6 +328,7 @@ input:disabled {
     margin-left: 30px;
     font-size: 34px;
     font-family: roboto;
+    font-weight: bold;
 }
 
 .addProp-form-container .address-container{
@@ -410,6 +416,7 @@ input:disabled {
     width: 100%;
     display: flex;
     justify-content: center;
+    column-gap: 100px;
 }
 
 .error{
@@ -521,3 +528,120 @@ input:disabled {
     padding: 5px;
     justify-content: center;
 }
+
+.content-container .search{
+    flex-basis: 10%;
+    padding: 20px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.content-container .search .blue-button{
+    border-radius: 10px;
+    height: 80%;
+    background-color: #007CFF;
+}
+
+.content-container .search input{
+    text-align: start;
+    border-radius: 15px;
+    width: 323px;
+    height: 56px;
+}
+
+.content-container .propertiesGrid{
+    flex-basis: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 40px;
+
+    -webkit-flex-direction: none;
+    overflow-x: scroll;
+
+    padding: 20px;
+}
+
+.content-container .propertiesGrid .property{
+    width: 25%;
+    min-width: 25%;
+    border: thin solid #D4D4D4;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 50px;
+    border-radius: 15px;
+    overflow: hidden ;
+    box-shadow: 0px 10px 20px #D4D4D4;
+    cursor: pointer;
+
+    font-family: roboto;
+}
+
+.content-container .propertiesGrid::-webkit-scrollbar {    display: none;}
+
+.content-container .propertiesGrid .property .propertyMainImage{
+    width: 100%;
+    height: 70%;
+}
+
+.content-container .propertiesGrid .property .propertyMainImage img{
+    width: 100%;
+    height: 100%;
+}
+
+.content-container .propertiesGrid .property .propertyName{
+    overflow: hidden;
+    max-width: 80%;
+    flex-basis: 10%;
+    text-align: center;
+    margin: auto;
+    margin-top: 0px;
+
+    font-size: 30px;
+
+}
+
+.content-container .propertiesGrid .property .city{
+    font-size: 24px;
+}
+
+.content-container .propertiesGrid .property .propertyPrice{
+    color: #007CFF;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+.modal-property{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    font-family: roboto;
+}
+
+.modal-property #info{
+    flex-basis: 10%;
+}
+
+.modal-property img{
+    width: 100px;
+}
+
+.modal-property #propertyImages {
+    flex-basis: 45%;
+    height: 100%;
+    border: thin solid blue;
+}
+
+.modal-property #propertyFieldsMod{
+    height: 100%;
+    border: thin solid red;
+    flex-basis: 30%;
+}
+

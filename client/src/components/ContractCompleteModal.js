@@ -75,32 +75,7 @@ export default class ContractCompleteModal extends Component{
 
     cancelContract = e => {
         //server cll to accept the contract
-
-        axios({
-            method: "delete",
-            url: `${SERVER_HOST}/Contracts/tenantCancelContract/${this.props.contract._id}`,
-            headers: { "authorization": localStorage.token },
-        }).then(res => {
-            //handle success
-            if(res.data)
-            {            
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else
-                {       
-                    console.log('Contract Canceled')    
-                    this.props.closeModal()
-                }   
-            }
-            else
-            {
-                console.log("Record not found")
-            }
-        }).catch(err =>{
-            console.log("err:" + err.response.data) 
-        })
+        this.props.closeModal()
 
     }
 

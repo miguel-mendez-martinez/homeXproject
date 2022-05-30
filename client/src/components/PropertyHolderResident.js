@@ -30,7 +30,7 @@ export default class PropertyHolderResident extends Component
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image}`)
+        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image.filename}`)
         .then(res => 
         {
             if(res.data)
@@ -58,14 +58,17 @@ export default class PropertyHolderResident extends Component
         return (
             <div className="property" onClick={this.clickOn}>
                 <div className="propertyMainImage">
-                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt="Loading..."/> : null}
+                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
                 </div>
+                
                 <div className="propertyName">
                     {this.state.property.address}
                 </div>
+
                 <div className="propertyPrice">
-                    {this.state.property.price}
+                    {this.state.property.price}€/month
                 </div>
+
                 {this.state.modal ? <PropertyResidentModal 
                                         property = {this.state.property}
                                         closeModal = {this.showModal.bind(this)}

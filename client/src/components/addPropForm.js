@@ -228,6 +228,7 @@ export default class addPropForm extends Component
                         </div>
                         <div className="button-container">
                             <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
+                            <Link className="red-button" to="/tenantsHome"> Cancel Rental</Link>
                         </div> 
                     </div>             
                 </div>

@@ -22,8 +22,8 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
     componentDidMount() 
     {   
         let images = []
-        this.state.property.images.map(fileName => {
-            axios.get(`${SERVER_HOST}/Properties/images/${fileName}`)
+        this.state.property.images.map((image, index) => {
+            axios.get(`${SERVER_HOST}/Properties/images/${image.filename}`)
             .then(res => 
             {
                 if(res.data)
@@ -34,7 +34,12 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                     }
                     else
                     {           
-                        images.push(res.data.image)      
+                        images.push(res.data.image)  
+                        this.setState({pictures: images})
+                        
+                        if(index === (this.state.property.images.length - 1)){
+                            this.setState({mounted: true})
+                        }
                     }   
                 }
                 else
@@ -42,10 +47,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                     console.log("Record not found")
                 }
             })
-            this.setState({pictures: images})
-            this.setState({mounted: true})
         })
-        console.log(this.state.property)
     }
 
     handleFileChange = (e) => 
@@ -121,25 +123,25 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
             <div id="modal"> 
             {this.state.redirect ? <Redirect to="/tenantHome"/> : null}
                 <div id="modalContent">
-                    <div className="modal-body">
+                    <div className="modal-property">
                         <div id="info">
                             <div id="title">
                                 <h1>{this.state.property.address}</h1>
                             </div>
-                            <div id="exit" onClick={this.props.closeModal}>
+                            <div id="exit">
                                 <img src= {require("../images/exit.png")} alt="/"/>
                             </div>
                         </div>
                         <div id="propertyImages">
-                            {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt=""/>) : null}
+                            {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt="loading"/>) : null}
                         </div>
                         <div id="propertyFieldsMod">
-                            <label>Area:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.area}/></label><br/>
-                            <label>Price:<input type="text" name="size" onChange={this.handleChange} value={this.state.property.price}/></label><br/>
-                            <label>Residents:<input type="text" name="size" onChange={this.handleChange} value={residentsString}/></label><br/>
+                            <label>Area:<input type="text" name="size" className="form-control" onChange={this.handleChange} value={this.state.property.area}/></label><br/>
+                            <label>Price:<input type="text" name="size" className="form-control" onChange={this.handleChange} value={this.state.property.price}/></label><br/>
+                            <label>Residents:</label><br/>
+                            <input type="file" multiple onChange={this.handleFileChange}/>
                        </div>
                         <div id="buttons">
-                            <input type="file" multiple onChange={this.handleFileChange}/>
                             <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
                             <input type="button" className="red-button" value="Delete" disabled={this.anyResident()} onClick={this.deleteProperty}/>
                         </div>

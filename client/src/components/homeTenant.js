@@ -53,15 +53,19 @@ export default class HomeTenant extends Component
             <div className="web-container"> 
                 <NavBar selected="0"/>
                 <div className="content-container">
-                    <h1>TENANTS PAGE</h1>
+                    <div className="search">
+                        <input className="form-control"
+                            id="searchBar"
+                            type="text"
+                            name="searchText" placeholder="Search anything" />
+                        <Link className="blue-button" to="/tenantAddPropForm">
+                            Add property
+                        </Link>
+                    </div>
 
                     <div className="propertiesGrid">
-                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderTenant key={property._id} property={property}/>) : null}
+                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderTenant key={property._id} property={property}/> ) : null}
                     </div>
-                    
-                <Link className="blue-button" to="/tenantAddPropForm">
-                    <h1> Add New Property </h1>
-                </Link>
                 </div>
             </div>
 

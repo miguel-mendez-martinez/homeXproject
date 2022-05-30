@@ -12,7 +12,7 @@ let contractSchema = new mongoose.Schema(
         date: {type: String, min: Date.now, required: true}, /* When the contract starts, not when created */
         status: {type: String, enum: ['requested', 'confirmated', 'signed', 'completed'], required: true},
         tenant: {type: String, required: true},
-        resident: {type: String, required: true}, //the resident that does the reservation
+        resident: {type: String, required: true}, //the users that does the reservation
         residents: [propResidentsSchema],
         property: {type: String, required: true},
         expireDate: {type: String, min: Date.now, required: true},

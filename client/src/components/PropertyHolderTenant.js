@@ -30,7 +30,7 @@ export default class PropertyHolderTenant extends Component
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image}`)
+        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image.filename}`)
         .then(res => 
         {
             if(res.data)
@@ -40,7 +40,7 @@ export default class PropertyHolderTenant extends Component
                     console.log(res.data.errorMessage)    
                 }
                 else
-                {           
+                {          
                     this.setState({picture: res.data.image})    
                     this.setState({mounted: true})  
                 }   
@@ -58,19 +58,26 @@ export default class PropertyHolderTenant extends Component
         return (
             <div className="property" onClick={this.clickOn}>
                 <div className="propertyMainImage">
-                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt="Loading..."/> : null}
+                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
                 </div>
+
                 <div className="propertyName">
                     {this.state.property.address}
                 </div>
-                <div className="propertyPrice">
-                    {this.state.property.price}
+
+                <div className="city">
+                    City: 
                 </div>
+
+                <div className="propertyPrice">
+                    {this.state.property.price}€/month
+                </div>
+
                 {this.state.modal ? <PropertyTenantModal 
                                         property = {this.state.property}
                                         closeModal = {this.showModal.bind(this)}
                                       /> : null}               
-            </div>        
+            </div>    
         )
     }
 }

@@ -32,7 +32,6 @@ export default class HomeResident extends Component
                 }
                 else
                 {           
-                    console.log(res.data)
                     this.setState({properties: res.data})
                     this.setState({mounted: true})
                 }   
@@ -53,7 +52,13 @@ export default class HomeResident extends Component
             <div className="web-container"> 
                 <NavBar selected="0"/>
                 <div className="content-container">
-                    <h1>RESIDENTS PAGE</h1>
+
+                    <div className="search">
+                        <input className="form-control"
+                            id="searchBar"
+                            type="text"
+                            name="searchText" placeholder="Search anything" />
+                    </div>
 
                     <div className="propertiesGrid">
                         {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderResident key={property._id} property={property}/>) : null}
