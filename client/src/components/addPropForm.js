@@ -69,11 +69,22 @@ export default class addPropForm extends Component
         }
     }
 
+    validateImages(){
+        if(this.state.selectedFiles){
+            if(this.state.selectedFiles.length >= 10){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
+
     validation(){
         return {
             address: this.validateAdress(),
             area: this.validateArea(),
             price: this.validatePrice(),
+            images: this.validateImages(),
         }
 
     }
@@ -222,13 +233,13 @@ export default class addPropForm extends Component
                             </div>
 
                             <div className="images-container">
+                                <h5>Please upload every image at once, max 10.</h5>
                                 <input type="file" multiple onChange={this.handleFileChange}/>
-                                <h1> PLEASE FIX THIS MAKE IT MULTIPLE AND STYLE IT :3</h1>
                             </div>
                         </div>
                         <div className="button-container">
                             <input type="button" className="green-button" value="Add Property" disabled = {!inputsAreAllValid} onClick={this.addProperty}/>
-                            <Link className="red-button" to="/tenantsHome"> Cancel Rental</Link>
+                            <Link className="red-button" to="/tenantHome"> Cancel Rental</Link>
                         </div> 
                     </div>             
                 </div>

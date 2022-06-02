@@ -38,6 +38,22 @@ const checkUserLogged = (req, res, next) =>
         }) 
 }  */  
 
+const checkProperty = (req, res, next) =>
+{
+    propertiesModel.findOne({_id: req.params.idProp}, (error, data) =>
+    {
+        if(error){
+            return next(createError(400, "Error checking property existance"))
+        }else{
+            if(data)
+                {req.property = data
+                return next()}
+            else
+                return next(createError(400, "Property already exists"))
+        }
+    })
+}
+
 const checkPropertyDontExists = (req, res, next) =>
 {
     propertiesModel.findOne({address: req.body.address}, (error, data) =>
@@ -180,19 +196,39 @@ router.get('/Properties/tenant/', checkUserLogged, (req, res) =>
     })
 })
 
-router.get(`/Properties/images/:filename`, (req, res) => 
+router.get(`/Properties/images/:idProp`, upload.none(), checkUserLogged, checkProperty, (req, res) => 
 {   
-    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, fileData) => 
+    let images = []
+    for(let i= 0; i < req.property.images.length; i++){
+        fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.property.images[i].filename}`, 'base64', (err, fileData) => 
         {        
-        if(fileData)
-        {  
-            res.json({image:fileData})                           
-        }   
-        else
-        {
-            res.json({image:null})
-        }
-    })             
+            if(fileData)
+            {  
+                images[i] = fileData   
+                
+                if(i === req.property.images.length-1){
+                    res.json({images: images}) 
+                }
+            }
+
+            
+        }) 
+    }
+              
+})
+
+router.get(`/Properties/image/:filename`, (req, res) => 
+{   
+    let images = []
+    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, fileData) => 
+    {        
+    if(fileData)
+    {  
+        images += fileData                          
+    }
+    res.json({image: images}) 
+    }) 
+              
 })
 
 router.get('/Properties/:id', (req, res) =>{
@@ -206,7 +242,7 @@ router.get('/Properties/:id', (req, res) =>{
 
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)
 
-router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, updateProperty)
+router.put('/Properties/:id', upload.none(), checkUserLogged, checkProperty, deleteImages, updateProperty)
 
 router.delete('/Properties/:id', checkUserLogged, deleteProperty)
 

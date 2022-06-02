@@ -12,6 +12,8 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
         super(props)
 
         this.state = {property: this.props.property,
+                      price: this.props.property.price,
+                      area: this.props.property.area,
                       id: this.props.property._id,
                       pictures: [],
                       selectedFiles: null,
@@ -21,9 +23,8 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
 
     componentDidMount() 
     {   
-        let images = []
-        this.state.property.images.map((image, index) => {
-            axios.get(`${SERVER_HOST}/Properties/images/${image.filename}`)
+
+        axios.get(`${SERVER_HOST}/Properties/images/${this.props.property._id}`, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
             .then(res => 
             {
                 if(res.data)
@@ -34,12 +35,10 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                     }
                     else
                     {           
-                        images.push(res.data.image)  
-                        this.setState({pictures: images})
+                        this.setState({pictures: res.data.images})
                         
-                        if(index === (this.state.property.images.length - 1)){
-                            this.setState({mounted: true})
-                        }
+                        this.setState({mounted: true})
+                        
                     }   
                 }
                 else
@@ -47,21 +46,22 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                     console.log("Record not found")
                 }
             })
-        })
     }
 
     handleFileChange = (e) => 
     {
-        this.setState({selectedFiles: e.target.files})
+        this.setState({pictures: e.target.files})
     }
 
     handleChange = e => {
+        
+        console.log(e.target.value)
         this.setState({[e.target.name]: e.target.value})
 
     }
 
     updateProperty = () => {
-        const property = {area: this.state.property.area, price: this.state.property.price, residents: this.state.property.residents, images: this.state.property.images } 
+        const property = {area: this.state.area, price: this.state.price, images: this.state.pictures } 
         axios.put(`${SERVER_HOST}/Properties/${this.state.id}`, property, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {   
@@ -110,14 +110,61 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
             return true
     }
 
+    validateArea() {
+        let num = parseInt(this.state.area) || 'NaN'
+        if( num === 'NaN' ){
+            return false
+        }else{
+            if(parseInt(this.state.area) <= 0){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
+
+    validatePrice() {
+        let num = parseInt(this.state.price) || 'NaN'
+        if( num === 'NaN' ){
+            return false
+        }else{
+            if(parseInt(this.state.price) <= 0){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
+
+    validateImages(){
+        if(this.state.selectedFiles){
+            if(this.state.selectedFiles.length >= 10){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
+
+    validation(){
+        return {
+            area: this.validateArea(),
+            price: this.validatePrice(),
+            images: this.validateImages(),
+        }
+
+    }
+
 
     render(){  
-        let residentsString = ''
-        /*if(this.state.property.resident){
-            this.state.property.resident.map(res => residentsString += res + '\n') 
-        }     */  
 
-        let canDelete = this.anyResident()
+        //errors
+        let validPrice = <div className="error">Enter a valid price.</div>
+        let validArea = <div className="error">Enter a valid area.</div>
+
+        //validation
+        const formInputsState = this.validation()
+        const inputsAreAllValid = Object.keys(formInputsState).every(index => formInputsState[index]) 
 
         return(
             <div id="modal"> 
@@ -125,10 +172,10 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                 <div id="modalContent">
                     <div className="modal-property">
                         <div id="info">
-                            <div id="title">
+                            <div id="title" >
                                 <h1>{this.state.property.address}</h1>
                             </div>
-                            <div id="exit">
+                            <div id="exit" onClick={this.props.closeModal}>
                                 <img src= {require("../images/exit.png")} alt="/"/>
                             </div>
                         </div>
@@ -136,14 +183,31 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                             {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt="loading"/>) : null}
                         </div>
                         <div id="propertyFieldsMod">
-                            <label>Area:<input type="text" name="size" className="form-control" onChange={this.handleChange} value={this.state.property.area}/></label><br/>
-                            <label>Price:<input type="text" name="size" className="form-control" onChange={this.handleChange} value={this.state.property.price}/></label><br/>
-                            <label>Residents:</label><br/>
-                            <input type="file" multiple onChange={this.handleFileChange}/>
+                                <div id="text-inputs">
+                                    <label>Area
+                                        <div id="item1">
+                                            <input type="text" name="area" className="form-control" onChange={this.handleChange} value={this.state.area}/>m<sup>2</sup>
+                                        </div>
+                                        {formInputsState.area ? "" : validArea}
+                                    </label>
+                                    <label>Price
+                                        <div id="item2">
+                                            <input type="text" name="price" className="form-control" onChange={this.handleChange} value={this.state.price}/>€
+                                        </div>
+                                        {formInputsState.price ? "" : validPrice}
+                                    </label>
+                                </div>
+                                <div id="other-inputs">
+                                    <h5>Please upload every image at once, max 10.</h5>
+                                    <input type="file" multiple onChange={this.handleFileChange}/>
+                                </div>
+                                { this.state.property.resident !== "none" ? <div id="residentList">
+                                        <h2>Rented to: {this.state.property.resident}</h2>
+                                </div> : null}
                        </div>
                         <div id="buttons">
-                            <input type="button" className="green-button" value="Update" onClick={this.updateProperty}/>
                             <input type="button" className="red-button" value="Delete" disabled={this.anyResident()} onClick={this.deleteProperty}/>
+                            <input type="button" className="green-button" value="Update" disabled = {!inputsAreAllValid} onClick={this.updateProperty}/>
                         </div>
                     </div>
                 </div>

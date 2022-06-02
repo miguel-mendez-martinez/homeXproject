@@ -30,7 +30,7 @@ export default class PropertyHolderTenant extends Component
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/Properties/images/${this.state.image.filename}`)
+        axios.get(`${SERVER_HOST}/Properties/image/${this.state.image.filename}`)
         .then(res => 
         {
             if(res.data)
@@ -56,28 +56,32 @@ export default class PropertyHolderTenant extends Component
     render() 
     {
         return (
-            <div className="property" onClick={this.clickOn}>
-                <div className="propertyMainImage">
-                    {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
-                </div>
+            <div className="property">
+                <div className="property-content" onClick={this.clickOn}>
+                    <div className="propertyMainImage">
+                        {this.state.mounted ? <img id={this.state.picture} src={`data:;base64,${this.state.picture}`} alt=""/> : null}
+                    </div>
 
-                <div className="propertyName">
-                    {this.state.property.address}
-                </div>
+                    <div className="propertyName">
+                        {this.state.property.address}
+                    </div>
 
-                <div className="city">
-                    City: 
-                </div>
+                    <div className="city">
+                        City: 
+                    </div>
 
-                <div className="propertyPrice">
-                    {this.state.property.price}€/month
-                </div>
+                    <div className="propertyPrice">
+                        {this.state.property.price}€/month
+                    </div>
 
+                                  
+                </div>
                 {this.state.modal ? <PropertyTenantModal 
-                                        property = {this.state.property}
-                                        closeModal = {this.showModal.bind(this)}
-                                      /> : null}               
-            </div>    
+                                            property = {this.state.property}
+                                            closeModal = {this.showModal.bind(this)}
+                                        /> : null} 
+            </div>
+                
         )
     }
 }
