@@ -65,6 +65,39 @@ const logInUser = (req, res, next) =>
     res.json({email:req.data.email, accessLevel:req.data.accessLevel, token:token})
 }
 
+const loginAsResident = (req,res,next) => {
+    req.data.accessLevel = 1
+}
+
+const checkIfCreate = (req, res, next) =>{
+    residentModel.findOne({userID: req.user._id}, (data,err) =>{
+        if(err)
+            return next(createError(400, "error at chechifcreate"))
+        if(data)
+            return next()
+        else{
+            let resident = new Object()
+            tenantModel.findOne({userID: req.user._id}, (data,err) =>{
+                if(err)
+                    return next(createError(400, "error at chechifcreate"))
+                if(data){
+                    resident.userID = req.user._id
+                    resident.id = data.id
+                    resident.name = data.name
+                    resident.phoneNumber = data.phoneNumber
+
+                    residentModel.create(resident, (data, err) =>{
+                        if(err)
+                            return next(createError(400, "creation error at chechifcreate"))
+                        else
+                            return next()
+                    })
+                }
+            })
+        }
+    })
+}
+
 const createUser = (req, res, next) => 
 {
     bcrypt.hash(req.body.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
@@ -172,11 +205,46 @@ const checkUserLogged = (req, res, next) =>
         }
     })
 }
+const findUser = (req, res, next) =>{
+    usersModel.findOne({email: req.decodedToken.email}, (error, data) =>{
+        if(data){
+            req.user = data
+        }else
+            return next(createError(400, "User not found."))
+    })
+}
+
+const updateProfile = (req,res,next) =>
+{
+    if(req.body.userType == "tenant"){
+        tenantModel.findOneAndUpdate({userID: req.user._id}, {name: req.data.name, id:req.body.id, phoneNumber:req.body.phoneNumber}, (err, data) => 
+        {
+            if(err)
+                return next(createError(400, err))
+        })
+    }else{
+        residentModel.findOneAndUpdate({name:req.body.name, id:req.body.id, phoneNumber:req.body.phoneNumber}, (err, data) => 
+        {
+            if(err)
+                return next(createError(400, err))
+        })
+    }
+    usersModel.findOneAndUpdate({}, {name: req.body.username, password: req.body.password},(err, data) =>{
+        if(err){
+            return next(createError(400, err))
+        }
+        if(data){
+            return next()
+        }
+    })
+}
 
 //Register
 router.post(`/Users/register`, upload.none(), checkUserNotExists, createUser, createTypeUser, logInUser) //we have to create the tenant or resident next
 //Log in
 router.post(`/Users/login`, upload.none(), checkUserExists, checkLogIn, logInUser) 
+//Switch to resident from tenant
+router.post(`/Users/profile/switch`, upload.none(), checkUserLogged, findUser, checkIfCreate, loginAsResident, logInUser) 
 //check Log in
 router.get('/Users/checkLogIn', checkUserLogged, (req, res) => {
     res.json({email:req.decodedToken.email, accessLevel:req.decodedToken.accessLevel, token: req.headers.authorization})
@@ -187,6 +255,45 @@ router.post(`/Users/resetUsers`, eliminateCollection, createAdmin)
 router.post(`/Users/logout`, (req,res) => {       
     res.json({})
 })
+//Update profile
+router.put(`/Users/profile`, checkUserLogged, findUser, updateProfile)
+
+//Get profile info for tenants
+router.get(`/Users/profile/tenant`, checkUserLogged, findUser, (req, res) =>{
+    tenantModel.findOne({userID: req.user._id}, (data, err) =>{
+        if(err)
+            return next(createError(400, err))
+        if(data){
+            let user = {
+                username: req.user.name,
+                password: req.user.password,
+                name: data.name,
+                id: data.id,
+                phoneNumber: data.phoneNumber
+            }
+            res.json({user: user})
+        }
+    })
+})
+
+//Get profile info for residents
+router.get(`/Users/profile/resident`, checkUserLogged, findUser, (req, res) =>{
+    residentModel.findOne({userID: req.user._id}, (data, err) =>{
+        if(err)
+            return next(createError(400, err))
+        if(data){
+            let user = {
+                username: req.user.name,
+                password: req.user.password,
+                name: data.name,
+                id: data.id,
+                phoneNumber: data.phoneNumber
+            }
+            res.json({user: user})
+        }
+    })
+})
+
 //Retrive all users
 router.get('/Users', (req, res) => 
 {
