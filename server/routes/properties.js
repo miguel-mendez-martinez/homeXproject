@@ -40,7 +40,7 @@ const checkUserLogged = (req, res, next) =>
 
 const checkProperty = (req, res, next) =>
 {
-    propertiesModel.findOne({_id: req.params.idProp}, (error, data) =>
+    propertiesModel.findOne({_id: req.params.id}, (error, data) =>
     {
         if(error){
             return next(createError(400, "Error checking property existance"))
@@ -105,9 +105,7 @@ const deleteImages = (req, res, next) => {
             if(err)
                 return next(createError(400, `Error on image deleting.`))
             else{
-                image.filename = ''
                 if(index === req.property.images.length - 1){
-                    console.log(req.property.images)
                     return next()
                 }
             }
@@ -115,24 +113,28 @@ const deleteImages = (req, res, next) => {
     })
 }
 
-const updateImages = (req, res, next) => {
-    console.log(req.body.propertyImages)
-    req.property.images = req.body.propertyImages.map((image, index) => {
-        
-    })
-}
-
 
 const updateProperty = (req, res, next) =>{ //At the moment is not possible to update images
 
-    propertiesModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (error, data) => 
+    let property = new Object()
+    property.area = req.body.area
+    property.price = req.body.price
+    property.images = []
+
+    req.files.map((file, index) =>
+    {
+        property.images[index] = {filename:`${file.filename}`}
+    })
+
+     propertiesModel.findByIdAndUpdate(req.params.id, {$set: property}, (error, data) => 
     {
         if(error){
+            console.log(error)
             return next(createError(400, `Error on property update.`))
         }else{
             res.json(data)
         }
-    })
+    }) 
 }
 
 const deleteProperty = (req, res, next) =>{
@@ -144,11 +146,16 @@ const deleteProperty = (req, res, next) =>{
         if(error){
             return next(createError(400, `Error on property delete.`))
         }else{
-            fs.unlink(`${path}\\uploads\\${data.images[0].filename}`, (err) => { //Only deletes one image for now
-                if(err)
-                    return next(createError(400, `Error on image deleting.`))
-                else
-                    res.json(data)
+            req.property.images.map((image, index) => {
+                fs.unlink(`${path}\\uploads\\${image.filename}`, (err) => { 
+                    if(err)
+                        return next(createError(400, `Error on image deleting.`))
+                    else{
+                        if(index === req.property.images.length - 1){
+                            res.json(data)
+                        }
+                    } 
+                })
             })
         }
     })
@@ -224,7 +231,7 @@ router.get('/Properties/tenant/', checkUserLogged, (req, res) =>
     })
 })
 
-router.get(`/Properties/images/:idProp`, upload.none(), checkUserLogged, checkProperty, (req, res) => 
+router.get(`/Properties/images/:id`, upload.none(), checkUserLogged, checkProperty, (req, res) => 
 {   
     let images = []
     for(let i= 0; i < req.property.images.length; i++){
@@ -237,12 +244,9 @@ router.get(`/Properties/images/:idProp`, upload.none(), checkUserLogged, checkPr
                 if(i === req.property.images.length-1){
                     res.json({images: images}) 
                 }
-            }
-
-            
+            }            
         }) 
-    }
-              
+    }    
 })
 
 router.get(`/Properties/image/:filename`, (req, res) => 
@@ -250,13 +254,12 @@ router.get(`/Properties/image/:filename`, (req, res) =>
     let images = []
     fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, fileData) => 
     {        
-    if(fileData)
-    {  
-        images += fileData                          
-    }
-    res.json({image: images}) 
-    }) 
-              
+        if(fileData)
+        {  
+            images += fileData                          
+        }
+        res.json({image: images}) 
+    })         
 })
 
 router.get('/Properties/:id', (req, res) =>{
@@ -270,9 +273,9 @@ router.get('/Properties/:id', (req, res) =>{
 
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)
 
-router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, checkProperty, deleteImages, updateProperty)
+router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, checkProperty, updateProperty, deleteImages )
 
-router.delete('/Properties/:id', checkUserLogged, deleteProperty)
+router.delete('/Properties/:id', checkUserLogged, checkProperty, deleteProperty)
 
 router.post('/Properties/rentProperty/:idProp', upload.none(), checkUserLogged, checkAvaliable, generateContract)
 

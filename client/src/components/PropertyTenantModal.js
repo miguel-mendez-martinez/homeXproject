@@ -50,7 +50,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
 
     handleFileChange = (e) => 
     {
-        this.setState({pictures: e.target.files})
+        this.setState({selectedFiles: e.target.files})
     }
 
     handleChange = e => {
@@ -58,8 +58,19 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
     }
 
     updateProperty = () => {
-        const property = {area: this.state.area, price: this.state.price, images: this.state.pictures } 
-        axios.put(`${SERVER_HOST}/Properties/${this.state.id}`, property, {headers:{"authorization":localStorage.token}})
+        let property = new FormData()
+
+        property.append("area", this.state.area)
+        property.append("price", this.state.price)
+        if(this.state.selectedFiles)
+        {
+            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            {
+                property.append("propertyImages", this.state.selectedFiles[i])
+            }
+        }
+
+        axios.put(`${SERVER_HOST}/Properties/${this.props.property._id}`, property, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {   
             if(res.data)
@@ -72,6 +83,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
                 {   
                     console.log("Record added")
                     this.setState({redirect: true})
+                    window.location.reload()
                 } 
             }
             else
@@ -91,6 +103,7 @@ export default class PropertyTenantModal extends Component{ //Not possible to up
             if(res.data)
             {          
                 this.setState({redirect: true})
+                window.location.reload()
                 console.log("Record deleted")
             }else{
                 console.log("Record not deleted")
