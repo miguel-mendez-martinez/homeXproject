@@ -1,6 +1,9 @@
 import React, {Component} from "react"
 import NavBar from "./NavBarResidents"
 
+import axios from "axios"
+import {SERVER_HOST} from "../config/global_constants"
+
 export default class ProfileResident extends Component 
 {
     constructor(props){

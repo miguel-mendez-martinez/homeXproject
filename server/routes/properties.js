@@ -95,6 +95,34 @@ const addProperty = (req, res, next) =>
     })
 }
 
+
+const deleteImages = (req, res, next) => {
+    let pathArray = __dirname.split('\\')
+    let path = pathArray.splice(-0, pathArray.length - 1).join('\\')
+
+    req.property.images = req.property.images.map((image, index) => {
+        fs.unlink(`${path}\\uploads\\${image.filename}`, (err) => { //Only deletes one image for now
+            if(err)
+                return next(createError(400, `Error on image deleting.`))
+            else{
+                image.filename = ''
+                if(index === req.property.images.length - 1){
+                    console.log(req.property.images)
+                    return next()
+                }
+            }
+        })
+    })
+}
+
+const updateImages = (req, res, next) => {
+    console.log(req.body.propertyImages)
+    req.property.images = req.body.propertyImages.map((image, index) => {
+        
+    })
+}
+
+
 const updateProperty = (req, res, next) =>{ //At the moment is not possible to update images
 
     propertiesModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (error, data) => 
@@ -242,7 +270,7 @@ router.get('/Properties/:id', (req, res) =>{
 
 router.post('/Properties/AddNew', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)),checkUserLogged, checkPropertyDontExists, addProperty)
 
-router.put('/Properties/:id', upload.none(), checkUserLogged, checkProperty, deleteImages, updateProperty)
+router.put('/Properties/:id', upload.array("propertyImages", parseInt(process.env.MAX_NUMBER_OF_UPLOAD_FILES_ALLOWED)), checkUserLogged, checkProperty, deleteImages, updateProperty)
 
 router.delete('/Properties/:id', checkUserLogged, deleteProperty)
 

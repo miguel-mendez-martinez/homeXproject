@@ -2,6 +2,10 @@ import React, {Component} from "react"
 import {Redirect, Link} from 'react-router-dom'
 import NavBar from "./NavBar"
 
+import axios from "axios"
+import {SERVER_HOST} from "../config/global_constants"
+
+
 export default class ProfileTenant extends Component 
 {
     constructor(props){

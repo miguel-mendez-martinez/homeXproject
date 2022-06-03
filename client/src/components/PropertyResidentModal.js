@@ -19,43 +19,35 @@ export default class PropertyResidentModal extends Component{
 
     componentDidMount() 
     {   
-        let images = []
-        this.state.property.images.map(fileName => {
-            axios.get(`${SERVER_HOST}/Properties/images/${fileName}`)
-            .then(res => 
-            {
-                if(res.data)
-                {            
-                    if (res.data.errorMessage)
-                    {
-                        console.log(res.data.errorMessage)    
-                    }
-                    else
-                    {           
-                        images.push(res.data.image)      
-                    }   
+        axios.get(`${SERVER_HOST}/Properties/images/${this.props.property._id}`, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
+        .then(res => 
+        {
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
                 }
                 else
-                {
-                    console.log("Record not found")
-                }
-            })
-            this.setState({pictures: images})
-            this.setState({mounted: true})
+                {           
+                    this.setState({pictures: res.data.images})
+                    
+                    this.setState({mounted: true})
+                    
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
         })
-    }
-
-
-    handleChange = e => {
-        this.setState({[e.target.name]: e.target.value})
-
     }
 
     render(){ 
         return(
             <div id="modal"> 
                 <div id="modalContent">
-                    <div className="modal-body">
+                    <div className="modal-property">
                         <div id="info">
                             <div id="title">
                                 <h1>{this.state.property.address}</h1>
@@ -65,11 +57,11 @@ export default class PropertyResidentModal extends Component{
                             </div>
                         </div>
                         <div id="propertyImages">
-                            {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt=""/>) : null}
+                            {this.state.mounted ? this.state.pictures.map(picture => <img key={picture} src={`data:;base64,${picture}`} alt="loading..."/>) : null}
                         </div>
                         <div id="propertyFields">
-                            <label>Area: {this.state.property.area}</label><br/>
-                            <label>Price: {this.state.property.price}</label><br/>
+                            <label>Area: {this.state.property.area} m<sup>2</sup></label><br/>
+                            <label>Price: {this.state.property.price} €/month</label><br/>
                        </div>
                         <div id="buttons">
                             <Link id="rentButton" className="green-button" to={{pathname: `rentForm/${this.state.id}`}}> Rent Request </Link>
