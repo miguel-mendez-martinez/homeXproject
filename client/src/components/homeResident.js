@@ -12,8 +12,10 @@ export default class HomeResident extends Component
         super(props)
 
         this.state = { 
-            properties: [], 
-            mounted: false
+            lessProperties: [], 
+            allProperties: [],
+            mounted: false,
+            completeGrid: false,
         }
     }
 
@@ -31,8 +33,19 @@ export default class HomeResident extends Component
                     console.log(res.data.errorMessage)    
                 }
                 else
-                {           
-                    this.setState({properties: res.data})
+                {    
+                    let finalData =[]
+                    if(res.data.length > 6){
+                        for(let i=0; i<6; i++){
+                            finalData.push(res.data[i])
+                        }
+                    }else{
+                        for(let i=0; i<res.data.length; i++){
+                            finalData.push(res.data[i])
+                        }
+                    }
+                    this.setState({allProperties: res.data})
+                    this.setState({lessProperties: finalData})
                     this.setState({mounted: true})
                 }   
             }
@@ -44,6 +57,11 @@ export default class HomeResident extends Component
             //handle error
             console.log(err)
         });
+    }
+
+    changeGrid = e => {
+        this.setState({completeGrid: !this.state.completeGrid})
+
     }
 
     render() 
@@ -58,11 +76,21 @@ export default class HomeResident extends Component
                             id="searchBar"
                             type="text"
                             name="searchText" placeholder="Search anything" />
+                            {!this.state.completeGrid ? <button className="blue-button" onClick={this.changeGrid}>More properties.</button> : <button className="blue-button" onClick={this.changeGrid}>Less properties.</button>}
+                            
                     </div>
 
-                    <div className="propertiesGrid">
-                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderResident key={property._id} property={property}/>) : null}
+                    {this.state.completeGrid ? 
+                    <div className="completePropertiesGrid">
+                        {this.state.mounted ? this.state.allProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
                     </div>
+                    : 
+                    <div className="propertiesGrid">
+                        {this.state.mounted ? this.state.lessProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
+                        <input type="image" src={require("../images/blackArrow.png")} className="round-blue-button" onClick={this.changeGrid}/>
+                    </div>
+                    }
+                    
 
                 </div>
             </div>

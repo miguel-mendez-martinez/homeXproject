@@ -62,9 +62,11 @@ export default class HomeTenant extends Component
                             Add property
                         </Link>
                     </div>
-
-                    <div className="propertiesGrid">
-                        {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderTenant key={property._id} property={property}/> ) : null}
+                    <div className="properties-container">
+                        <h2> My properties.</h2>
+                        <div className="propertiesGrid">
+                            {this.state.mounted ? this.state.properties.map((property) => <PropertyHolderTenant key={property._id} property={property}/> ) : null}
+                        </div>
                     </div>
                 </div>
             </div>
