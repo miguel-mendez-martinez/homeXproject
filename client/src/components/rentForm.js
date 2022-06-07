@@ -21,10 +21,12 @@ export default class rentForm extends Component{
             expireYear: null,
             expireMonth: null,
             resident: localStorage.email,
-            residents: null,
+            currentResidentName: '',
+            currentResidentId: '',
             redirect:false,
             errorMessage: '',
-            mounted: false
+            mounted: false,
+            finalResidents: [],
         }
     }
 
