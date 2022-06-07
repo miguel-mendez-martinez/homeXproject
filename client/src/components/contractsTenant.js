@@ -98,19 +98,19 @@ export default class ContractTenant extends Component
                     <h1>TENANTS CONTRACTS PAGE</h1>
 
                     {this.state.requested? 
-                        <div className="contractsRequested">
+                        <div className="contractsResident">
                             <h2>Rent Requests</h2>
                             {this.state.requested.map((contract, index) => <ContractHolderTenant key={index} contract={contract}/>)}
                         </div> 
                     : null}
                     {this.state.signed? 
-                        <div className="contractsSigned">
+                        <div className="contractsResident">
                             <h2>Sign Requests</h2>
                             {this.state.signed.map((contract, index) => <ContractHolderTenant key={index+50} contract={contract}/>)}
                         </div> 
                     : null}
                     {this.state.completed? 
-                        <div className="contractsCompleted">
+                        <div className="contractsResident">
                             <h2>Active Contracts</h2>
                             {this.state.completed.map((contract, index) => <ContractHolderTenant key={index+100} contract={contract}/>)}
                         </div> 

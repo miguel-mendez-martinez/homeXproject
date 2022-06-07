@@ -30,7 +30,7 @@ export default class PropertyHolderTenant extends Component
 
     componentDidMount() 
     {
-        axios.get(`${SERVER_HOST}/Properties/image/${this.state.image.filename}`)
+        axios.get(`${SERVER_HOST}/Properties/image/${this.state.image.filename}`, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
         .then(res => 
         {
             if(res.data)

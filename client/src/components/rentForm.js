@@ -4,6 +4,7 @@ import {Redirect,Link} from "react-router-dom"
 import NavBar from "./NavBarResidents"
 
 import {SERVER_HOST} from "../config/global_constants"
+import MonthYearPicker from 'react-month-year-picker';
 
 
 export default class rentForm extends Component{
@@ -29,7 +30,16 @@ export default class rentForm extends Component{
 
     componentDidMount()
     {
-        this.inputToFocus.focus()
+
+        let now = new Date();
+        let current
+        if (now.getMonth() == 11) {
+            current = new Date(now.getFullYear() + 1, 0, 1);
+        } else {
+            current = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        }
+
+        this.setState({month: current.getMonth() + 1, year: current.getFullYear()})
 
         axios({
             method: "get",
@@ -176,88 +186,54 @@ export default class rentForm extends Component{
             <div className="web-container"> 
                 {this.state.redirect ? <Redirect to="/residentHome"/> : null}
                 <NavBar selected="0"/>
+                {this.state.mounted ? 
                 <div className="content-container">
-                    <div className="addProp-form-container">
-                        <div className="name-container">
-                            <h1>Rent Form</h1>
-                        </div>
-                        <div className="props-container">
-                            <div className="items-container">
-                                <div className="items-container">
-                                    <div className="item">
-                                        <select name="month" className="datefield month"  onChange={this.handleChange}>
-                                            <option value="no">Month</option>
-                                            <option value="01">Jan</option>
-                                            <option value="02">Feb</option>
-                                            <option value="03">Mar</option>
-                                            <option value="04">Apr</option>
-                                            <option value="05">May</option>
-                                            <option value="06">Jun</option>
-                                            <option value="07">Jul</option>
-                                            <option value="08">Aug</option>
-                                            <option value="09">Sep</option>
-                                            <option value="10">Oct</option>
-                                            <option value="11">Nov</option>
-                                            <option value="12">Dec</option>
-                                        </select>/
-                                        <select name="year" className="datefield year" onChange={this.handleChange}>
-                                            <option value="no">Year</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                        </select>
-                                    </div>
-                                {formInputsState.date ? "" : validDate}
+                    <div className="rent-form">
+                        <h1>Rent Form</h1>
+                        <div className="fields-container">
+                            <div className="dates-container">
+                                <div className="date-item">
+                                    <MonthYearPicker
+                                        caption="Select a starting year and month."
+                                        selectedMonth={this.state.month}
+                                        selectedYear={this.state.year}
+                                        minYear={new Date().getFullYear()}
+                                        maxYear={2030}
+                                        onChangeYear={year => this.setState({ year: year })}
+                                        onChangeMonth={month => this.setState({ month: month })}
+                                        />
+                                    {formInputsState.date ? "" : validDate}
                                 </div>
-                                <div className="items-container">
-                                    <div className="item">
-                                        <input className = {"form-control"}
-                                            id="residents" 
-                                            type="text" 
-                                            name="residents" placeholder="Property Residents" 
-                                            onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
-                                    </div>
-                                    {formInputsState.residents ? "" : validResidents}
-                                </div>
-                                <div className="items-container">
-                                    <div className="item">
-                                        <select name="expireMonth" className="datefield month" onChange={this.handleChange}>
-                                            <option value="no">Month</option>
-                                            <option value="01">Jan</option>
-                                            <option value="02">Feb</option>
-                                            <option value="03">Mar</option>
-                                            <option value="04">Apr</option>
-                                            <option value="05">May</option>
-                                            <option value="06">Jun</option>
-                                            <option value="07">Jul</option>
-                                            <option value="08">Aug</option>
-                                            <option value="09">Sep</option>
-                                            <option value="10">Oct</option>
-                                            <option value="11">Nov</option>
-                                            <option value="12">Dec</option>
-                                        </select>/
-                                        <select name="expireYear" className="datefield year" onChange={this.handleChange}>
-                                            <option value="no">Year</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                        </select>
-                                    </div>
-                                {formInputsState.expireDate ? "" : validExpireDate}
+                                <div className="date-item">
+                                    <MonthYearPicker
+                                        caption="Select an ending year and month."
+                                        selectedMonth={this.state.month}
+                                        selectedYear={this.state.year}
+                                        minYear={new Date().getFullYear()}
+                                        maxYear={2030}
+                                        onChangeYear={year => this.setState({ year: year })}
+                                        onChangeMonth={month => this.setState({ month: month })}
+                                        />
+                                    {formInputsState.expireDate ? "" : validExpireDate}
                                 </div>
                             </div>
-
+                            <div className="residents-container">
+                                {/* formed by a add resident "form" and a table of residents*/}
+                                <input className = {"form-control"}
+                                    id="residents" 
+                                    type="text" 
+                                    name="residents" placeholder="Property Residents" 
+                                    onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
+                                {formInputsState.residents ? "" : validResidents}
+                            </div>
                         </div>
                         <div className="button-container">
                             <input type="button" className="green-button" value="Submit" disabled = {!inputsAreAllValid} onClick={this.sendRequest}/>
                             <Link className="red-button" to="/residentContracts"> Cancel Rental</Link>
                         </div> 
                     </div>             
-                </div>
+            </div> : null}
+                
             </div>
         )
     }

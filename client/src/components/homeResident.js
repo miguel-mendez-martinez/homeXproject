@@ -1,7 +1,6 @@
 import React, {Component} from "react"
 import NavBar from "./NavBarResidents"
 import axios from "axios"
-import {Redirect, Link} from 'react-router-dom'
 import PropertyHolderResident from "./PropertyHolderResident"
 import {SERVER_HOST} from "../config/global_constants"
 
@@ -87,7 +86,7 @@ export default class HomeResident extends Component
                     : 
                     <div className="propertiesGrid">
                         {this.state.mounted ? this.state.lessProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
-                        <input type="image" src={require("../images/blackArrow.png")} className="round-blue-button" onClick={this.changeGrid}/>
+                        <input type="image" src={require("../images/blackArrow.png")} className="round-blue-button" onClick={this.changeGrid} alt="loading..."/>
                     </div>
                     }
                     

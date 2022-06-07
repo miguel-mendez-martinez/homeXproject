@@ -151,7 +151,9 @@ const cancelOtherContracts = (req, res, next) => {
 }
 
 const cancelContract = (req, res, next) => {
-    contractModel.findOneAndDelete(req.params.idCon, (error, data) => 
+
+    console.log(req.contract)
+    contractModel.findOneAndDelete({_id: req.contract._id}, (error, data) => 
     {
         if(error){
             return next(createError(400, `Error on contract canceling.`))
@@ -163,16 +165,30 @@ const cancelContract = (req, res, next) => {
 
 router.get('/ContractsRequested',checkUserLogged, (req, res) => 
 {
-    contractModel.find({tenant: req.decodedToken.email, status: 'requested'}, (error, data) =>
-    {
-        if(!error){
-            if(data){
-                res.json(data)
-            }else{
-                res,json()
+    if(req.decodedToken.accessLevel == process.env.ACCESS_LEVEL_ADMIN){
+        contractModel.find({tenant: req.decodedToken.email, status: 'requested'}, (error, data) =>
+        {
+            if(!error){
+                if(data){
+                    res.json(data)
+                }else{
+                    res,json()
+                }
             }
-        }
-    })
+        })
+    }else{
+        contractModel.find({resident: req.decodedToken.email, status: 'requested'}, (error, data) =>
+        {
+            if(!error){
+                if(data){
+                    res.json(data)
+                }else{
+                    res,json()
+                }
+            }
+        })
+    }
+    
 })
 
 router.get('/ContractsConfirmed', checkUserLogged, (req, res) => 

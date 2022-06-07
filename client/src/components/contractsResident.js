@@ -13,6 +13,7 @@ export default class ContractTenant extends Component
 
         
         this.state = { 
+            requested: null,
             confirmed: null,
             completed: null,
             mounted: false
@@ -40,6 +41,25 @@ export default class ContractTenant extends Component
                 console.log("Record not found")
             }
         }) 
+        axios.get(`${SERVER_HOST}/ContractsRequested`, {headers:{"authorization":localStorage.token}})
+        .then(res => 
+        {
+            if(res.data)
+            {            
+                if (res.data.errorMessage)
+                {
+                    console.log(res.data.errorMessage)    
+                }
+                else
+                {         
+                    this.setState({requested: res.data})    
+                }   
+            }
+            else
+            {
+                console.log("Record not found")
+            }
+        })
         axios.get(`${SERVER_HOST}/ContractsCompleted`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {
@@ -66,19 +86,25 @@ export default class ContractTenant extends Component
             <div className="web-container"> 
                 <NavBar selected="1"/>
                 <div className="content-container">
-                    <h1>RESIDENTS CONTRACTS PAGE</h1>
-
+                    {this.state.requested?
+                        <div>
+                            <h2>Rent Offers Requested</h2>
+                            <div className="contractsResident">
+                                {this.state.requested.map((contract, index) => <ContractHolder key={index} contract={contract} />)}
+                            </div>
+                        </div>
+                    : null}
                     {this.state.confirmed? 
-                        <div className="contractsConfirmed">
-                            <h2>Rent Offers to sign</h2>
-                            {this.state.confirmed.map((contract, index) => <ContractHolder key={index} contract={contract}/>)}
-                        </div> 
+                        <div><br/><h2>Rent Offers to Sign</h2>
+                        <div className="contractsResident">
+                            {this.state.confirmed.map((contract, index) => <ContractHolder key={index} contract={contract} />)}
+                        </div></div> 
                     : null}
                     {this.state.completed? 
-                        <div className="contractsCompleted">
-                            <h2>Active Contracts</h2>
-                            {this.state.completed.map((contract, index) => <ContractHolder key={index+100} contract={contract}/>)}
-                        </div> 
+                        <div><br/><h2>Active Contracts</h2>
+                        <div className="contractsResident">
+                            {this.state.completed.map((contract, index) => <ContractHolder key={index + 100} contract={contract} />)}
+                        </div></div> 
                     : null}
                 </div>
             </div>

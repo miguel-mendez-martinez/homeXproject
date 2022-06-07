@@ -28,6 +28,7 @@ export default class ProfileResident extends Component
                 if (res.data.errorMessage)
                     console.log(res.data.errorMessage)  
                 else{
+                    console.log(res.data)
                     this.setState({name: res.data.user.name})
                     this.setState({username: res.data.user.username})
                     this.setState({id: res.data.user.id})

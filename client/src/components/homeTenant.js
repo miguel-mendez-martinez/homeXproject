@@ -1,6 +1,6 @@
 import axios from "axios"
 import React, {Component} from "react"
-import {Redirect, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import NavBar from "./NavBar"
 import PropertyHolderTenant from "./PropertyHolderTenant"
 import {SERVER_HOST} from "../config/global_constants"

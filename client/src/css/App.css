@@ -136,10 +136,13 @@ input{
 .navbar-container{
     flex-basis: 15%;
     display: flex;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
     background-color: #d9eaff;
-    
+
+    position: sticky;
+    top: 0;
 }
 
 
@@ -150,6 +153,9 @@ input{
     padding: 40px;
 }
 
+body::-webkit-scrollbar{
+    display: none;
+}
 
 
  .nav-items{
@@ -592,8 +598,10 @@ input:disabled {
 .content-container .propertiesGrid{
     width: 100%;
     display: flex;
-    align-items: center;
     flex-direction: row;
+    align-items: center;
+    column-gap: 7%;
+    
 
     /* Please make the scroll bar be near the flex, or make this "grid" better. */
     -webkit-flex-direction: none;
@@ -603,7 +611,11 @@ input:disabled {
 }
 
 .content-container .completePropertiesGrid{
+    margin: 10px auto;
+    width: 100%;
     display: grid;
+    grid-template-columns: repeat(3, 30% [col-start]);
+    grid-auto-rows: 1fr;
 }
 
 .content-container .completePropertiesGrid .property,
@@ -619,12 +631,16 @@ input:disabled {
     overflow: hidden;
     box-shadow: 0px 10px 20px #D4D4D4;
     cursor: pointer;
-    margin-right: 20px;
+
+    justify-self: center;
 
     font-family: roboto;
 }
 
-/* .content-container .propertiesGrid::-webkit-scrollbar {    display: none;} */
+.content-container .completePropertiesGrid .property{
+    width: 75%;
+    height: 75%;
+}
 
 .content-container .completePropertiesGrid .property .property-content,
 .content-container .propertiesGrid .property .property-content{
@@ -698,8 +714,6 @@ input:disabled {
 
     column-gap: 10%;
 }
-
-/* .modal-property #propertyImages::-webkit-scrollbar {    display: none;} */
 
 
 .modal-property #propertyImages img{
@@ -776,4 +790,91 @@ input:disabled {
 .modal-property #propertyFields label{
     display: flex;
     align-items: center;
+}
+
+/* contracts stuff */
+
+.content-container .contractsResident{
+    padding: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 7%;
+
+    -webkit-flex-direction: none;
+    overflow-x: scroll;
+    
+}
+
+.web-container h2{
+    font-family: roboto;
+}
+
+
+.content-container .contractsResident .contract{
+    width: 25%;
+    min-width: 25%;
+    border: thin solid #D4D4D4;
+    height: 40vh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+    
+    box-shadow: 0px 10px 20px #D4D4D4;
+
+    font-family: roboto;
+}
+
+.content-container .contractsResident .contract .propertyName{
+    font-weight: bold;
+    padding: 10px;
+    font-size: 22px;
+    text-align: center;
+    flex-basis: 12%;
+    overflow: hidden;
+}
+
+.content-container .contractsResident .contract .contractInfo{
+    padding: 15px;
+    flex-basis: 15%;
+    color:#007CFF;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.content-container .contractsResident .contract .contractMainImage {
+    width: 70%;
+    max-height: 50%;
+    flex-basis: 40%;
+}
+
+.content-container .contractsResident .contract .contractMainImage img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.content-container .rent-form{
+    background-color: #d9eaff;
+    text-align: center;
+    font-family: roboto;
+}
+
+.content-container .rent-form h1{
+    padding: 20px;
+}
+
+.content-container .rent-form .fields-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container .rent-form .fields-container .dates-container{
+    display: flex;
+    justify-content: center;
+    column-gap: 20%;
 }
