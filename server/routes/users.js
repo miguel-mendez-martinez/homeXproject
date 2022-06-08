@@ -205,13 +205,55 @@ const checkUserLogged = (req, res, next) =>
         }
     })
 }
-const findUser = (req, res, next) =>{
+const findUser = (req, res, next) =>
+{
     usersModel.findOne({email: req.decodedToken.email}, (error, data) =>{
-        if(data){
-            req.user = data
-        }else
-            return next(createError(400, "User not found."))
+        if(error){
+            console.log(error)
+        }else{
+            if(data){
+                req.user = data
+                return next()
+            }else
+                return next(createError(400, "User not found."))
+        } 
     })
+}
+
+const findResident = (req, res, next) => {
+    residentModel.findOne({userID: req.user._id}, (err, data) =>
+    {
+        if(err){
+            return next(createError(400, err))
+        }   
+        else if(data){
+            let user = {
+                username: req.user.name,
+                password: req.user.password,
+                name: data.name,
+                id: data.id,
+                phoneNumber: data.phoneNumber
+            }
+            res.json({user: user})
+    }})
+}
+
+const findTenant = (req, res, next) => {
+    tenantModel.findOne({userID: req.user._id}, (err, data) =>
+    {
+        if(err){
+            return next(createError(400, err))
+        }   
+        else if(data){
+            let user = {
+                username: req.user.name,
+                password: req.user.password,
+                name: data.name,
+                id: data.id,
+                phoneNumber: data.phoneNumber
+            }
+            res.json({user: user})
+    }})
 }
 
 const updateProfile = (req,res,next) =>
@@ -258,51 +300,8 @@ router.post(`/Users/logout`, (req,res) => {
 //Update profile
 router.put(`/Users/profile`, checkUserLogged, findUser, updateProfile)
 
-//Get profile info for tenants
-router.get(`/Users/profile/tenant`, checkUserLogged, findUser, (req, res) =>{
-    tenantModel.findOne({userID: req.user._id}, (data, err) =>{
-        if(err)
-            return next(createError(400, err))
-        if(data){
-            let user = {
-                username: req.user.name,
-                password: req.user.password,
-                name: data.name,
-                id: data.id,
-                phoneNumber: data.phoneNumber
-            }
-            res.json({user: user})
-        }
-    })
-})
+router.get(`/Users/resident`, upload.none(), checkUserLogged, findUser, findResident )
 
-//Get profile info for residents
-router.get(`/Users/profile/resident`, checkUserLogged, findUser, (req, res) =>{
-    residentModel.findOne({userID: req.user._id}, (data, err) =>{
-        if(err)
-            return next(createError(400, err))
-        if(data){
-            let user = {
-                username: req.user.name,
-                password: req.user.password,
-                name: data.name,
-                id: data.id,
-                phoneNumber: data.phoneNumber
-            }
-            res.json({user: user})
-        }
-    })
-})
-
-//Retrive all users
-router.get('/Users', (req, res) => 
-{
-    usersModel.find({}, (error, data) =>
-    {
-        if(!error){
-            res.json(data)
-        }
-    })
-})
+router.get(`/Users/tenant`, upload.none(), checkUserLogged, findUser, findTenant )
 
 module.exports = router

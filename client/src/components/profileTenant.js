@@ -24,7 +24,7 @@ export default class ProfileTenant extends Component
 
     }
     componentDidMount = () =>{
-        axios.get(`${SERVER_HOST}/Users/profile/tenant`, {headers:{"authorization":localStorage.token}})
+        axios.get(`${SERVER_HOST}/Users/tenant`, {headers:{"authorization":localStorage.token}})
         .then(res => 
         {     
             if(res.data)

@@ -42,7 +42,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/residentBills" component={BillsResident}/>
                     <LoggedInRoute exact path="/residentProfile" component={ProfileResident}/>
                     <LoggedInRoute exact path="/tenantAddPropForm" component={addPropForm}/>
-                    <LoggedInRoute exact path="/rentForm/:id" component={rentForm}/>
+                    <LoggedInRoute exact path="/rentForm" component={rentForm}/>
                     <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
                 </Switch>
             </BrowserRouter>
