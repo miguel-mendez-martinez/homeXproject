@@ -250,8 +250,8 @@ export default class userForm extends Component {
                     </div>
 
                     <div className="item-container">
-                        <label>
-                            Type:
+                        <label className="user-type--labeled">
+                            <p>Type:</p>
                             <div className="customSelect">
                                 <select className="form-control" name="userType" defaultValue="Tenant" onChange={this.handleChange}>
                                     <option value="Tenant">Tenant</option>

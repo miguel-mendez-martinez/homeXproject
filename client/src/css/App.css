@@ -1,7 +1,7 @@
 body{
     background-color: #F2F8FF;
-    min-height: 100vh;
-    min-width: 100vh;
+    height: 100vh;
+    width: 100vw;
 }
 
 input{
@@ -12,6 +12,15 @@ input{
 {
     margin: 0 auto;
     background: #F2F8FF;
+}
+
+#root{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-container{
@@ -128,9 +137,8 @@ input{
 .web-container
 {
     display: flex;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    min-height: 100vh;
 }
 
 
@@ -969,4 +977,172 @@ input:disabled {
     padding: 60px;
     display: flex;
     justify-content: space-around;
+}
+
+
+@media only screen and (max-width: 500px) {
+    /*LOGIN START */
+    #registerLogoContainer{
+        display: none;
+    }
+
+    .register-form-container{
+        width: 100vw;
+        padding: 0;
+        height: 100vh;
+        justify-content:space-between
+    }
+
+    .form-container{
+        align-self: center;
+    }
+    /*LOGIN END */
+
+    /*REGISTER START */
+    .logo-container{
+        margin: 0;
+        
+    }
+
+    .form-container{
+        margin: 0;
+    }
+
+    .button-container{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-button{
+        margin-bottom: 10px;
+    }
+
+    .logo-container{
+        display: flex;
+        justify-content: center;
+    }
+
+    .error{
+        font-size: 9px;
+    }
+
+    .item-container{
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .register-form-container input:not(.green-button) {
+        width: calc(100% - 40px);
+        padding: 5px;
+    }
+
+    #userName{
+        width: calc(100% - 80px);
+    }
+
+    .user-type--labeled{
+        display: flex;
+        align-items: center;
+        gap:10px;
+    }
+
+    .user-type--labeled p {
+        margin: 0;
+    }
+
+    
+    /* REGISTER END */
+
+
+    /*NAVBAR START */
+    .navbar-container{
+        width: 20%;
+    }
+
+    .navbar-container h2{
+        display: none;
+    }
+    
+   .navBarItemIcon{
+    align-self: center;
+    margin: 0 auto;
+   }
+
+   .navBar-item, .navBar-item-b, .logout-container{
+    padding: 0;
+    margin: 0 auto;
+    width: auto;
+    
+   }
+
+   #littleSizeLogo{
+       width: 20vw;
+   }
+
+   .navBarIcon{
+       width: 100%;
+   }
+
+   /* NAVBAR END */
+
+   /*REST OF APP START*/
+
+   .content-container{
+       padding: 20px;
+       box-sizing: border-box;
+       width: 80%;
+   }
+   body{
+    overflow-x:hidden;
+   }
+
+   #buttons{
+       display: flex;
+       justify-content: center;
+       flex-wrap: wrap;
+       gap:10px;
+   }
+
+   .content-container .propertiesGrid{
+    flex-direction: column;
+    overflow-y: scroll;
+    -webkit-flex-direction: none;
+    padding: 0;
+    }
+
+  .search{
+      flex-wrap: wrap;
+  }
+
+  .content-container .search .blue-button{
+      height: 50px;
+      margin-top: 10px;
+      width: 100%;
+      
+  }
+
+  .content-container .completePropertiesGrid .property, .content-container .propertiesGrid .property{
+      width: 90%;
+  }
+
+  .navbar-container{
+    position: fixed;
+    top: 0;
+    height: 100vh;
+  }
+
+  .content-container{
+      margin-left: 20vw;
+  }
+
+  .content-container .completePropertiesGrid{
+    grid-template-columns: repeat(1, 90% [col-start]);
+
+ }
+  
+ .property{
+     margin: 10px;
+ }
+    /*REST OF APP END*/
 }
