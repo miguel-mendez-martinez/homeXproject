@@ -18,30 +18,7 @@ export default class ContractConfirmModal extends Component{
 
     componentDidMount() 
     {   
-        let images = []
-        this.state.property.images.map(fileName => {
-            axios.get(`${SERVER_HOST}/Properties/images/${fileName}`)
-            .then(res => 
-            {
-                if(res.data)
-                {            
-                    if (res.data.errorMessage)
-                    {
-                        console.log(res.data.errorMessage)    
-                    }
-                    else
-                    {           
-                        images.push(res.data.image)      
-                    }   
-                }
-                else
-                {
-                    console.log("Record not found")
-                }
-            })
-            this.setState({pictures: images})
-            this.setState({mounted: true})
-        })
+        this.setState({mounted: true})
     }
 
 

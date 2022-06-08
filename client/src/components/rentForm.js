@@ -113,7 +113,7 @@ export default class rentForm extends Component{
     }
 
     validateName(){
-        if(this.currentResidentName === ''){
+        if(this.state.currentResidentName === ''){
             return false
         }else{
             return true
@@ -121,7 +121,7 @@ export default class rentForm extends Component{
     }
 
     validateID(){
-        if(this.currentResidentID === ''){
+        if(this.state.currentResidentID === ''){
             return false
         }else{
             return true
@@ -143,11 +143,9 @@ export default class rentForm extends Component{
 
     sendRequest = e => {
 
-
-
         let formData = new FormData()  
-        formData.append("date", new Date(this.state.year, this.state.month, 1))
-        formData.append("expireDate", new Date(this.state.expireYear, this.state.expireMonth, 28))
+        formData.append("date", new Date(this.state.year, this.state.month-1, 1))
+        formData.append("expireDate", new Date(this.state.expireYear, this.state.expireMonth-1, 28))
         formData.append("moneyAmount", this.props.location.state.price) 
         formData.append("tenant", this.props.location.state.tenant) 
         formData.append("monthlyDeadLine", 1)
@@ -156,7 +154,6 @@ export default class rentForm extends Component{
         //for residents
         for(let i = 0; i < this.state.finalResidents.length; i++)
         {
-            console.log(JSON.stringify(this.state.finalResidents[i]))
             formData.append("residents", JSON.stringify(this.state.finalResidents[i]))
         }
 
@@ -198,7 +195,7 @@ export default class rentForm extends Component{
 
         residents.push(resident)
 
-        console.log(residents)
+        this.setState({finalResidents: residents, currentResidentName: '', currentResidentID: ''})
     }
 
     render() 
@@ -206,7 +203,6 @@ export default class rentForm extends Component{
         //errors
         let validDate = <div className="error"> Enter a valid date.</div>
         let validExpireDate = <div className="error"> Enter a valid date.</div>
-        let validResidents = <div className="error"> Enter the name of the residents. name,id;name,id...</div>
 
         //validation
         const formInputsState = this.validation()
@@ -262,7 +258,7 @@ export default class rentForm extends Component{
                                         id="currentResidentID" 
                                         type="text" 
                                         name="currentResidentID" placeholder="Resident's ID" 
-                                        onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
+                                        onChange={this.handleChange}/>
                                     <input type="button" className="blue-button" value="Add resident" disabled = {!residentInputsAreAllValid} onClick={this.addResident}/>
                                 </div>
                                 <div className="residentsTable">
@@ -275,8 +271,6 @@ export default class rentForm extends Component{
                                         </tbody>
                                     </table>
                                 </div>
-                                
-                               {/*  {formInputsState.residents ? "" : validResidents} */}
                             </div>
                         </div>
                         <div className="button-container">

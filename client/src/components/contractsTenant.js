@@ -95,25 +95,27 @@ export default class ContractTenant extends Component
             <div className="web-container"> 
                 <NavBar selected="1"/>
                 <div className="content-container">
-                    <h1>TENANTS CONTRACTS PAGE</h1>
 
                     {this.state.requested? 
+                        <div><br/><h2>Rent Requests</h2>
                         <div className="contractsResident">
-                            <h2>Rent Requests</h2>
                             {this.state.requested.map((contract, index) => <ContractHolderTenant key={index} contract={contract}/>)}
                         </div> 
+                        </div>
                     : null}
                     {this.state.signed? 
+                        <div><br/><h2>Sign Requests</h2>
                         <div className="contractsResident">
-                            <h2>Sign Requests</h2>
                             {this.state.signed.map((contract, index) => <ContractHolderTenant key={index+50} contract={contract}/>)}
+                        </div> 
                         </div> 
                     : null}
                     {this.state.completed? 
+                        <div><br/><h2>Active Contracts</h2>
                         <div className="contractsResident">
-                            <h2>Active Contracts</h2>
                             {this.state.completed.map((contract, index) => <ContractHolderTenant key={index+100} contract={contract}/>)}
                         </div> 
+                        </div>
                     : null}
                 </div>
             </div>

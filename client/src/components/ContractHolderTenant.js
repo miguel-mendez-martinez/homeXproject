@@ -36,8 +36,27 @@ export default class ContractHolderTenant extends Component
                 }
                 else
                 {          
-                    this.setState({property: res.data})    
-                    this.setState({mounted: true})  
+                    this.setState({property: res.data})  
+                    axios.get(`${SERVER_HOST}/Properties/image/${res.data.images[0].filename}`, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
+                    .then(res => 
+                    {
+                        if(res.data)
+                        {            
+                            if (res.data.errorMessage)
+                            {
+                                console.log(res.data.errorMessage)    
+                            }
+                            else
+                            {          
+                                this.setState({picture: res.data.image})    
+                                this.setState({mounted: true})  
+                            }   
+                        }
+                        else
+                        {
+                            console.log("Record not found")
+                        }
+                    }) 
                 }   
             }
             else
@@ -62,17 +81,19 @@ export default class ContractHolderTenant extends Component
 
     showRequestedModal(){
         this.setState({ requestedModal: !this.state.requestedModal, redirect: true})
+        window.location.reload()
     }
 
     showCompletedModal(){
         this.setState({ requestedModal: !this.state.completeModal, redirect: true})
+        window.location.reload()
     }
     
     render() 
     {
         return (
             <div className="contract">
-                {this.state.redirect ? <Redirect to="/tenantHome"/> : null}
+                {this.state.redirect ? <Redirect to="/tenantContracts"/> : null}
                 {this.state.mounted ? 
                     <><div className="propertyName">
                         {this.state.property.address}
