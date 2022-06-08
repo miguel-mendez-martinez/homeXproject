@@ -64,7 +64,7 @@ export default class PropertyResidentModal extends Component{
                             <label>Price: {this.state.property.price} €/month</label><br/>
                        </div>
                         <div id="buttons">
-                            <Link id="rentButton" className="green-button" to={{pathname: `rentForm/${this.state.id}`}}> Rent Request </Link>
+                            <Link id="rentButton" className="green-button" to={{pathname: `/rentForm`, state: this.state.property}}> Rent Request </Link>
                         </div>
                     </div>
                 </div>

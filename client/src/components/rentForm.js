@@ -14,15 +14,14 @@ export default class rentForm extends Component{
         super(props)
 
         this.state = {
-            property: null,
+            user: null,
             month: null,
             year: null,
-            expireMonth: null,
             expireYear: null,
             expireMonth: null,
             resident: localStorage.email,
             currentResidentName: '',
-            currentResidentId: '',
+            currentResidentID: '',
             redirect:false,
             errorMessage: '',
             mounted: false,
@@ -41,34 +40,36 @@ export default class rentForm extends Component{
             current = new Date(now.getFullYear(), now.getMonth() + 1, 1);
         }
 
-        this.setState({month: current.getMonth() + 1, year: current.getFullYear()})
+        this.setState({month: current.getMonth() + 1, year: current.getFullYear(), expireMonth: current.getMonth() + 2, expireYear: current.getFullYear()})
 
-        axios({
-            method: "get",
-            url: `${SERVER_HOST}/Properties/${this.props.match.params.id}/`,
-            headers: { "authorization": localStorage.token },
-        }).then(res => {
-            //handle success
-            if(res.data)
-            {            
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
+        axios.get(`${SERVER_HOST}/Users/resident`, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
+            .then(res => 
+            {
+                if(res.data)
+                {            
+                    if (res.data.errorMessage)
+                    {
+                        console.log(res.data.errorMessage)    
+                    }
+                    else
+                    {      
+                        let residents = this.state.finalResidents
+
+                        residents[0] = {
+                            name: res.data.user.name,
+                            id: res.data.user.id
+                        }
+                        
+                        this.setState({finalResidents: residents, user: res.data,mounted: true})
+                        
+                    }   
                 }
                 else
-                {           
-                    this.setState({property: res.data})
-                    this.setState({mounted: true})
-                }   
-            }
-            else
-            {
-                console.log("Record not found")
-            }
-        }).catch(err => {
-            //handle error
-            console.log(err)
-        })
+                {
+                    console.log("Record not found")
+                }
+            })
+
     }
 
 
@@ -87,7 +88,7 @@ export default class rentForm extends Component{
         if( this.state.expireMonth != 'no'){
             if(this.state.expireYear != 'no'){
                 var ed = new Date(this.state.expireYear, this.state.expireMonth-1, 28)
-                var d = new Date(this.state.year, this.state.month-1, 1)
+                var d = new Date(this.state.year, this.state.month, 1)
                 if(ed > d)
                     return true
             }
@@ -96,10 +97,11 @@ export default class rentForm extends Component{
     }
 
     validateResidents() {
-        if(this.state.residents != '')
+        if(this.state.finalResidents.length > 0){
             return true
-        
-        return false
+        }else{
+            return false
+        }
     }
 
     validation(){
@@ -108,7 +110,29 @@ export default class rentForm extends Component{
             expireDate: this.validateExpireDate(),
             residents: this.validateResidents()
         }
+    }
 
+    validateName(){
+        if(this.state.currentResidentName === ''){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    validateID(){
+        if(this.state.currentResidentID === ''){
+            return false
+        }else{
+            return true
+        }
+    }
+
+    residentValidation(){
+        return {
+            name: this.validateName(),
+            id: this.validateID(),
+        }
     }
 
 
@@ -118,34 +142,22 @@ export default class rentForm extends Component{
     }
 
     sendRequest = e => {
-        let finalResidents = []
-        let splittedData
-        this.state.residents.split(';').map((nameId, index) =>{
-            splittedData = nameId.split(',')
-
-            finalResidents[index] = {
-                name: splittedData[0],
-                id: splittedData[1]
-            }
-        })
-
-
 
         let formData = new FormData()  
         formData.append("date", new Date(this.state.year, this.state.month-1, 1))
         formData.append("expireDate", new Date(this.state.expireYear, this.state.expireMonth-1, 28))
-        formData.append("moneyAmount", this.state.property.price) 
-        formData.append("tenant", this.state.property.tenant) 
+        formData.append("moneyAmount", this.props.location.state.price) 
+        formData.append("tenant", this.props.location.state.tenant) 
         formData.append("monthlyDeadLine", 1)
         formData.append("resident", this.state.resident)
 
         //for residents
-        for(let i = 0; i < finalResidents.length; i++)
+        for(let i = 0; i < this.state.finalResidents.length; i++)
         {
-            formData.append("residents", JSON.stringify(finalResidents[i]))
+            formData.append("residents", JSON.stringify(this.state.finalResidents[i]))
         }
 
-        axios.post(`${SERVER_HOST}/Properties/rentProperty/${this.props.match.params.id}`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
+        axios.post(`${SERVER_HOST}/Properties/rentProperty/${this.props.location.state._id}`, formData, {headers:{"authorization":localStorage.token ,"Content-type": "multipart/form-data"}})
         .then(res => 
         {   
             if(res.data)
@@ -173,16 +185,31 @@ export default class rentForm extends Component{
         this.setState({redirect: !this.state.redirect})
     }
 
+    addResident = e => {
+        let residents = this.state.finalResidents
+
+        let resident = {
+            name: this.state.currentResidentName,
+            id: this.state.currentResidentID,
+        }
+
+        residents.push(resident)
+
+        this.setState({finalResidents: residents, currentResidentName: '', currentResidentID: ''})
+    }
+
     render() 
     {   
         //errors
         let validDate = <div className="error"> Enter a valid date.</div>
         let validExpireDate = <div className="error"> Enter a valid date.</div>
-        let validResidents = <div className="error"> Enter the name of the residents. name,id;name,id...</div>
 
         //validation
         const formInputsState = this.validation()
         const inputsAreAllValid = Object.keys(formInputsState).every(index => formInputsState[index]) 
+
+        const residentInputsState = this.residentValidation()
+        const residentInputsAreAllValid = Object.keys(residentInputsState).every(index => residentInputsState[index]) 
 
         return (       
             <div className="web-container"> 
@@ -209,24 +236,41 @@ export default class rentForm extends Component{
                                 <div className="date-item">
                                     <MonthYearPicker
                                         caption="Select an ending year and month."
-                                        selectedMonth={this.state.month}
-                                        selectedYear={this.state.year}
+                                        selectedMonth={this.state.expireMonth}
+                                        selectedYear={this.state.expireYear}
                                         minYear={new Date().getFullYear()}
                                         maxYear={2030}
-                                        onChangeYear={year => this.setState({ year: year })}
-                                        onChangeMonth={month => this.setState({ month: month })}
+                                        onChangeYear={year => this.setState({ expireYear: year })}
+                                        onChangeMonth={month => this.setState({ expireMonth: month })}
                                         />
                                     {formInputsState.expireDate ? "" : validExpireDate}
                                 </div>
                             </div>
                             <div className="residents-container">
                                 {/* formed by a add resident "form" and a table of residents*/}
-                                <input className = {"form-control"}
-                                    id="residents" 
-                                    type="text" 
-                                    name="residents" placeholder="Property Residents" 
-                                    onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
-                                {formInputsState.residents ? "" : validResidents}
+                                <div className="inputs">
+                                    <input className = {"form-control"}
+                                        id="currentResidentName" 
+                                        type="text" 
+                                        name="currentResidentName" placeholder="Resident's full name" 
+                                        onChange={this.handleChange} ref={input => { this.inputToFocus = input }}/>
+                                    <input className = {"form-control"}
+                                        id="currentResidentID" 
+                                        type="text" 
+                                        name="currentResidentID" placeholder="Resident's ID" 
+                                        onChange={this.handleChange}/>
+                                    <input type="button" className="blue-button" value="Add resident" disabled = {!residentInputsAreAllValid} onClick={this.addResident}/>
+                                </div>
+                                <div className="residentsTable">
+                                    <table>
+                                        <thead>
+                                            <tr><th>Resident's name</th><th>Resident's ID</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.state.finalResidents.map((resident, index) => <tr key={index}><td>{resident.name}</td><td> {resident.id}</td></tr> )}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div className="button-container">

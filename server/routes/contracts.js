@@ -152,7 +152,6 @@ const cancelOtherContracts = (req, res, next) => {
 
 const cancelContract = (req, res, next) => {
 
-    console.log(req.contract)
     contractModel.findOneAndDelete({_id: req.contract._id}, (error, data) => 
     {
         if(error){

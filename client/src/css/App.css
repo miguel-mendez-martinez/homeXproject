@@ -967,3 +967,8 @@ input:disabled {
 /*ToDoApp styles END*/
 
 
+.content-container .rent-form .fields-container .residents-container{
+    padding: 60px;
+    display: flex;
+    justify-content: space-around;
+}
