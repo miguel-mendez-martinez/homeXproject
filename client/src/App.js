@@ -1,5 +1,5 @@
-import React, {Component} from "react"
-import {BrowserRouter, Switch, Route} from "react-router-dom"
+import React, { Component } from "react"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
@@ -20,30 +20,30 @@ import ProfileResident from "./components/profileResident"
 import addPropForm from "./components/addPropForm"
 import rentForm from "./components/rentForm"
 import checkLogIn from "./components/checkLogIn"
+import ToDoApp from "./components/ToDoApp"
 
-export default class App extends Component 
-{
-    render() 
-    {
+export default class App extends Component {
+    render() {
         return (
             <BrowserRouter>
-                <Switch>                 
+                <Switch>
                     <Route exact path="/" component={checkLogIn} />
                     <LoggedInRoute exact path="/logOut" component={LogOut} />
                     <Route exact path="/registerUser" component={userCreationForm} />
-                    <Route exact path="/logInForm" component={logInForm}/>
-                    <LoggedInRouteTen exact path="/tenantHome" component={HomeTenant}/>
-                    <LoggedInRouteTen exact path="/tenantContracts" component={ContractTenant}/>
-                    <LoggedInRouteTen exact path="/tenantBills" component={BillsTenant}/>
-                    <LoggedInRouteTen exact path="/tenantSchedule" component={ScheduleTenant}/>
-                    <LoggedInRouteTen exact path="/tenantProfile" component={ProfileTenant}/>
-                    <LoggedInRoute exact path="/residentHome" component={HomeResident}/>
-                    <LoggedInRoute exact path="/residentContracts" component={ContractsResident}/>
-                    <LoggedInRoute exact path="/residentBills" component={BillsResident}/>
-                    <LoggedInRoute exact path="/residentProfile" component={ProfileResident}/>
-                    <LoggedInRoute exact path="/tenantAddPropForm" component={addPropForm}/>
-                    <LoggedInRoute exact path="/rentForm/:id" component={rentForm}/>
-                    <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>}/>                           
+                    <Route exact path="/logInForm" component={logInForm} />
+                    <LoggedInRouteTen exact path="/tenantHome" component={HomeTenant} />
+                    <LoggedInRouteTen exact path="/tenantContracts" component={ContractTenant} />
+                    <LoggedInRouteTen exact path="/tenantBills" component={BillsTenant} />
+                    <LoggedInRouteTen exact path="/tenantSchedule" component={ScheduleTenant} />
+                    <LoggedInRouteTen exact path="/tenantProfile" component={ProfileTenant} />
+                    <LoggedInRoute exact path="/residentHome" component={HomeResident} />
+                    <LoggedInRoute exact path="/residentContracts" component={ContractsResident} />
+                    <LoggedInRoute exact path="/residentBills" component={BillsResident} />
+                    <LoggedInRoute exact path="/residentProfile" component={ProfileResident} />
+                    <LoggedInRoute exact path="/tenantAddPropForm" component={addPropForm} />
+                    <LoggedInRoute exact path="/rentForm/:id" component={rentForm} />
+                    <Route exact path="/ToDoApp" component={ToDoApp} />
+                    <Route path="*" component={() => <h3>Invalid URL. Webpage does not exist</h3>} />
                 </Switch>
             </BrowserRouter>
         )

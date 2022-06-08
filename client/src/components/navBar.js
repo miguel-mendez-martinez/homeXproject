@@ -50,6 +50,13 @@ export default class NavBar extends Component {
                         </div>
                         <h2 id="profileText" className="menuText">Profile</h2>
                     </Link>
+
+                    <Link className={this.props.selected == 5 ? "navBar-item-b" : "navBar-item"} to="/ToDoApp">
+                        <div className="navBarItemIcon">
+                            <img className="navBarIcon" src={require("../images/to-do-list.png")} alt="" />
+                        </div>
+                        <h2 id="profileText" className="menuText">ToDoApp</h2>
+                    </Link>
                 </div>
                 <Link to="/logOut" className="logout">
                     <div className="logout-container">
