@@ -5,7 +5,7 @@ import {Redirect,Link} from "react-router-dom"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export default class PropertyTenantModal extends Component{ //Not possible to update images yet
+export default class PropertyTenantModal extends Component{ 
 
     constructor(props) 
     {

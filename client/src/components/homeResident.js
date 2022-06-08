@@ -78,18 +78,18 @@ export default class HomeResident extends Component
                             {!this.state.completeGrid ? <button className="blue-button" onClick={this.changeGrid}>More properties.</button> : <button className="blue-button" onClick={this.changeGrid}>Less properties.</button>}
                             
                     </div>
-
-                    {this.state.completeGrid ? 
-                    <div className="completePropertiesGrid">
-                        {this.state.mounted ? this.state.allProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
-                    </div>
-                    : 
-                    <div className="propertiesGrid">
-                        {this.state.mounted ? this.state.lessProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
-                        <input type="image" src={require("../images/blackArrow.png")} className="round-blue-button" onClick={this.changeGrid} alt="loading..."/>
-                    </div>
-                    }
-                    
+                    <div className="properties-container">
+                        {this.state.completeGrid ? 
+                        <div className="completePropertiesGrid">
+                            {this.state.mounted ? this.state.allProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
+                        </div>
+                        : 
+                        <div className="propertiesGrid">
+                            {this.state.mounted ? this.state.lessProperties.map((property, index) => <PropertyHolderResident key={property._id} property={property}/>) : null}
+                            <input type="image" src={require("../images/blackArrow.png")} className="round-blue-button" onClick={this.changeGrid} alt="loading..."/>
+                        </div>
+                        }
+                    </div>    
 
                 </div>
             </div>

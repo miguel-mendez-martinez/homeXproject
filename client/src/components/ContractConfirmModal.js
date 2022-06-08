@@ -122,7 +122,7 @@ export default class ContractConfirmModal extends Component{
         axios({
             method: "delete",
             url: `${SERVER_HOST}/Contracts/tenantCancelContract/${this.props.contract._id}`,
-            headers: { "authorization": localStorage.token },
+            headers: { "authorization": localStorage.token, "Content-type": "multipart/form-data" },
         }).then(res => {
             //handle success
             if(res.data)

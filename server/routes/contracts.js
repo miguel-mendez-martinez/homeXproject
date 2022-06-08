@@ -251,7 +251,7 @@ router.put('/Contracts/sign/:idCon', upload.none(), checkUserLogged, checkContra
 
 router.put('/Contracts/complete/:idCon', checkUserLogged, checkContractExists, checkAvaliable, checkUserTenant, completeContract, rentProperty, cancelOtherContracts)
 
-router.delete('/Contracts/tenantCancelContract/:idCon', checkUserLogged, checkContractExists, checkUserTenant, cancelContract)
+router.delete('/Contracts/tenantCancelContract/:idCon', upload.none(), checkUserLogged, checkContractExists, checkUserTenant, cancelContract)
 
 router.delete('/Contracts/residentCancelContract/:idCon', checkUserLogged, checkContractExists, checkUserResident, cancelContract)
 
